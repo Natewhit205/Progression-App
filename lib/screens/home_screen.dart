@@ -22,6 +22,21 @@ class HomeScreenState extends State<HomeScreen> {
     const TunerScreen(),
   ];
 
+  final List<BottomNavigationBarItem> _bottomNavigationBarItems = [
+    const BottomNavigationBarItem(
+      icon: Icon(Icons.timer),
+      label: 'BPM Clicker',
+    ),
+    const BottomNavigationBarItem(
+      icon: Icon(Icons.home),
+      label: 'Home',
+    ),
+    const BottomNavigationBarItem(
+      icon: Icon(Icons.audiotrack_outlined),
+      label: 'Tuner',
+    ),
+  ];
+
   void onTapHandler(int index) {
     setState(() {
       _selectedIndex = index;
@@ -70,20 +85,7 @@ class HomeScreenState extends State<HomeScreen> {
         selectedItemColor: const Color.fromARGB(255, 42, 85, 124),
         currentIndex: _selectedIndex,
         onTap: onTapHandler,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.timer),
-            label: 'BPM Clicker',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.audiotrack_outlined),
-            label: 'Tuner',
-          ),
-        ]
+        items: _bottomNavigationBarItems,
       ),
     );
   }
