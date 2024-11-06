@@ -2,7 +2,7 @@ flutter_native_splash:
   color: "#FFFFFF"
   color_dark: "#272727"
   image: assets/icons/logo.png
-  image_dark: assets/icons/logo.png
+  image_dark: assets/icons/logo_dark.png
   android: true
   ios: true
 
@@ -10,6 +10,6 @@ flutter_native_splash:
     color: "#FFFFFF"
     color_dark: "#474747"
     image: assets/icons/logo.png
-    image_dark: assets/icons/logo.png
+    image_dark: assets/icons/logo_dark.png
   
   web: false
