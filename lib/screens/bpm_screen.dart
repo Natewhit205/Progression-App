@@ -30,7 +30,11 @@ class BpmScreenState extends State<BpmScreen> with AutomaticKeepAliveClientMixin
     _numOfTaps += 1;
     DateTime currentTime = DateTime.now();
     int timeElapsed = currentTime.difference(_startTime).inMilliseconds;
-    _lastTap = DateTime.now(); 
+    _lastTap = DateTime.now();
+
+    if (timeElapsed == 0) {
+      timeElapsed = 400;
+    }
 
     setState(() {
       _beatsPerMinute = (60000 * _numOfTaps) ~/ timeElapsed;

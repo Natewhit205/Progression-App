@@ -16,6 +16,7 @@ class HomeScreenState extends State<HomeScreen> {
   // Page Controller
   int _selectedIndex = 1;
   final PageController _pageController = PageController(initialPage: 1);
+  
   final List<Widget> _pages = [
     const BpmScreen(),
     const HarmonyScreen(),
