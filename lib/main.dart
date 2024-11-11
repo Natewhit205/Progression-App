@@ -1,34 +1,72 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'node.dart';
+import 'chord.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'screens/home_screen.dart';
 
-late Box<Node> box;
+late Box<Chord> box;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
-  Hive.registerAdapter(NodeAdapter());
-  box = await Hive.openBox<Node>('decisionMap');
+  Hive.registerAdapter(ChordAdapter());
+  box = await Hive.openBox<Chord>('decisionMap');
 
-  String csv = 'assets/decision_map.csv';
+  String csv = 'assets/chord_maps/f_maj.csv';
   String fileData = await rootBundle.loadString(csv);
 
   List<String> rows = fileData.split('\n');
+
   for (int i = 0; i < rows.length; i++) {
-    String row = rows[i];
+    String row = rows[i].trim(); //remove trailing whitespace or new lines
+    print(row);
+    if (row.isEmpty) continue; //skip empty rows
     List<String> itemInRow = row.split(',');
+
+    int iD = 0;
+    List<int> nextChords = [];
+    List<String> nextChordNames = [];
+    bool modulates = false;
+    Map keyShifts = {};
+
+    for (int j = 0; j < itemInRow.length; j++) {
+      if (j == 0) {
+        iD = int.parse(itemInRow[j]);
+      } else {
+        while (itemInRow[j] != '-1') {
+          nextChords.add(int.parse(itemInRow[j]));
+          j++;
+        }
+        j++; //skip the -1 entry
+        while (itemInRow[j] != '0') {
+          nextChordNames.add(itemInRow[j]);
+          j++;
+        }
+        j++; //skip the 0 entry
+        List tempValues = [];
+        while (itemInRow[j] != "None") {
+          modulates = true;
+          if (itemInRow[j] == "-") {
+            continue;
+          }
+
+          tempValues.add(itemInRow[j]);
+
+          if (tempValues.length == 2) {
+            keyShifts[tempValues[0]] = tempValues[1];
+            tempValues.clear();
+          }
+          j++;
+        }
+      }
+    }
     
-    Node node = Node(
-      int.parse(itemInRow[0]),
-      int.parse(itemInRow[1]),
-      itemInRow[2]
-    );
+    Chord chord = Chord(iD, nextChords, nextChordNames, modulates, keyShifts);
 
     int key = int.parse(itemInRow[0]);
-    box.put(key, node);
+    box.put(key, chord);
   }
 
   runApp (
@@ -58,26 +96,26 @@ class MyFlutterState extends State<MyApp> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      setState(() {
+      /*setState(() {
         Node? current = box.get(1);
         if (current != null) {
           iD = current.iD;
           nextID = current.nextID;
           description = current.description;
         }
-      });
+      });*/
     });
   }
 
   void buttonHandler() {
-    setState(() {
+    /*setState(() {
       Node? nextNode = box.get(nextID);
       if (nextNode != null) {
         iD = nextNode.iD;
         nextID = nextNode.nextID;
         description = nextNode.description;
       }
-    });
+    });*/
   }
 
   @override
