@@ -1,7 +1,7 @@
-1,4,5,6,-1,Bb,C,Dm,0,None
-2,4,5,-1,Bb,C,0,None
-3,-1,0,None
-4,1,2,5,6,-1,F,Gm,C,Dm,0,2,1,None
-5,1,2,4,6,-1,F,Gm,Bb,Dm,0,None
-6,1,4,5,-1,F,Bb,C,0,None
-7,-1,0,None
+1,F,4,5,6,-1,Bb,C,Dm,0,None
+2,Gm,4,5,-1,Bb,C,0,None
+3,Am,-1,0,None
+4,Bb,1,2,5,6,-1,F,Gm,C,Dm,0,2,1,None
+5,C,1,2,4,6,-1,F,Gm,Bb,Dm,0,None
+6,Dm,1,4,5,-1,F,Bb,C,0,None
+7,Edim,-1,0,None

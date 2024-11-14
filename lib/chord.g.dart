@@ -18,26 +18,29 @@ class ChordAdapter extends TypeAdapter<Chord> {
     };
     return Chord(
       fields[0] as int,
-      (fields[1] as List).cast<int>(),
-      (fields[2] as List).cast<String>(),
-      fields[3] as bool,
-      (fields[4] as Map).cast<dynamic, dynamic>(),
+      fields[1] as String,
+      (fields[2] as List).cast<int>(),
+      (fields[3] as List).cast<String>(),
+      fields[4] as bool,
+      (fields[5] as Map).cast<int, int>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, Chord obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.iD)
       ..writeByte(1)
-      ..write(obj.nextChords)
+      ..write(obj.chordName)
       ..writeByte(2)
-      ..write(obj.nextChordNames)
+      ..write(obj.nextChords)
       ..writeByte(3)
-      ..write(obj.modulates)
+      ..write(obj.nextChordNames)
       ..writeByte(4)
+      ..write(obj.modulates)
+      ..writeByte(5)
       ..write(obj.keyShifts);
   }
 

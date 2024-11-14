@@ -10,63 +10,90 @@ late Box<Chord> box;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  print('Test 1');
   await Hive.initFlutter();
+  print('Test 2');
   Hive.registerAdapter(ChordAdapter());
+  print('Test 3');
   box = await Hive.openBox<Chord>('decisionMap');
+  print('Test 4');
 
-  String csv = 'assets/chord_maps/f_maj.csv';
-  String fileData = await rootBundle.loadString(csv);
+  List<String> files = [
+    'assets/chord_maps/f_maj.csv',
+    'assets/chord_maps/c_min.csv',
+    'assets/chord_maps/d_min.csv',
+    'assets/chord_maps/f#_min.csv',
+    'assets/chord_maps/e_maj.csv',
+    'assets/chord_maps/a_maj.csv',
+    'assets/chord_maps/b_maj.csv'
+  ];
 
-  List<String> rows = fileData.split('\n');
+  for (int k = 0; k < files.length; k++) {
+    String csv = 'assets/chord_maps/f_maj.csv';
+    String fileData = await rootBundle.loadString(csv);
+    print('CSV Data: $fileData');
 
-  for (int i = 0; i < rows.length; i++) {
-    String row = rows[i].trim(); //remove trailing whitespace or new lines
-    print(row);
-    if (row.isEmpty) continue; //skip empty rows
-    List<String> itemInRow = row.split(',');
+    List<String> rows = fileData.split('\n');
 
-    int iD = 0;
-    List<int> nextChords = [];
-    List<String> nextChordNames = [];
-    bool modulates = false;
-    Map keyShifts = {};
+    for (int i = 0; i < rows.length; i++) {
+      String row = rows[i].trim(); //remove trailing whitespace or new lines
+      if (row.isEmpty) continue; //skip empty rows
+      List<String> itemInRow = row.split(',');
 
-    for (int j = 0; j < itemInRow.length; j++) {
-      if (j == 0) {
-        iD = int.parse(itemInRow[j]);
-      } else {
-        while (itemInRow[j] != '-1') {
-          nextChords.add(int.parse(itemInRow[j]));
-          j++;
-        }
-        j++; //skip the -1 entry
-        while (itemInRow[j] != '0') {
-          nextChordNames.add(itemInRow[j]);
-          j++;
-        }
-        j++; //skip the 0 entry
-        List tempValues = [];
-        while (itemInRow[j] != "None") {
-          modulates = true;
-          if (itemInRow[j] == "-") {
-            continue;
+      int iD = 0;
+      String chordName = '';
+      List<int> nextChords = [];
+      List<String> nextChordNames = [];
+      bool modulates = false;
+      Map<int, int> keyShifts = {};
+
+      for (int j = 0; j < itemInRow.length; j++) {
+        if (j == 0) {
+          iD = int.parse(itemInRow[j]);
+        } else if (j == 1) {
+          chordName = itemInRow[j];
+        } else {
+          while (itemInRow[j] != '-1') {
+            nextChords.add(int.parse(itemInRow[j]));
+            j++;
           }
+          j++; //skip the -1 entry
 
-          tempValues.add(itemInRow[j]);
-
-          if (tempValues.length == 2) {
-            keyShifts[tempValues[0]] = tempValues[1];
-            tempValues.clear();
+          while (itemInRow[j] != '0') {
+            nextChordNames.add(itemInRow[j]);
+            j++;
           }
-          j++;
+          j++; //skip the 0 entry
+
+          List<int> tempValues = [];
+          while (itemInRow[j] != "None") {
+            modulates = true;
+            if (itemInRow[j] == "-") {
+              continue;
+            }
+
+            tempValues.add(int.parse(itemInRow[j]));
+
+            if (tempValues.length == 2) {
+              keyShifts[tempValues[0]] = tempValues[1];
+              tempValues.clear();
+            }
+            j++;
+          }
         }
       }
-    }
     
-    Chord chord = Chord(iD, nextChords, nextChordNames, modulates, keyShifts);
+      Chord chord = Chord(iD, chordName, nextChords, nextChordNames, modulates, keyShifts);
+      int key = int.parse(itemInRow[0]);
 
-    int key = int.parse(itemInRow[0]);
-    box.put(key, chord);
+      try {
+        box.put(key, chord);
+        print('Stored chord: ID=$iD, ChordName=$chordName NextChords=$nextChords, NextChordNames=$nextChordNames, Modulates=$modulates, KeyShifts=$keyShifts');
+      } catch(e) {
+        print('Error storing chord: $e');
+      }
+    }
+  
   }
 
   runApp (
