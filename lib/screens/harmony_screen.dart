@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_music_application/keys.dart';
+import 'package:flutter_music_application/main.dart';
+import 'package:flutter_spinbox/flutter_spinbox.dart';
 
 class HarmonyScreen extends StatefulWidget {
   const HarmonyScreen({super.key});
@@ -17,13 +19,17 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
   Keys key = Keys();
 
   int selectedKey = 1;
-  int selectedChord = 1;
+  late List<int> selectedChord;
   String chordProgression = "";
+
+  void generateProgression() {
+
+  }
 
   @override
   void initState() {
     super.initState();
-    
+    selectedChord = key.getChords(selectedKey).first.value;
   }
 
   @override
@@ -38,6 +44,22 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
           child: Stack(
             alignment: Alignment.topLeft,
             children: [
+              const Align(
+                alignment: Alignment(0.0, 0.0),
+                child: Padding(
+                  padding: EdgeInsets.all(35.0),
+                  child: Text(
+                    'F | Bb | C | F | Dm | Bb | C | Dm | C',
+                    style: TextStyle(
+                      fontSize: 30.0,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.clip,
+                    softWrap: true,
+                  ),
+                ),
+              ),
               Align(
                 alignment: const Alignment(0.0, 0.5),
                 child: Row(
@@ -53,6 +75,7 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
                         if (selectedKey != index) {
                           setState(() {
                             selectedKey = index;
+                            selectedChord = key.getChords(selectedKey).first.value;
                           });
                         }
                       },

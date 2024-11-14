@@ -42,6 +42,8 @@ dependencies:
 
   webview_flutter: ^4.10.0
 
+  flutter_spinbox: ^0.13.1
+
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6
@@ -82,6 +84,12 @@ flutter:
     - assets/icons/
     - assets/decision_map.csv
     - assets/chord_maps/f_maj.csv
+    - assets/chord_maps/c_min.csv
+    - assets/chord_maps/d_min.csv
+    - assets/chord_maps/f#_min.csv
+    - assets/chord_maps/e_maj.csv
+    - assets/chord_maps/a_maj.csv
+    - assets/chord_maps/b_maj.csv
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

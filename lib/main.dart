@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'node.dart';
 import 'chord.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
@@ -10,13 +9,9 @@ late Box<Chord> box;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  print('Test 1');
   await Hive.initFlutter();
-  print('Test 2');
   Hive.registerAdapter(ChordAdapter());
-  print('Test 3');
   box = await Hive.openBox<Chord>('decisionMap');
-  print('Test 4');
 
   List<String> files = [
     'assets/chord_maps/f_maj.csv',
@@ -28,10 +23,9 @@ Future<void> main() async {
     'assets/chord_maps/b_maj.csv'
   ];
 
-  for (int k = 0; k < files.length; k++) {
+  for (int k = 1; k < files.length + 1; k++) {
     String csv = 'assets/chord_maps/f_maj.csv';
     String fileData = await rootBundle.loadString(csv);
-    print('CSV Data: $fileData');
 
     List<String> rows = fileData.split('\n');
 
@@ -84,7 +78,7 @@ Future<void> main() async {
       }
     
       Chord chord = Chord(iD, chordName, nextChords, nextChordNames, modulates, keyShifts);
-      int key = int.parse(itemInRow[0]);
+      String key = '[$k, ${itemInRow[0]}]';
 
       try {
         box.put(key, chord);
