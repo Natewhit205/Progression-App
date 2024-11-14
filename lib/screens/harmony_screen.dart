@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_music_application/keys.dart';
 import 'package:flutter_music_application/main.dart';
-import 'package:flutter_spinbox/flutter_spinbox.dart';
 
 class HarmonyScreen extends StatefulWidget {
   const HarmonyScreen({super.key});
@@ -15,6 +14,9 @@ class HarmonyScreen extends StatefulWidget {
 class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveClientMixin<HarmonyScreen> {
   @override
   bool get wantKeepAlive => true;
+
+  bool saved = false;
+  bool generated = false;
 
   Keys key = Keys();
 
@@ -58,6 +60,55 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
                     overflow: TextOverflow.clip,
                     softWrap: true,
                   ),
+                ),
+              ),
+              Align(
+                alignment: const Alignment(0.0, 0.27),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    MaterialButton(
+                      onPressed: () {},
+                      color: const Color.fromARGB(255, 42, 85, 124),
+                      elevation: 0,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                      ),
+                      textColor: const Color(0xfffffdfd),
+                      height: 40,
+                      minWidth: 110,
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      child: const Text(
+                        'Play',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                          fontStyle: FontStyle.normal,
+                        ),
+                      ),
+                    ),
+                    MaterialButton(
+                      onPressed: () {},
+                      color: const Color.fromARGB(255, 42, 85, 124),
+                      elevation: 0,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                      ),
+                      textColor: const Color(0xfffffdfd),
+                      height: 40,
+                      minWidth: 110,
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      child: const Text(
+                        'Save',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                          fontStyle: FontStyle.normal,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
               Align(
