@@ -1,4 +1,8 @@
+import 'dart:math';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_music_application/chord.dart';
 import 'package:flutter_music_application/keys.dart';
 import 'package:flutter_music_application/main.dart';
 
@@ -22,10 +26,63 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
 
   int selectedKey = 1;
   late List<int> selectedChord;
-  String chordProgression = "";
+  String chordProgression = '';
+  int chordLimit = 8;
 
   void generateProgression() {
+    chordProgression = '';
+    int limit = chordLimit;
+    int currentKey = selectedKey;
+    int currentChordId = selectedChord[1];
 
+    setState(() {
+      chordProgression += key.getChords(selectedKey)[currentChordId - 1].label;
+    });
+
+    limit--;
+
+    while (limit > 0) {
+      Chord? chord = box.get('[$currentKey, $currentChordId]');
+      List<int> nextChords = chord!.getPossibleChords();
+      int index = Random().nextInt(nextChords.length);
+
+      String newChordPair = '';
+
+      if (nextChords[index] == -1) {
+        newChordPair = chord.getModulation();
+      } else {
+        newChordPair = '[$currentKey, ${nextChords[index]}]';
+      }
+      List<String> keyChord = newChordPair.substring(1, newChordPair.length - 1).split(',');
+      currentKey = int.parse(keyChord[0]);
+      currentChordId = int.parse(keyChord[1]);
+
+      String? chordName = box.get(newChordPair)!.chordName;
+
+      setState(() {
+        chordProgression += ' | $chordName';
+      });
+
+      limit--;
+    }
+
+    setState(() {
+      generated = true;
+    });
+  }
+
+  bool _checkPlayStatus() {
+    if (generated) {
+      return true;
+    }
+    return false;
+  }
+
+  bool _checkSaveStatus() {
+    if (generated && saved == false) {
+      return true;
+    }
+    return false;
   }
 
   @override
@@ -46,13 +103,13 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
           child: Stack(
             alignment: Alignment.topLeft,
             children: [
-              const Align(
-                alignment: Alignment(0.0, 0.0),
+              Align(
+                alignment: const Alignment(0.0, 0.0),
                 child: Padding(
-                  padding: EdgeInsets.all(35.0),
+                  padding: const EdgeInsets.all(35.0),
                   child: Text(
-                    'F | Bb | C | F | Dm | Bb | C | Dm | C',
-                    style: TextStyle(
+                    chordProgression,
+                    style: const TextStyle(
                       fontSize: 30.0,
                       fontWeight: FontWeight.w500,
                     ),
@@ -69,7 +126,7 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     MaterialButton(
-                      onPressed: () {},
+                      onPressed: _checkPlayStatus() ? () {} : null,
                       color: const Color.fromARGB(255, 42, 85, 124),
                       elevation: 0,
                       shape: const RoundedRectangleBorder(
@@ -89,7 +146,7 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
                       ),
                     ),
                     MaterialButton(
-                      onPressed: () {},
+                      onPressed: _checkSaveStatus() ? () {} : null,
                       color: const Color.fromARGB(255, 42, 85, 124),
                       elevation: 0,
                       shape: const RoundedRectangleBorder(
@@ -150,7 +207,7 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
               Align(
                 alignment: const Alignment(0.0, 0.8),
                 child: MaterialButton(
-                  onPressed: () {},
+                  onPressed: generateProgression,
                   color: const Color.fromARGB(255, 42, 85, 124),
                   elevation: 0,
                   shape: const RoundedRectangleBorder(

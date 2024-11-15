@@ -38,10 +38,10 @@ class Chord {
     return output;
   }
 
-  Map<int, int> getModulation() {
+  String getModulation() {
     int index = Random().nextInt(keyShifts.length);
     int key = keyShifts.keys.elementAt(index);
     int value = keyShifts[key]!;
-    return {key: value};
+    return '[$key, $value]';
   }
 }

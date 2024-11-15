@@ -24,7 +24,7 @@ Future<void> main() async {
   ];
 
   for (int k = 1; k < files.length + 1; k++) {
-    String csv = 'assets/chord_maps/f_maj.csv';
+    String csv = files[k - 1];
     String fileData = await rootBundle.loadString(csv);
 
     List<String> rows = fileData.split('\n');
@@ -63,6 +63,7 @@ Future<void> main() async {
           while (itemInRow[j] != "None") {
             modulates = true;
             if (itemInRow[j] == "-") {
+              j++;
               continue;
             }
 
@@ -82,7 +83,7 @@ Future<void> main() async {
 
       try {
         box.put(key, chord);
-        print('Stored chord: ID=$iD, ChordName=$chordName NextChords=$nextChords, NextChordNames=$nextChordNames, Modulates=$modulates, KeyShifts=$keyShifts');
+        print('Stored chord: key=$key, ID=$iD, ChordName=$chordName NextChords=$nextChords, NextChordNames=$nextChordNames, Modulates=$modulates, KeyShifts=$keyShifts');
       } catch(e) {
         print('Error storing chord: $e');
       }
