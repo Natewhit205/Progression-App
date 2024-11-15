@@ -1,10 +1,10 @@
 import 'dart:math';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_music_application/chord.dart';
 import 'package:flutter_music_application/keys.dart';
 import 'package:flutter_music_application/main.dart';
+import 'package:numberpicker/numberpicker.dart';
 
 class HarmonyScreen extends StatefulWidget {
   const HarmonyScreen({super.key});
@@ -22,12 +22,21 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
   bool saved = false;
   bool generated = false;
 
+  final double _minFont = 26;
+  final double _maxFont = 30;
+  final int _minLimit = 4;
+  final int _maxLimit = 20;
+
   Keys key = Keys();
 
   int selectedKey = 1;
   late List<int> selectedChord;
   String chordProgression = '';
-  int chordLimit = 8;
+  int chordLimit = 4;
+
+  double _calculateFontSize() {
+    return _maxFont - pow(_maxFont - _minFont, 2) / (_maxLimit - _minLimit);
+  }
 
   void generateProgression() {
     chordProgression = '';
@@ -109,8 +118,8 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
                   padding: const EdgeInsets.all(35.0),
                   child: Text(
                     chordProgression,
-                    style: const TextStyle(
-                      fontSize: 30.0,
+                    style: TextStyle(
+                      fontSize: _calculateFontSize(),
                       fontWeight: FontWeight.w500,
                     ),
                     textAlign: TextAlign.center,
@@ -120,7 +129,7 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
                 ),
               ),
               Align(
-                alignment: const Alignment(0.0, 0.27),
+                alignment: const Alignment(0.0, 0.36),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -169,7 +178,7 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
                 ),
               ),
               Align(
-                alignment: const Alignment(0.0, 0.5),
+                alignment: const Alignment(0.0, 0.7),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -182,8 +191,12 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
                       onSelected: (index) {
                         if (selectedKey != index) {
                           setState(() {
+                            int j = 0;
                             selectedKey = index;
-                            selectedChord = key.getChords(selectedKey).first.value;
+                            while (key.getChords(selectedKey)[j].enabled == false) {
+                              j++;
+                            }
+                            selectedChord = key.getChords(selectedKey)[j].value;
                           });
                         }
                       },
@@ -201,11 +214,30 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
                       },
                       label: const Text('Starting Chord'),
                     ),
+                    Stack(
+                      children: [
+                        const Text(
+                          '',
+                          textAlign: TextAlign.left,
+                          overflow: TextOverflow.clip,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        NumberPicker(
+                          value: chordLimit,
+                          minValue: _minLimit,
+                          maxValue: _maxLimit,
+                          onChanged: (value) => setState(() => chordLimit = value),
+                          itemWidth: 40,
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ),
               Align(
-                alignment: const Alignment(0.0, 0.8),
+                alignment: const Alignment(0.0, 0.9),
                 child: MaterialButton(
                   onPressed: generateProgression,
                   color: const Color.fromARGB(255, 42, 85, 124),

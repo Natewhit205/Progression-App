@@ -4,6 +4,7 @@ import 'chord.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'screens/home_screen.dart';
+import 'permissions.dart';
 
 late Box<Chord> box;
 
@@ -83,13 +84,13 @@ Future<void> main() async {
 
       try {
         box.put(key, chord);
-        print('Stored chord: key=$key, ID=$iD, ChordName=$chordName NextChords=$nextChords, NextChordNames=$nextChordNames, Modulates=$modulates, KeyShifts=$keyShifts');
       } catch(e) {
         print('Error storing chord: $e');
       }
     }
-  
   }
+
+  requestPermissions();
 
   runApp (
     const MaterialApp(
@@ -97,102 +98,4 @@ Future<void> main() async {
       debugShowCheckedModeBanner: false,
     ),
   );
-}
-
-class MyApp extends StatefulWidget {
-  const MyApp({super.key});
-
-  @override
-  State<StatefulWidget> createState() {
-    return MyFlutterState();
-  }
-}
-
-class MyFlutterState extends State<MyApp> {
-  late int iD;
-  late int nextID;
-  String description = '';
-
-  @override
-  void initState() {
-    super.initState();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      /*setState(() {
-        Node? current = box.get(1);
-        if (current != null) {
-          iD = current.iD;
-          nextID = current.nextID;
-          description = current.description;
-        }
-      });*/
-    });
-  }
-
-  void buttonHandler() {
-    /*setState(() {
-      Node? nextNode = box.get(nextID);
-      if (nextNode != null) {
-        iD = nextNode.iD;
-        nextID = nextNode.nextID;
-        description = nextNode.description;
-      }
-    });*/
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xff3e87c5),
-      body: Align(
-        alignment: Alignment.center,
-        child: SizedBox(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          child: Stack(
-            alignment: Alignment.topLeft,
-            children: [
-              Align(
-                alignment: const Alignment(0.0, 0.0),
-                child: MaterialButton(
-                  onPressed: () { buttonHandler(); },
-                  color: const Color(0xff3a21d9),
-                  elevation: 0,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.zero,
-                  ),
-                  textColor: const Color(0xfffffdfd),
-                  height: 40,
-                  minWidth: 140,
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  child: const Text(
-                    "Text Button",
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                      fontStyle: FontStyle.normal,
-                    ),
-                  ),
-                ),
-              ),
-              Align(
-                alignment: const Alignment(0.0, -0.7),
-                child: Text(
-                  description,
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.clip,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontStyle: FontStyle.normal,
-                    fontSize: 34,
-                    color: Color(0xffffffff),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
 }

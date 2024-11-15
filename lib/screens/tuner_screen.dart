@@ -5,6 +5,8 @@ import 'package:flutter_audio_capture/flutter_audio_capture.dart';
 import 'package:pitch_detector_dart/pitch_detector.dart';
 import 'package:pitchupdart/instrument_type.dart';
 import 'package:pitchupdart/pitch_handler.dart';
+import '../permissions.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 
 class TunerScreen extends StatefulWidget {
@@ -28,10 +30,18 @@ class TunerScreenState extends State<TunerScreen> with AutomaticKeepAliveClientM
   String _status = "Press Start";
 
   Future<void> _startRecording() async {
-    await _audioRecorder.start(listener, onError, sampleRate: 44100, bufferSize: 3000);
-    setState(() {
-      _status = "Recording";
-    });
+    if (await Permission.microphone.isGranted) {
+      try {
+        await _audioRecorder.start(listener, onError, sampleRate: 44100, bufferSize: 3000);
+        setState(() {
+          _status = "Recording";
+        });
+      } catch (e) {
+        print('Recording Error: $e');
+      }
+    } else {
+      requestPermissions();
+    }
   }
 
   Future<void> _stopRecording() async {
