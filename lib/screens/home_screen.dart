@@ -23,16 +23,16 @@ class HomeScreenState extends State<HomeScreen> {
     const TunerScreen(),
   ];
 
-  final List<BottomNavigationBarItem> _bottomNavigationBarItems = [
-    const BottomNavigationBarItem(
+  final List<BottomNavigationBarItem> _bottomNavigationBarItems = const [
+    BottomNavigationBarItem(
       icon: Icon(Icons.timer),
       label: 'BPM Clicker',
     ),
-    const BottomNavigationBarItem(
+    BottomNavigationBarItem(
       icon: Icon(Icons.home),
       label: 'Home',
     ),
-    const BottomNavigationBarItem(
+    BottomNavigationBarItem(
       icon: Icon(Icons.audiotrack_outlined),
       label: 'Tuner',
     ),
@@ -48,11 +48,6 @@ class HomeScreenState extends State<HomeScreen> {
       duration: const Duration(milliseconds: 750),
       curve: Curves.ease,
     );
-  }
-
-  @override
-  void initState() {
-    super.initState();
   }
 
   @override

@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:hive/hive.dart';
 part 'chord.g.dart';
 

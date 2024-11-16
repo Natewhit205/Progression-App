@@ -1,10 +1,11 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_music_application/chord.dart';
 import 'package:flutter_music_application/keys.dart';
 import 'package:flutter_music_application/main.dart';
 import 'package:numberpicker/numberpicker.dart';
+import 'package:flutter_music_application/widgets/dropdown.dart';
+import 'package:flutter_music_application/widgets/button.dart';
 
 class HarmonyScreen extends StatefulWidget {
   const HarmonyScreen({super.key});
@@ -19,35 +20,33 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
   @override
   bool get wantKeepAlive => true;
 
-  bool saved = false;
-  bool generated = false;
+  bool _saved = false;
+  bool _generated = false;
 
-  final double _minFont = 26;
+  final double _minFont = 22;
   final double _maxFont = 30;
   final int _minLimit = 4;
-  final int _maxLimit = 20;
+  final int _maxLimit = 32;
+  final Keys _key = Keys();
 
-  Keys key = Keys();
+  late int _selectedKey;
+  late List<int> _selectedChord;
+  String _chordProgression = '';
+  late int _chordLimit;
+  late int _lastChordLimit;
 
-  int selectedKey = 1;
-  late List<int> selectedChord;
-  String chordProgression = '';
-  int chordLimit = 4;
+  double _calculateFontSize() => _maxFont - (_lastChordLimit - _minLimit) * (_maxFont - _minFont) / (_maxLimit - _minLimit);
+  bool _checkPlayStatus() => _generated;
+  bool _checkSaveStatus() => _generated && !_saved;
 
-  double _calculateFontSize() {
-    return _maxFont - pow(_maxFont - _minFont, 2) / (_maxLimit - _minLimit);
-  }
+  void _generateProgression() {
+    _lastChordLimit = _chordLimit;
+    _chordProgression = '';
+    int limit = _chordLimit;
+    int currentKey = _selectedKey;
+    int currentChordId = _selectedChord[1];
 
-  void generateProgression() {
-    chordProgression = '';
-    int limit = chordLimit;
-    int currentKey = selectedKey;
-    int currentChordId = selectedChord[1];
-
-    setState(() {
-      chordProgression += key.getChords(selectedKey)[currentChordId - 1].label;
-    });
-
+    _chordProgression += _key.getChords(_selectedKey)[currentChordId - 1].label;
     limit--;
 
     while (limit > 0) {
@@ -62,42 +61,29 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
       } else {
         newChordPair = '[$currentKey, ${nextChords[index]}]';
       }
+
       List<String> keyChord = newChordPair.substring(1, newChordPair.length - 1).split(',');
       currentKey = int.parse(keyChord[0]);
       currentChordId = int.parse(keyChord[1]);
 
       String? chordName = box.get(newChordPair)!.chordName;
 
-      setState(() {
-        chordProgression += ' | $chordName';
-      });
-
+      _chordProgression += ' | $chordName';
       limit--;
     }
 
     setState(() {
-      generated = true;
+      _generated = true;
     });
-  }
-
-  bool _checkPlayStatus() {
-    if (generated) {
-      return true;
-    }
-    return false;
-  }
-
-  bool _checkSaveStatus() {
-    if (generated && saved == false) {
-      return true;
-    }
-    return false;
   }
 
   @override
   void initState() {
     super.initState();
-    selectedChord = key.getChords(selectedKey).first.value;
+    _selectedKey = 1;
+    _selectedChord = _key.getChords(_selectedKey).first.value;
+    _chordLimit = _minLimit;
+    _lastChordLimit = _minLimit;
   }
 
   @override
@@ -117,7 +103,7 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
                 child: Padding(
                   padding: const EdgeInsets.all(35.0),
                   child: Text(
-                    chordProgression,
+                    _chordProgression,
                     style: TextStyle(
                       fontSize: _calculateFontSize(),
                       fontWeight: FontWeight.w500,
@@ -134,17 +120,8 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    MaterialButton(
+                    CustomMaterialButton(
                       onPressed: _checkPlayStatus() ? () {} : null,
-                      color: const Color.fromARGB(255, 42, 85, 124),
-                      elevation: 0,
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                      ),
-                      textColor: const Color(0xfffffdfd),
-                      height: 40,
-                      minWidth: 110,
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                       child: const Text(
                         'Play',
                         style: TextStyle(
@@ -154,17 +131,8 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
                         ),
                       ),
                     ),
-                    MaterialButton(
+                    CustomMaterialButton(
                       onPressed: _checkSaveStatus() ? () {} : null,
-                      color: const Color.fromARGB(255, 42, 85, 124),
-                      elevation: 0,
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                      ),
-                      textColor: const Color(0xfffffdfd),
-                      height: 40,
-                      minWidth: 110,
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                       child: const Text(
                         'Save',
                         style: TextStyle(
@@ -183,55 +151,35 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    DropdownMenu(
-                      dropdownMenuEntries: key.keys,
-                      initialSelection: 1,
-                      enableSearch: false,
-                      enableFilter: false,
+                    MusicDropdownMenu(
+                      dropdownMenuEntries: _key.keys,
+                      initialSelection: _selectedKey,
+                      label: const Text('Starting Key'),
                       onSelected: (index) {
-                        if (selectedKey != index) {
+                        if (_selectedKey != index) {
                           setState(() {
                             int j = 0;
-                            selectedKey = index;
-                            while (key.getChords(selectedKey)[j].enabled == false) {
+                            _selectedKey = index;
+                            while (_key.getChords(_selectedKey)[j].enabled == false) {
                               j++;
                             }
-                            selectedChord = key.getChords(selectedKey)[j].value;
+                            _selectedChord = _key.getChords(_selectedKey)[j].value;
                           });
                         }
                       },
-                      label: const Text('Starting Key'),
                     ),
-                    DropdownMenu(
-                      dropdownMenuEntries: key.getChords(selectedKey),
-                      initialSelection: selectedChord,
-                      enableSearch: false,
-                      enableFilter: false,
-                      onSelected: (index) {
-                        setState(() {
-                          selectedChord = index;
-                        });
-                      },
+                    MusicDropdownMenu(
+                      dropdownMenuEntries: _key.getChords(_selectedKey),
+                      initialSelection: _selectedChord,
                       label: const Text('Starting Chord'),
+                      onSelected: (index) => setState(() { _selectedChord = index; }),
                     ),
-                    Stack(
-                      children: [
-                        const Text(
-                          '',
-                          textAlign: TextAlign.left,
-                          overflow: TextOverflow.clip,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        NumberPicker(
-                          value: chordLimit,
-                          minValue: _minLimit,
-                          maxValue: _maxLimit,
-                          onChanged: (value) => setState(() => chordLimit = value),
-                          itemWidth: 40,
-                        ),
-                      ],
+                    NumberPicker(
+                      value: _chordLimit,
+                      minValue: _minLimit,
+                      maxValue: _maxLimit,
+                      onChanged: (value) => setState(() => _chordLimit = value),
+                      itemWidth: 40,
                     ),
                   ],
                 ),
@@ -239,7 +187,7 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
               Align(
                 alignment: const Alignment(0.0, 0.9),
                 child: MaterialButton(
-                  onPressed: generateProgression,
+                  onPressed: _generateProgression,
                   color: const Color.fromARGB(255, 42, 85, 124),
                   elevation: 0,
                   shape: const RoundedRectangleBorder(
