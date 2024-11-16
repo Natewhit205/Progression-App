@@ -84,35 +84,7 @@ flutter:
   assets:
     - assets/icons/
     - assets/chord_maps/
-
-    - assets/chord_imgs/F/1.png
-    - assets/chord_imgs/F/2.png
-    - assets/chord_imgs/F/4.png
-    - assets/chord_imgs/F/5.png
-    - assets/chord_imgs/F/6.png
-
-    - assets/chord_imgs/Cm/1.png
-    - assets/chord_imgs/Cm/2.png
-    - assets/chord_imgs/Cm/3.png
-    - assets/chord_imgs/Cm/4.png
-    - assets/chord_imgs/Cm/5.png
-    - assets/chord_imgs/Cm/6.png
-    - assets/chord_imgs/Cm/7.png
-
-    - assets/chord_imgs/Dm/1.png
-    - assets/chord_imgs/Dm/3.png
-    - assets/chord_imgs/Dm/4.png
-    - assets/chord_imgs/Dm/6.png
-    - assets/chord_imgs/Dm/7.png
-
-    - assets/chord_imgs/F#m/1.png
-    - assets/chord_imgs/F#m/3.png
-    - assets/chord_imgs/F#m/4.png
-    - assets/chord_imgs/F#m/5.png
-    - assets/chord_imgs/F#m/6.png
-    - assets/chord_imgs/F#m/7.png
-
-    - assets/chord_imgs/E/5.png
+    - assets/chord_imgs/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
