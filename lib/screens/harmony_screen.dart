@@ -23,6 +23,8 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
   bool _saved = false;
   bool _generated = false;
 
+  String _image = '';
+
   final double _minFont = 22;
   final double _maxFont = 30;
   final int _minLimit = 4;
@@ -38,6 +40,8 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
   double _calculateFontSize() => _maxFont - (_lastChordLimit - _minLimit) * (_maxFont - _minFont) / (_maxLimit - _minLimit);
   bool _checkPlayStatus() => _generated;
   bool _checkSaveStatus() => _generated && !_saved;
+
+  String _getImage() => 'assets/chord_maps/img/$_selectedKey/${_selectedChord[1]}.png';
 
   void _generateProgression() {
     _lastChordLimit = _chordLimit;
@@ -84,6 +88,7 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
     _selectedChord = _key.getChords(_selectedKey).first.value;
     _chordLimit = _minLimit;
     _lastChordLimit = _minLimit;
+    _image = 'assets/chord_maps/img/$_selectedKey/${_selectedChord[1]}.png';
   }
 
   @override
@@ -98,6 +103,23 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
           child: Stack(
             alignment: Alignment.topLeft,
             children: [
+              Align(
+                alignment: const Alignment(0.0, -1),
+                child: Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.black, width: 2.0),
+                      borderRadius: BorderRadius.circular(8.0)
+                    ),
+                    child: _image.isNotEmpty
+                      ? Image.asset(
+                        _getImage(),
+                        width: MediaQuery.of(context).size.width,
+                    ) : const SizedBox.shrink(),
+                  )
+                ),
+              ),
               Align(
                 alignment: const Alignment(0.0, 0.0),
                 child: Padding(

@@ -91,6 +91,20 @@ flutter:
     - assets/chord_maps/a_maj.csv
     - assets/chord_maps/b_maj.csv
 
+    - assets/chord_maps/img/1/1.png
+    - assets/chord_maps/img/1/2.png
+    - assets/chord_maps/img/1/4.png
+    - assets/chord_maps/img/1/5.png
+    - assets/chord_maps/img/1/6.png
+
+    - assets/chord_maps/img/2/1.png
+    - assets/chord_maps/img/2/2.png
+    - assets/chord_maps/img/2/3.png
+    - assets/chord_maps/img/2/4.png
+    - assets/chord_maps/img/2/5.png
+    - assets/chord_maps/img/2/6.png
+    - assets/chord_maps/img/2/7.png
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
