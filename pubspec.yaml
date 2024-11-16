@@ -83,27 +83,36 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/icons/
-    - assets/chord_maps/f_maj.csv
-    - assets/chord_maps/c_min.csv
-    - assets/chord_maps/d_min.csv
-    - assets/chord_maps/f#_min.csv
-    - assets/chord_maps/e_maj.csv
-    - assets/chord_maps/a_maj.csv
-    - assets/chord_maps/b_maj.csv
+    - assets/chord_maps/
 
-    - assets/chord_maps/img/1/1.png
-    - assets/chord_maps/img/1/2.png
-    - assets/chord_maps/img/1/4.png
-    - assets/chord_maps/img/1/5.png
-    - assets/chord_maps/img/1/6.png
+    - assets/chord_imgs/F/1.png
+    - assets/chord_imgs/F/2.png
+    - assets/chord_imgs/F/4.png
+    - assets/chord_imgs/F/5.png
+    - assets/chord_imgs/F/6.png
 
-    - assets/chord_maps/img/2/1.png
-    - assets/chord_maps/img/2/2.png
-    - assets/chord_maps/img/2/3.png
-    - assets/chord_maps/img/2/4.png
-    - assets/chord_maps/img/2/5.png
-    - assets/chord_maps/img/2/6.png
-    - assets/chord_maps/img/2/7.png
+    - assets/chord_imgs/Cm/1.png
+    - assets/chord_imgs/Cm/2.png
+    - assets/chord_imgs/Cm/3.png
+    - assets/chord_imgs/Cm/4.png
+    - assets/chord_imgs/Cm/5.png
+    - assets/chord_imgs/Cm/6.png
+    - assets/chord_imgs/Cm/7.png
+
+    - assets/chord_imgs/Dm/1.png
+    - assets/chord_imgs/Dm/3.png
+    - assets/chord_imgs/Dm/4.png
+    - assets/chord_imgs/Dm/6.png
+    - assets/chord_imgs/Dm/7.png
+
+    - assets/chord_imgs/F#m/1.png
+    - assets/chord_imgs/F#m/3.png
+    - assets/chord_imgs/F#m/4.png
+    - assets/chord_imgs/F#m/5.png
+    - assets/chord_imgs/F#m/6.png
+    - assets/chord_imgs/F#m/7.png
+
+    - assets/chord_imgs/E/5.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

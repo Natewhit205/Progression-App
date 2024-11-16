@@ -1,7 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_music_application/chord.dart';
-import 'package:flutter_music_application/keys.dart';
 import 'package:flutter_music_application/main.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:flutter_music_application/widgets/dropdown.dart';
@@ -29,7 +28,6 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
   final double _maxFont = 30;
   final int _minLimit = 4;
   final int _maxLimit = 32;
-  final Keys _key = Keys();
 
   late int _selectedKey;
   late List<int> _selectedChord;
@@ -50,7 +48,7 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
     int currentKey = _selectedKey;
     int currentChordId = _selectedChord[1];
 
-    _chordProgression += _key.getChords(_selectedKey)[currentChordId - 1].label;
+    _chordProgression += keyValues.getChords(_selectedKey)[currentChordId - 1].label;
     limit--;
 
     while (limit > 0) {
@@ -85,10 +83,10 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
   void initState() {
     super.initState();
     _selectedKey = 1;
-    _selectedChord = _key.getChords(_selectedKey).first.value;
+    _selectedChord = keyValues.getChords(_selectedKey).first.value;
     _chordLimit = _minLimit;
     _lastChordLimit = _minLimit;
-    _image = 'assets/chord_maps/img/$_selectedKey/${_selectedChord[1]}.png';
+    _image = 'assets/chord_imgs/${keyValues.chords[_selectedKey - 1].first.label}/${_selectedChord[1]}.png';
   }
 
   @override
@@ -174,7 +172,7 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     MusicDropdownMenu(
-                      dropdownMenuEntries: _key.keys,
+                      dropdownMenuEntries: keyValues.keys,
                       initialSelection: _selectedKey,
                       label: const Text('Starting Key'),
                       onSelected: (index) {
@@ -182,16 +180,16 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
                           setState(() {
                             int j = 0;
                             _selectedKey = index;
-                            while (_key.getChords(_selectedKey)[j].enabled == false) {
+                            while (keyValues.getChords(_selectedKey)[j].enabled == false) {
                               j++;
                             }
-                            _selectedChord = _key.getChords(_selectedKey)[j].value;
+                            _selectedChord = keyValues.getChords(_selectedKey)[j].value;
                           });
                         }
                       },
                     ),
                     MusicDropdownMenu(
-                      dropdownMenuEntries: _key.getChords(_selectedKey),
+                      dropdownMenuEntries: keyValues.getChords(_selectedKey),
                       initialSelection: _selectedChord,
                       label: const Text('Starting Chord'),
                       onSelected: (index) => setState(() { _selectedChord = index; }),

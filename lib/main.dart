@@ -5,8 +5,12 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'screens/home_screen.dart';
 import 'permissions.dart';
+import 'keys.dart';
 
 late Box<Chord> box;
+final Keys keyValues = Keys();
+
+bool checkEnabledStatus(List<int> nextChords, Map<int, int> keyShifts) => nextChords.isNotEmpty || keyShifts.isNotEmpty;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,8 +31,24 @@ Future<void> main() async {
   for (int k = 1; k < files.length + 1; k++) {
     String csv = files[k - 1];
     String fileData = await rootBundle.loadString(csv);
+    String name;
 
     List<String> rows = fileData.split('\n');
+
+    String keyChordName = rows[0].split(',')[1];
+    if (keyChordName.length == 1) {
+      name = keyChordName[0];
+    } else {
+      name = keyChordName.substring(0, keyChordName.length - 1);
+    }
+
+    if (keyChordName.endsWith('m')) {
+      name += ' Minor';
+    } else {
+      name += ' Major';
+    }
+    keyValues.addKeys(k, name);
+    keyValues.chords.add([]);
 
     for (int i = 0; i < rows.length; i++) {
       String row = rows[i].trim(); //remove trailing whitespace or new lines
@@ -81,6 +101,7 @@ Future<void> main() async {
     
       Chord chord = Chord(iD, chordName, nextChords, nextChordNames, modulates, keyShifts);
       String key = '[$k, ${itemInRow[0]}]';
+      keyValues.addChords(k, iD, chordName, checkEnabledStatus(nextChords, keyShifts));
 
       try {
         box.put(key, chord);
