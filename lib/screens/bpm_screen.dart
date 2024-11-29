@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_music_application/colors.dart';
+import 'package:flutter_music_application/styles.dart';
 
 class BpmScreen extends StatefulWidget {
   const BpmScreen({super.key});
@@ -60,18 +61,13 @@ class BpmScreenState extends State<BpmScreen> with AutomaticKeepAliveClientMixin
           child: Stack(
             alignment: Alignment.topLeft,
             children: [
-              const Align(
-                alignment: Alignment(0.0, -0.85),
+              Align(
+                alignment: const Alignment(0.0, -0.85),
                 child: Text(
                   'BPM Clicker',
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.clip,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontStyle: FontStyle.normal,
-                    fontSize: 36,
-                    color: Colors.black,
-                  ),
+                  style: AppTextStyle.heading(context),
                 ),
               ),
               Align(
@@ -80,12 +76,7 @@ class BpmScreenState extends State<BpmScreen> with AutomaticKeepAliveClientMixin
                   '$_beatsPerMinute BPM',
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.clip,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontStyle: FontStyle.normal,
-                    fontSize: 34,
-                    color: Colors.grey,
-                  ),
+                  style: AppTextStyle.setSize(context, color: Colors.grey, fontSize: 34),
                 ),
               ),
               Align(
@@ -96,17 +87,13 @@ class BpmScreenState extends State<BpmScreen> with AutomaticKeepAliveClientMixin
                   shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(20.0)),
                   ),
-                  textColor: const Color(0xfffffdfd),
+                  textColor: Colors.white,
                   height: 10,
                   minWidth: 120,
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  child: const Text(
+                  child: Text(
                     'Tap',
-                    style: TextStyle(
-                      fontSize: 26,
-                      fontWeight: FontWeight.w400,
-                      fontStyle: FontStyle.normal,
-                    ),
+                    style: AppTextStyle.large(context),
                   ),
                 ),
               ),
@@ -127,13 +114,9 @@ class BpmScreenState extends State<BpmScreen> with AutomaticKeepAliveClientMixin
                   height: 8,
                   minWidth: 100,
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  child: const Text(
+                  child: Text(
                     'Reset',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w400,
-                      fontStyle: FontStyle.normal,
-                    ),
+                    style: AppTextStyle.medium(context),
                   ),
                 ),
               ),

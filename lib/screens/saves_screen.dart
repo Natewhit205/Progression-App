@@ -3,6 +3,8 @@ import 'package:fading_edge_scrollview/fading_edge_scrollview.dart';
 import 'package:flutter_music_application/colors.dart';
 import 'package:flutter_music_application/main.dart';
 import 'package:flutter_music_application/saved_chord_progression.dart';
+import 'package:flutter_music_application/styles.dart';
+import 'package:flutter_music_application/widgets/button.dart';
 
 class SavesScreen extends StatefulWidget {
   const SavesScreen({super.key});
@@ -55,22 +57,22 @@ class SavesScreenState extends State<SavesScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  '$key .  ',
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                Flexible(
-                  child: Text(
-                    displayedProgression,
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 2 / 3,
+                  height: 60,
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Flexible(
+                      child: Text(
+                        displayedProgression,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        overflow: TextOverflow.clip,
+                        softWrap: true,
+                      ),
                     ),
-                    overflow: TextOverflow.clip,
-                    softWrap: true,
                   ),
                 ),
                 Column(
@@ -80,12 +82,12 @@ class SavesScreenState extends State<SavesScreen> {
                         IconButton(
                           onPressed: _playChordProgression,
                           icon: const Icon(Icons.play_arrow),
-                          color: const Color.fromARGB(255, 42, 85, 124),
+                          color: AppTheme.primary,
                         ),
                         IconButton(
                           onPressed: () {_removeSave(key);},
                           icon: const Icon(Icons.delete),
-                          color: const Color.fromARGB(255, 209, 52, 41),
+                          color: AppTheme.delete,
                         ),
                       ],
                     ),
@@ -149,23 +151,12 @@ class SavesScreenState extends State<SavesScreen> {
         ),
       ),
       bottomNavigationBar: saves.isNotEmpty ? BottomAppBar(
-        child: MaterialButton(
+        child: SimpleActionButton(
           onPressed: _clearSaves,
           color: AppTheme.primaryAccent,
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(10.0)),
-          ),
-          textColor: Colors.white,
-          height: 45,
-          minWidth: 130,
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          child: const Text(
+          child: Text(
             'Clear Saves',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w400,
-              fontStyle: FontStyle.normal,
-            ),
+            style: AppTextStyle.standard(context),
           ),
         ),
       ) : null,

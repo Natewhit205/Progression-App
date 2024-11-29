@@ -2,6 +2,7 @@ import 'dart:typed_data';
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_music_application/colors.dart';
+import 'package:flutter_music_application/styles.dart';
 import 'package:flutter_music_application/widgets/start_stop_button.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter_music_application/permissions.dart';
@@ -102,18 +103,13 @@ class TunerScreenState extends State<TunerScreen> with AutomaticKeepAliveClientM
           child: Stack(
             alignment: Alignment.topLeft,
             children: [
-              const Align(
-                alignment: Alignment(0.0, -0.85),
+              Align(
+                alignment: const Alignment(0.0, -0.85),
                 child: Text(
                   'Tuner',
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.clip,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontStyle: FontStyle.normal,
-                    fontSize: 36,
-                    color: Colors.black,
-                  ),
+                  style: AppTextStyle.heading(context, color: Colors.black),
                 ),
               ),
               Align(
@@ -122,12 +118,7 @@ class TunerScreenState extends State<TunerScreen> with AutomaticKeepAliveClientM
                   _note,
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.clip,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontStyle: FontStyle.normal,
-                    fontSize: 96,
-                    color: AppTheme.primaryAccent,
-                  ),
+                  style: AppTextStyle.setSize(context, color: AppTheme.primaryAccent, fontSize: 96),
                 ),
               ),
               Align(
@@ -135,24 +126,16 @@ class TunerScreenState extends State<TunerScreen> with AutomaticKeepAliveClientM
                 child: !_listening ? StartStopButton(
                   onPressed: _startRecording,
                   color: AppTheme.secondary,
-                  child: const Text(
+                  child: Text(
                     'Start',
-                    style: TextStyle(
-                      fontSize: 26,
-                      fontWeight: FontWeight.w400,
-                      fontStyle: FontStyle.normal,
-                    ),
+                    style: AppTextStyle.large(context),
                   ),
                 ) : StartStopButton(
                   onPressed: _stopRecording,
                   color: AppTheme.primaryAccent,
-                  child: const Text(
+                  child: Text(
                     'Stop',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w400,
-                      fontStyle: FontStyle.normal,
-                    ),
+                    style: AppTextStyle.large(context),
                   ),
                 ),
               ),
@@ -162,12 +145,7 @@ class TunerScreenState extends State<TunerScreen> with AutomaticKeepAliveClientM
                   _status,
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.clip,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontStyle: FontStyle.normal,
-                    fontSize: 24,
-                    color: Colors.grey,
-                  ),
+                  style: AppTextStyle.emphasised(context, color: Colors.grey),
                 ),
               ),
             ],

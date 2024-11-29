@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter_music_application/styles.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:flutter_music_application/main.dart';
 import 'package:flutter_music_application/chord.dart';
@@ -174,31 +175,20 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
                   children: [
                     CustomMaterialButton(
                       onPressed: _checkPlayStatus() ? _playChordProgression : null,
-                      child: const Text(
+                      child: Text(
                         'Play',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          fontStyle: FontStyle.normal,
-                        ),
+                        style: AppTextStyle.standard(context),
                       ),
                     ),
                     !_saved ? CustomMaterialButton(
                       onPressed: _checkSaveStatus() ? _saveChordProgression : null,
-                      child: const Text(
+                      child: Text(
                         'Save',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          fontStyle: FontStyle.normal,
-                        ),
+                        style: AppTextStyle.standard(context),
                       ),
-                    ) : const Text(
+                    ) : Text(
                       'Saved!',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
-                      ),
+                      style: AppTextStyle.bold(context, color: Colors.black),
                     ),
                   ],
                 ),
@@ -237,6 +227,8 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
                       minValue: _minLimit,
                       maxValue: _maxLimit,
                       onChanged: (value) => setState(() => _chordLimit = value),
+                      textStyle: AppTextStyle.small(context, color: Colors.black),
+                      selectedTextStyle: AppTextStyle.emphasised(context, color: Colors.black),
                       itemWidth: 40,
                     ),
                   ],
@@ -248,42 +240,20 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    MaterialButton(
+                    SimpleActionButton(
                       onPressed: _generateProgression,
                       color: AppTheme.secondary,
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                      ),
-                      textColor: Colors.white,
-                      height: 45,
-                      minWidth: 130,
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                      child: const Text(
+                      child: Text(
                         'Start',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          fontStyle: FontStyle.normal,
-                        ),
+                        style: AppTextStyle.standard(context),
                       ),
                     ),
-                    MaterialButton(
+                    SimpleActionButton(
                       onPressed: _viewSaves,
                       color: AppTheme.primaryAccent,
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                      ),
-                      textColor: Colors.white,
-                      height: 45,
-                      minWidth: 130,
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                      child: const Text(
+                      child: Text(
                         'View Saves',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          fontStyle: FontStyle.normal,
-                        ),
+                        style: AppTextStyle.standard(context),
                       ),
                     ),
                   ],
