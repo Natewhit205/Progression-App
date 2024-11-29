@@ -1,26 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_music_application/colors.dart';
 
-class TunerButton extends StatelessWidget {
+class StartStopButton extends StatelessWidget {
   final void Function()? onPressed;
-  final double? height;
-  final double? minWidth;
   final Widget? child;
   final Color? color;
 
   // Constant Values
+  final double? height = 10;
+  final double? minWidth = 120;
   final ShapeBorder? shape = const RoundedRectangleBorder(
     borderRadius: BorderRadius.all(Radius.circular(20.0)),
   );
   final Color? textColor = Colors.white;
   final EdgeInsetsGeometry? padding = const EdgeInsets.symmetric(horizontal: 16, vertical: 8);
 
-  const TunerButton({
+  const StartStopButton({
     super.key,
     required this.onPressed,
     required this.color,
-    required this.height,
-    required this.minWidth,
     required this.child
   });
 

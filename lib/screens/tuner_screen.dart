@@ -2,7 +2,7 @@ import 'dart:typed_data';
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_music_application/colors.dart';
-import 'package:flutter_music_application/widgets/tuner_button.dart';
+import 'package:flutter_music_application/widgets/start_stop_button.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter_music_application/permissions.dart';
 import 'package:flutter_audio_capture/flutter_audio_capture.dart';
@@ -132,11 +132,9 @@ class TunerScreenState extends State<TunerScreen> with AutomaticKeepAliveClientM
               ),
               Align(
                 alignment: const Alignment(0.0, 0.5),
-                child: !_listening ? TunerButton(
+                child: !_listening ? StartStopButton(
                   onPressed: _startRecording,
                   color: AppTheme.secondary,
-                  height: 10,
-                  minWidth: 120,
                   child: const Text(
                     'Start',
                     style: TextStyle(
@@ -145,11 +143,9 @@ class TunerScreenState extends State<TunerScreen> with AutomaticKeepAliveClientM
                       fontStyle: FontStyle.normal,
                     ),
                   ),
-                ) : TunerButton(
+                ) : StartStopButton(
                   onPressed: _stopRecording,
                   color: AppTheme.primaryAccent,
-                  height: 8,
-                  minWidth: 90,
                   child: const Text(
                     'Stop',
                     style: TextStyle(
