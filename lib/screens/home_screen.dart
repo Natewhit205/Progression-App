@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'bpm_screen.dart';
-import 'tuner_screen.dart';
-import 'harmony_screen.dart';
+import 'package:flutter_music_application/screens/bpm_screen.dart';
+import 'package:flutter_music_application/screens/tuner_screen.dart';
+import 'package:flutter_music_application/screens/harmony_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -60,12 +60,8 @@ class HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Music App Name',
-          style: TextStyle(
-            color: Colors.white
-          ),
-        ),
+        foregroundColor: Colors.white,
+        title: const Text('Music App Name'),
         backgroundColor: const Color.fromARGB(255, 42, 85, 124),
       ),
       body: PageView(

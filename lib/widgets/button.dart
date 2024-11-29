@@ -6,7 +6,6 @@ class CustomMaterialButton extends StatelessWidget {
 
   // Constant Values
   final Color? color = const Color.fromARGB(255, 42, 85, 124);
-  final double elevation = 0;
   final ShapeBorder? shape = const RoundedRectangleBorder(
     borderRadius: BorderRadius.all(Radius.circular(10.0)),
   );
@@ -26,7 +25,6 @@ class CustomMaterialButton extends StatelessWidget {
     return MaterialButton(
       onPressed: onPressed,
       color: color,
-      elevation: elevation,
       shape: shape,
       textColor: textColor,
       height: height,

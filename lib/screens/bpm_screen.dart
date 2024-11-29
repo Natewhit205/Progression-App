@@ -92,7 +92,6 @@ class BpmScreenState extends State<BpmScreen> with AutomaticKeepAliveClientMixin
                 child: MaterialButton(
                   onPressed: _setBpm,
                   color: const Color.fromARGB(255, 42, 85, 124),
-                  elevation: 0,
                   shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(20.0)),
                   ),
@@ -119,12 +118,11 @@ class BpmScreenState extends State<BpmScreen> with AutomaticKeepAliveClientMixin
                       _beatsPerMinute = 0;
                     });
                   },
-                  color: Colors.grey,
-                  elevation: 0,
+                  color: const Color.fromARGB(255, 204, 204, 204),
                   shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(20.0)),
                   ),
-                  textColor: const Color(0xfffffdfd),
+                  textColor: Colors.black,
                   height: 8,
                   minWidth: 100,
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),

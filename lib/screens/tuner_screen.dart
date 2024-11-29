@@ -1,12 +1,12 @@
 import 'dart:typed_data';
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:flutter_music_application/permissions.dart';
 import 'package:flutter_audio_capture/flutter_audio_capture.dart';
 import 'package:pitch_detector_dart/pitch_detector.dart';
 import 'package:pitchupdart/instrument_type.dart';
 import 'package:pitchupdart/pitch_handler.dart';
-import '../permissions.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 
 class TunerScreen extends StatefulWidget {
@@ -130,7 +130,6 @@ class TunerScreenState extends State<TunerScreen> with AutomaticKeepAliveClientM
                 child: MaterialButton(
                   onPressed: _startRecording,
                   color: const Color.fromARGB(255, 42, 85, 124),
-                  elevation: 0,
                   shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(20.0)),
                   ),
@@ -152,12 +151,11 @@ class TunerScreenState extends State<TunerScreen> with AutomaticKeepAliveClientM
                 alignment: const Alignment(0.0, 0.7),
                 child: MaterialButton(
                   onPressed: _stopRecording,
-                  color: Colors.grey,
-                  elevation: 0,
+                  color: const Color.fromARGB(255, 204, 204, 204),
                   shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(20.0)),
                   ),
-                  textColor: const Color(0xfffffdfd),
+                  textColor: Colors.black,
                   height: 8,
                   minWidth: 90,
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -181,7 +179,7 @@ class TunerScreenState extends State<TunerScreen> with AutomaticKeepAliveClientM
                     fontWeight: FontWeight.w400,
                     fontStyle: FontStyle.normal,
                     fontSize: 24,
-                    color: Colors.black38,
+                    color: Colors.grey,
                   ),
                 ),
               ),

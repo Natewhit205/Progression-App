@@ -1,8 +1,10 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:flutter_music_application/chord.dart';
-import 'package:flutter_music_application/main.dart';
 import 'package:numberpicker/numberpicker.dart';
+import 'package:flutter_music_application/main.dart';
+import 'package:flutter_music_application/chord.dart';
+import 'package:flutter_music_application/saved_chord_progression.dart';
+import 'package:flutter_music_application/screens/saves_screen.dart';
 import 'package:flutter_music_application/widgets/dropdown.dart';
 import 'package:flutter_music_application/widgets/button.dart';
 
@@ -31,7 +33,8 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
 
   late int _selectedKey;
   late List<int> _selectedChord;
-  String _chordProgression = '';
+  String _displayChordProgression = '';
+  List<String> _chordProgression = [];
   late int _chordLimit;
   late int _lastChordLimit;
 
@@ -39,16 +42,21 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
   bool _checkPlayStatus() => _generated;
   bool _checkSaveStatus() => _generated && !_saved;
 
-  String _getImage() => 'assets/chord_maps/img/$_selectedKey/${_selectedChord[1]}.png';
+  String _getImage() => 'assets/chord_imgs/${keyValues.chords[_selectedKey - 1].first.label}/${_selectedChord[1]}.png';
+
+  void _viewSaves() => Navigator.push(context, MaterialPageRoute(builder: (context) => const SavesScreen()));
 
   void _generateProgression() {
+    _saved = false;
     _lastChordLimit = _chordLimit;
-    _chordProgression = '';
+    _displayChordProgression = '';
+    _chordProgression = [];
     int limit = _chordLimit;
     int currentKey = _selectedKey;
     int currentChordId = _selectedChord[1];
 
-    _chordProgression += keyValues.getChords(_selectedKey)[currentChordId - 1].label;
+    _displayChordProgression += keyValues.getChords(_selectedKey)[currentChordId - 1].label;
+    _chordProgression.add(keyValues.getChords(_selectedKey)[currentChordId - 1].label);
     limit--;
 
     while (limit > 0) {
@@ -70,13 +78,27 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
 
       String? chordName = box.get(newChordPair)!.chordName;
 
-      _chordProgression += ' | $chordName';
+      _displayChordProgression += ' | $chordName';
+      _chordProgression.add(chordName);
       limit--;
     }
 
     setState(() {
       _generated = true;
     });
+  }
+
+  void _playChordProgression() {
+    
+  }
+
+  void _saveChordProgression() {
+    SavedChordProgression newSave = SavedChordProgression(_chordProgression);
+    int key = 1;
+    while (saves.containsKey(key)) { key++; }
+    saves.put(key, newSave);
+    setState(() => _saved = true);
+    print("Saved");
   }
 
   @override
@@ -108,13 +130,22 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
                   child: Container(
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.black, width: 2.0),
-                      borderRadius: BorderRadius.circular(8.0)
+                      borderRadius: BorderRadius.circular(8.0),
                     ),
-                    child: _image.isNotEmpty
-                      ? Image.asset(
-                        _getImage(),
-                        width: MediaQuery.of(context).size.width,
-                    ) : const SizedBox.shrink(),
+                    child: AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 350),
+                      transitionBuilder: (Widget child,
+                        Animation<double> animation) => ScaleTransition(
+                          scale: animation,
+                          child: child
+                        ),
+                      child: _image.isNotEmpty
+                        ? Image.asset(
+                          _getImage(),
+                          key: ValueKey('[$_selectedChord]'),
+                          width: MediaQuery.of(context).size.width,
+                        ) : const SizedBox.shrink(),
+                    ),
                   )
                 ),
               ),
@@ -123,7 +154,7 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
                 child: Padding(
                   padding: const EdgeInsets.all(35.0),
                   child: Text(
-                    _chordProgression,
+                    _displayChordProgression,
                     style: TextStyle(
                       fontSize: _calculateFontSize(),
                       fontWeight: FontWeight.w500,
@@ -141,7 +172,7 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     CustomMaterialButton(
-                      onPressed: _checkPlayStatus() ? () {} : null,
+                      onPressed: _checkPlayStatus() ? _playChordProgression : null,
                       child: const Text(
                         'Play',
                         style: TextStyle(
@@ -151,8 +182,8 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
                         ),
                       ),
                     ),
-                    CustomMaterialButton(
-                      onPressed: _checkSaveStatus() ? () {} : null,
+                    !_saved ? CustomMaterialButton(
+                      onPressed: _checkSaveStatus() ? _saveChordProgression : null,
                       child: const Text(
                         'Save',
                         style: TextStyle(
@@ -160,6 +191,12 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
                           fontWeight: FontWeight.w400,
                           fontStyle: FontStyle.normal,
                         ),
+                      ),
+                    ) : const Text(
+                      'Saved!',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ],
@@ -206,26 +243,50 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
               ),
               Align(
                 alignment: const Alignment(0.0, 0.9),
-                child: MaterialButton(
-                  onPressed: _generateProgression,
-                  color: const Color.fromARGB(255, 42, 85, 124),
-                  elevation: 0,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                  ),
-                  textColor: const Color(0xfffffdfd),
-                  height: 45,
-                  minWidth: 130,
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  child: const Text(
-                    'Start',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                      fontStyle: FontStyle.normal,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    MaterialButton(
+                      onPressed: _generateProgression,
+                      color: const Color.fromARGB(255, 42, 85, 124),
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                      ),
+                      textColor: const Color(0xfffffdfd),
+                      height: 45,
+                      minWidth: 130,
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      child: const Text(
+                        'Start',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                          fontStyle: FontStyle.normal,
+                        ),
+                      ),
                     ),
-                  ),
-                )
+                    MaterialButton(
+                      onPressed: _viewSaves,
+                      color: const Color.fromARGB(255, 204, 204, 204),
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                      ),
+                      textColor: Colors.black,
+                      height: 45,
+                      minWidth: 130,
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      child: const Text(
+                        'View Saves',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                          fontStyle: FontStyle.normal,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ]
           ),

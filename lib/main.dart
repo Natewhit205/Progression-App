@@ -1,23 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'chord.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'screens/home_screen.dart';
-import 'permissions.dart';
-import 'keys.dart';
+import 'package:flutter_music_application/chord.dart';
+import 'package:flutter_music_application/keys.dart';
+import 'package:flutter_music_application/permissions.dart';
+import 'package:flutter_music_application/saved_chord_progression.dart';
+import 'package:flutter_music_application/screens/home_screen.dart';
 
 late Box<Chord> box;
+late Box<SavedChordProgression> saves;
 final Keys keyValues = Keys();
 
 bool checkEnabledStatus(List<int> nextChords, Map<int, int> keyShifts) => nextChords.isNotEmpty || keyShifts.isNotEmpty;
 
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Hive.initFlutter();
-  Hive.registerAdapter(ChordAdapter());
-  box = await Hive.openBox<Chord>('decisionMap');
-
+Future<void> _populateDecisionMap() async {
   List<String> files = [
     'assets/chord_maps/f_maj.csv',
     'assets/chord_maps/c_min.csv',
@@ -110,7 +106,17 @@ Future<void> main() async {
       }
     }
   }
+}
 
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  Hive.registerAdapter(ChordAdapter());
+  Hive.registerAdapter(SavedChordProgressionAdapter());
+  box = await Hive.openBox<Chord>('decisionMap');
+  saves = await Hive.openBox<SavedChordProgression>('savedChords');
+
+  await _populateDecisionMap();
   requestPermissions();
 
   runApp (
