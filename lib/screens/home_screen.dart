@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_music_application/colors.dart';
 import 'package:flutter_music_application/screens/bpm_screen.dart';
 import 'package:flutter_music_application/screens/tuner_screen.dart';
 import 'package:flutter_music_application/screens/harmony_screen.dart';
@@ -62,7 +63,7 @@ class HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         foregroundColor: Colors.white,
         title: const Text('Music App Name'),
-        backgroundColor: const Color.fromARGB(255, 42, 85, 124),
+        backgroundColor: AppTheme.primary,
       ),
       body: PageView(
         controller: _pageController,
@@ -74,7 +75,7 @@ class HomeScreenState extends State<HomeScreen> {
         children: _pages,
       ),
       bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: const Color.fromARGB(255, 42, 85, 124),
+        selectedItemColor: AppTheme.primaryAccent,
         currentIndex: _selectedIndex,
         onTap: onTapHandler,
         items: _bottomNavigationBarItems,

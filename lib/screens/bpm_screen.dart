@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_music_application/colors.dart';
 
 class BpmScreen extends StatefulWidget {
   const BpmScreen({super.key});
@@ -91,7 +92,7 @@ class BpmScreenState extends State<BpmScreen> with AutomaticKeepAliveClientMixin
                 alignment: const Alignment(0.0, 0.0),
                 child: MaterialButton(
                   onPressed: _setBpm,
-                  color: const Color.fromARGB(255, 42, 85, 124),
+                  color: AppTheme.secondary,
                   shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(20.0)),
                   ),
@@ -118,11 +119,11 @@ class BpmScreenState extends State<BpmScreen> with AutomaticKeepAliveClientMixin
                       _beatsPerMinute = 0;
                     });
                   },
-                  color: const Color.fromARGB(255, 204, 204, 204),
+                  color: AppTheme.primaryAccent,
                   shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(20.0)),
                   ),
-                  textColor: Colors.black,
+                  textColor: Colors.white,
                   height: 8,
                   minWidth: 100,
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),

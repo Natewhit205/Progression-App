@@ -1,24 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_music_application/colors.dart';
 
-class CustomMaterialButton extends StatelessWidget {
+class TunerButton extends StatelessWidget {
   final void Function()? onPressed;
+  final double? height;
+  final double? minWidth;
   final Widget? child;
+  final Color? color;
 
   // Constant Values
-  final Color? color = AppTheme.secondary;
   final ShapeBorder? shape = const RoundedRectangleBorder(
-    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+    borderRadius: BorderRadius.all(Radius.circular(20.0)),
   );
   final Color? textColor = Colors.white;
-  final double? height = 40;
-  final double? minWidth = 110;
   final EdgeInsetsGeometry? padding = const EdgeInsets.symmetric(horizontal: 16, vertical: 8);
 
-  const CustomMaterialButton({
+  const TunerButton({
     super.key,
     required this.onPressed,
-    this.child
+    required this.color,
+    required this.height,
+    required this.minWidth,
+    required this.child
   });
 
   @override

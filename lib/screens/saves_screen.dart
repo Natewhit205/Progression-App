@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:fading_edge_scrollview/fading_edge_scrollview.dart';
+import 'package:flutter_music_application/colors.dart';
 import 'package:flutter_music_application/main.dart';
 import 'package:flutter_music_application/saved_chord_progression.dart';
 
@@ -15,18 +17,16 @@ class SavesScreenState extends State<SavesScreen> {
 
   String _getDisplayString(SavedChordProgression chordProgression) => chordProgression.chordProgression.join(' | ');
 
-  void _clearSaves() => setState((){ saves.deleteAll(saves.keys); });
+  void _clearSaves() => setState(() { saves.deleteAll(saves.keys); });
 
   void _removeSave(int index) {
     saves.delete(index);
     
-    setState((){
+    setState(() {
       for (int i = index; i <= saves.length; i++) {
-        print(saves.keys);
         int oldKey = i + 1;
         int newKey = i;
         SavedChordProgression? oldValue = saves.get(oldKey)!;
-
         saves.delete(oldKey);
         saves.put(newKey, oldValue);
       }
@@ -53,6 +53,7 @@ class SavesScreenState extends State<SavesScreen> {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   '$key .  ',
@@ -72,18 +73,26 @@ class SavesScreenState extends State<SavesScreen> {
                     softWrap: true,
                   ),
                 ),
-                IconButton(
-                  onPressed: _playChordProgression,
-                  icon: const Icon(Icons.play_arrow),
-                  color: const Color.fromARGB(255, 42, 85, 124),
+                Column(
+                  children: [
+                    Row(
+                      children: [
+                        IconButton(
+                          onPressed: _playChordProgression,
+                          icon: const Icon(Icons.play_arrow),
+                          color: const Color.fromARGB(255, 42, 85, 124),
+                        ),
+                        IconButton(
+                          onPressed: () {_removeSave(key);},
+                          icon: const Icon(Icons.delete),
+                          color: const Color.fromARGB(255, 209, 52, 41),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
-                IconButton(
-                  onPressed: () {_removeSave(key);},
-                  icon: const Icon(Icons.delete),
-                  color: const Color.fromARGB(255, 209, 52, 41),
-                )
               ],
-            )
+            ),
           )
         ),
       ));
@@ -109,10 +118,19 @@ class SavesScreenState extends State<SavesScreen> {
       appBar: AppBar(
         foregroundColor: Colors.white,
         title: const Text('Music App Name'),
-        backgroundColor: const Color.fromARGB(255, 42, 85, 124),
+        backgroundColor: AppTheme.primary,
       ),
-      body: saves.isNotEmpty ? ListView(
-        children: _populateSaves()
+      body: saves.isNotEmpty ? Stack(
+        children: [
+          FadingEdgeScrollView.fromScrollView(
+            gradientFractionOnStart: 0.2,
+            gradientFractionOnEnd: 0.2,
+            child: ListView(
+              controller: ScrollController(),
+              children: _populateSaves()
+            ),
+          ),
+        ]
       ) : Align(
         alignment: Alignment.center,
         child: SizedBox(
@@ -133,11 +151,11 @@ class SavesScreenState extends State<SavesScreen> {
       bottomNavigationBar: saves.isNotEmpty ? BottomAppBar(
         child: MaterialButton(
           onPressed: _clearSaves,
-          color: const Color.fromARGB(255, 204, 204, 204),
+          color: AppTheme.primaryAccent,
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(10.0)),
           ),
-          textColor: Colors.black,
+          textColor: Colors.white,
           height: 45,
           minWidth: 130,
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),

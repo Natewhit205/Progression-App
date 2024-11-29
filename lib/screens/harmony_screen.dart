@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:flutter_music_application/main.dart';
 import 'package:flutter_music_application/chord.dart';
+import 'package:flutter_music_application/colors.dart';
 import 'package:flutter_music_application/saved_chord_progression.dart';
 import 'package:flutter_music_application/screens/saves_screen.dart';
 import 'package:flutter_music_application/widgets/dropdown.dart';
@@ -249,11 +250,11 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
                   children: [
                     MaterialButton(
                       onPressed: _generateProgression,
-                      color: const Color.fromARGB(255, 42, 85, 124),
+                      color: AppTheme.secondary,
                       shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10.0)),
                       ),
-                      textColor: const Color(0xfffffdfd),
+                      textColor: Colors.white,
                       height: 45,
                       minWidth: 130,
                       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -268,11 +269,11 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
                     ),
                     MaterialButton(
                       onPressed: _viewSaves,
-                      color: const Color.fromARGB(255, 204, 204, 204),
+                      color: AppTheme.primaryAccent,
                       shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10.0)),
                       ),
-                      textColor: Colors.black,
+                      textColor: Colors.white,
                       height: 45,
                       minWidth: 130,
                       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),

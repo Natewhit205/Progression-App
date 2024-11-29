@@ -1,6 +1,8 @@
 import 'dart:typed_data';
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_music_application/colors.dart';
+import 'package:flutter_music_application/widgets/tuner_button.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter_music_application/permissions.dart';
 import 'package:flutter_audio_capture/flutter_audio_capture.dart';
@@ -28,6 +30,7 @@ class TunerScreenState extends State<TunerScreen> with AutomaticKeepAliveClientM
 
   String _note = "C";
   String _status = "Press Start";
+  bool _listening = false;
 
   Future<void> _startRecording() async {
     if (await Permission.microphone.isGranted) {
@@ -35,6 +38,7 @@ class TunerScreenState extends State<TunerScreen> with AutomaticKeepAliveClientM
         await _audioRecorder.start(listener, onError, sampleRate: 44100, bufferSize: 3000);
         setState(() {
           _status = "Recording";
+          _listening = true;
         });
       } catch (e) {
         print('Recording Error: $e');
@@ -48,6 +52,7 @@ class TunerScreenState extends State<TunerScreen> with AutomaticKeepAliveClientM
     await _audioRecorder.stop();
     setState(() {
       _status = "Press Start";
+      _listening = false;
     });
   }
 
@@ -121,22 +126,17 @@ class TunerScreenState extends State<TunerScreen> with AutomaticKeepAliveClientM
                     fontWeight: FontWeight.w400,
                     fontStyle: FontStyle.normal,
                     fontSize: 96,
-                    color: Color.fromARGB(255, 42, 85, 124),
+                    color: AppTheme.primaryAccent,
                   ),
                 ),
               ),
               Align(
                 alignment: const Alignment(0.0, 0.5),
-                child: MaterialButton(
+                child: !_listening ? TunerButton(
                   onPressed: _startRecording,
-                  color: const Color.fromARGB(255, 42, 85, 124),
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                  ),
-                  textColor: const Color(0xfffffdfd),
+                  color: AppTheme.secondary,
                   height: 10,
                   minWidth: 120,
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   child: const Text(
                     'Start',
                     style: TextStyle(
@@ -145,20 +145,11 @@ class TunerScreenState extends State<TunerScreen> with AutomaticKeepAliveClientM
                       fontStyle: FontStyle.normal,
                     ),
                   ),
-                ),
-              ),
-              Align(
-                alignment: const Alignment(0.0, 0.7),
-                child: MaterialButton(
+                ) : TunerButton(
                   onPressed: _stopRecording,
-                  color: const Color.fromARGB(255, 204, 204, 204),
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                  ),
-                  textColor: Colors.black,
+                  color: AppTheme.primaryAccent,
                   height: 8,
                   minWidth: 90,
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   child: const Text(
                     'Stop',
                     style: TextStyle(
