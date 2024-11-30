@@ -10,7 +10,7 @@ class SavesScreen extends StatefulWidget {
   const SavesScreen({super.key});
 
   @override
-  State<StatefulWidget> createState() {
+  SavesScreenState createState() {
     return SavesScreenState();
   }
 }
@@ -39,7 +39,22 @@ class SavesScreenState extends State<SavesScreen> {
     
   }
 
-  List<Widget> _populateSaves() {
+  double _calculateFontSize(int length) {
+    double output;
+    double minFont = 16;
+    double maxFont = 18;
+    int lowerBound = 8;
+    int upperBound = 32;
+
+    if (length <= 8) {
+      output = maxFont;
+    } else {
+      output = maxFont - (length - lowerBound) * (maxFont - minFont) / (upperBound - lowerBound);
+    }
+    return output;
+  }
+
+  List<Widget> _populateSaves(double screenWidth) {
     List<Widget> output = [];
     for (int i = 0; i < saves.length; i++) {
       int key = i + 1;
@@ -58,21 +73,33 @@ class SavesScreenState extends State<SavesScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 SizedBox(
-                  width: MediaQuery.of(context).size.width * 2 / 3,
-                  height: 60,
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: Flexible(
-                      child: Text(
-                        displayedProgression,
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w500,
+                  width: screenWidth * 2 / 3,
+                  height: 80,
+                  child: Flex(
+                    direction: Axis.horizontal,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Flexible(
+                        child: FadingEdgeScrollView.fromSingleChildScrollView(
+                          gradientFractionOnStart: 0.8,
+                          gradientFractionOnEnd: 0.8,
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.vertical,
+                            controller: ScrollController(),
+                            child: Text(
+                              displayedProgression,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: _calculateFontSize(currentProgression.chordProgression.length),
+                                fontWeight: FontWeight.w500,
+                              ),
+                              overflow: TextOverflow.clip,
+                              softWrap: true,
+                            ),
+                          ),
                         ),
-                        overflow: TextOverflow.clip,
-                        softWrap: true,
                       ),
-                    ),
+                    ]
                   ),
                 ),
                 Column(
@@ -82,7 +109,7 @@ class SavesScreenState extends State<SavesScreen> {
                         IconButton(
                           onPressed: _playChordProgression,
                           icon: const Icon(Icons.play_arrow),
-                          color: AppTheme.primary,
+                          color: AppTheme.primaryAccent,
                         ),
                         IconButton(
                           onPressed: () {_removeSave(key);},
@@ -106,7 +133,6 @@ class SavesScreenState extends State<SavesScreen> {
   @override
   void initState() {
     super.initState();
-    _populateSaves();
   }
 
   @override
@@ -129,7 +155,7 @@ class SavesScreenState extends State<SavesScreen> {
             gradientFractionOnEnd: 0.2,
             child: ListView(
               controller: ScrollController(),
-              children: _populateSaves()
+              children: _populateSaves(MediaQuery.sizeOf(context).width)
             ),
           ),
         ]

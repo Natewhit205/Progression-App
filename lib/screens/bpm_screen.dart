@@ -67,7 +67,7 @@ class BpmScreenState extends State<BpmScreen> with AutomaticKeepAliveClientMixin
                   'BPM Clicker',
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.clip,
-                  style: AppTextStyle.heading(context),
+                  style: AppTextStyle.heading(context, color: Colors.black),
                 ),
               ),
               Align(

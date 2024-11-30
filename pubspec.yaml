@@ -38,8 +38,6 @@ dependencies:
   pitchupdart: ^0.0.6
   flutter_audio_capture: ^1.1.8
 
-  dartpy: ^0.0.5
-
   webview_flutter: ^4.10.0
 
   numberpicker: ^2.1.2
@@ -59,6 +57,8 @@ dev_dependencies:
 
   launcher_name: ^1.0.2
   flutter_launcher_icons: "^0.14.1"
+
+  dartpip: ^0.2.8
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

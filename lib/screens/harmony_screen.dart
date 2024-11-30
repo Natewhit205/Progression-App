@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter_music_application/screens/chord_charts.dart';
 import 'package:flutter_music_application/styles.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:flutter_music_application/main.dart';
@@ -28,7 +29,7 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
 
   String _image = '';
 
-  final double _minFont = 22;
+  final double _minFont = 18;
   final double _maxFont = 30;
   final int _minLimit = 4;
   final int _maxLimit = 32;
@@ -94,6 +95,10 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
     
   }
 
+  void _showChordSymbols() {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => ChordChartsScreen(selectedKey: _selectedKey)));
+  }
+
   void _saveChordProgression() {
     SavedChordProgression newSave = SavedChordProgression(_chordProgression);
     int key = 1;
@@ -127,28 +132,43 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
             children: [
               Align(
                 alignment: const Alignment(0.0, -1),
-                child: Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black, width: 2.0),
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    child: AnimatedSwitcher(
-                      duration: const Duration(milliseconds: 350),
-                      transitionBuilder: (Widget child,
-                        Animation<double> animation) => ScaleTransition(
-                          scale: animation,
-                          child: child
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black, width: 2.0),
+                          borderRadius: BorderRadius.circular(8.0),
                         ),
-                      child: _image.isNotEmpty
-                        ? Image.asset(
-                          _getImage(),
-                          key: ValueKey('[$_selectedChord]'),
-                          width: MediaQuery.of(context).size.width,
-                        ) : const SizedBox.shrink(),
+                        child: AnimatedSwitcher(
+                          duration: const Duration(milliseconds: 350),
+                          transitionBuilder: (Widget child,
+                            Animation<double> animation) => ScaleTransition(
+                              scale: animation,
+                              child: child
+                            ),
+                          child: _image.isNotEmpty
+                            ? Image.asset(
+                              _getImage(),
+                              key: ValueKey('[$_selectedChord]'),
+                              width: MediaQuery.of(context).size.width,
+                            ) : const SizedBox.shrink(),
+                        ),
+                      ),
                     ),
-                  )
+                    Align(
+                      alignment: const Alignment(0.0, -0.8),
+                      child: SimpleActionButton(
+                        onPressed: _showChordSymbols,
+                        color: AppTheme.primaryAccent,
+                        child: Text(
+                          'View Chord Charts',
+                          style: AppTextStyle.standard(context),
+                        ),
+                      )
+                    ),
+                  ]
                 ),
               ),
               Align(
@@ -168,7 +188,7 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
                 ),
               ),
               Align(
-                alignment: const Alignment(0.0, 0.36),
+                alignment: const Alignment(0.0, 0.30),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -186,9 +206,12 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
                         'Save',
                         style: AppTextStyle.standard(context),
                       ),
-                    ) : Text(
-                      'Saved!',
-                      style: AppTextStyle.bold(context, color: Colors.black),
+                    ) : SizedBox(
+                      width: 110,
+                      child: Text(
+                        'Saved!',textAlign: TextAlign.center,
+                        style: AppTextStyle.bold(context, color: Colors.black),
+                      )
                     ),
                   ],
                 ),

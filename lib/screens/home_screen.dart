@@ -8,7 +8,7 @@ class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  State<StatefulWidget> createState() {
+  HomeScreenState createState() {
     return HomeScreenState();
   }
 }
