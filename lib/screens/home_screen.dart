@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_music_application/colors.dart';
+import 'package:flutter_music_application/constants.dart';
 import 'package:flutter_music_application/screens/bpm_screen.dart';
 import 'package:flutter_music_application/screens/tuner_screen.dart';
 import 'package:flutter_music_application/screens/harmony_screen.dart';
@@ -60,11 +61,7 @@ class HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        foregroundColor: Colors.white,
-        title: const Text('Music App Name'),
-        backgroundColor: AppTheme.primary,
-      ),
+      appBar: Constants.appBar,
       body: PageView(
         controller: _pageController,
         onPageChanged: (index) {

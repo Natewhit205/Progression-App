@@ -1,13 +1,13 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:flutter_music_application/screens/chord_charts.dart';
-import 'package:flutter_music_application/styles.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:flutter_music_application/main.dart';
 import 'package:flutter_music_application/chord.dart';
 import 'package:flutter_music_application/colors.dart';
+import 'package:flutter_music_application/styles.dart';
 import 'package:flutter_music_application/saved_chord_progression.dart';
 import 'package:flutter_music_application/screens/saves_screen.dart';
+import 'package:flutter_music_application/screens/chord_charts.dart';
 import 'package:flutter_music_application/widgets/dropdown.dart';
 import 'package:flutter_music_application/widgets/button.dart';
 
@@ -91,7 +91,7 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
     });
   }
 
-  void _playChordProgression() {
+  void _playChordProgression() async {
     
   }
 

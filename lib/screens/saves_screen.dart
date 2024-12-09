@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:fading_edge_scrollview/fading_edge_scrollview.dart';
 import 'package:flutter_music_application/colors.dart';
 import 'package:flutter_music_application/main.dart';
-import 'package:flutter_music_application/saved_chord_progression.dart';
 import 'package:flutter_music_application/styles.dart';
+import 'package:flutter_music_application/constants.dart';
+import 'package:flutter_music_application/saved_chord_progression.dart';
 import 'package:flutter_music_application/widgets/button.dart';
 
 class SavesScreen extends StatefulWidget {
@@ -21,6 +22,30 @@ class SavesScreenState extends State<SavesScreen> {
 
   void _clearSaves() => setState(() { saves.deleteAll(saves.keys); });
 
+  Future<bool?> confirmDelete(BuildContext context) async => showDialog<bool>(
+    context: context,
+    builder: (context) => AlertDialog(
+      title: const Text('Confirm Delete'),
+      content: const Text('Deleting this will be permenant. Are you sure?'),
+      actions: [
+        TextButton(
+          child: Text(
+            'Cancel',
+            style: AppTextStyle.standard(context, color: AppTheme.primaryAccent)
+          ),
+          onPressed: () => Navigator.of(context).pop(false)
+        ),
+        TextButton(
+          child: Text(
+            'Delete',
+            style: AppTextStyle.standard(context, color: AppTheme.delete),
+          ),
+          onPressed: () => Navigator.of(context).pop(true)
+        ),
+      ],
+    )
+  );
+
   void _removeSave(int index) {
     saves.delete(index);
     
@@ -33,6 +58,17 @@ class SavesScreenState extends State<SavesScreen> {
         saves.put(newKey, oldValue);
       }
     });
+  }
+
+  void _deleteItem(Function function, {int? key}) async {
+    bool? result = await confirmDelete(context);
+    if (result!) {
+      if (key == null) {
+        function();
+      } else {
+        function(key);
+      }
+    }
   }
 
   void _playChordProgression() {
@@ -54,7 +90,7 @@ class SavesScreenState extends State<SavesScreen> {
     return output;
   }
 
-  List<Widget> _populateSaves(double screenWidth) {
+  List<Widget> _populateSaves(BuildContext context, double screenWidth) {
     List<Widget> output = [];
     for (int i = 0; i < saves.length; i++) {
       int key = i + 1;
@@ -112,7 +148,7 @@ class SavesScreenState extends State<SavesScreen> {
                           color: AppTheme.primaryAccent,
                         ),
                         IconButton(
-                          onPressed: () {_removeSave(key);},
+                          onPressed: () => _deleteItem(_removeSave, key: key),
                           icon: const Icon(Icons.delete),
                           color: AppTheme.delete,
                         ),
@@ -143,11 +179,7 @@ class SavesScreenState extends State<SavesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        foregroundColor: Colors.white,
-        title: const Text('Music App Name'),
-        backgroundColor: AppTheme.primary,
-      ),
+      appBar: Constants.appBar,
       body: saves.isNotEmpty ? Stack(
         children: [
           FadingEdgeScrollView.fromScrollView(
@@ -155,7 +187,7 @@ class SavesScreenState extends State<SavesScreen> {
             gradientFractionOnEnd: 0.2,
             child: ListView(
               controller: ScrollController(),
-              children: _populateSaves(MediaQuery.sizeOf(context).width)
+              children: _populateSaves(context, MediaQuery.sizeOf(context).width)
             ),
           ),
         ]
@@ -178,7 +210,7 @@ class SavesScreenState extends State<SavesScreen> {
       ),
       bottomNavigationBar: saves.isNotEmpty ? BottomAppBar(
         child: SimpleActionButton(
-          onPressed: _clearSaves,
+          onPressed: () => _deleteItem(_clearSaves),
           color: AppTheme.primaryAccent,
           child: Text(
             'Clear Saves',
