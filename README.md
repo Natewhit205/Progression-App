@@ -1,6 +1,6 @@
-# flutter_music_application
+# Progression
 
-A new Flutter project.
+A music harmonisation tool to assist in composition.
 
 ## Getting Started
 
