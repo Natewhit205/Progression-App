@@ -7,7 +7,7 @@ import 'package:flutter_music_application/colors.dart';
 import 'package:flutter_music_application/styles.dart';
 import 'package:flutter_music_application/saved_chord_progression.dart';
 import 'package:flutter_music_application/screens/saves_screen.dart';
-import 'package:flutter_music_application/screens/chord_charts.dart';
+import 'package:flutter_music_application/screens/chord_charts_screen.dart';
 import 'package:flutter_music_application/widgets/dropdown.dart';
 import 'package:flutter_music_application/widgets/button.dart';
 

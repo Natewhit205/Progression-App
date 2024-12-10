@@ -51,20 +51,24 @@ class SavesScreenState extends State<SavesScreen> {
       for (int i = index; i <= saves.length; i++) {
         int oldKey = i + 1;
         int newKey = i;
-        SavedChordProgression? oldValue = saves.get(oldKey)!;
-        saves.delete(oldKey);
-        saves.put(newKey, oldValue);
+        SavedChordProgression? oldValue = saves.get(oldKey);
+        if (oldValue != null) {
+          saves.delete(oldKey);
+          saves.put(newKey, oldValue);
+        }
       }
     });
   }
 
   void _deleteItem(Function function, {int? key}) async {
     bool? result = await confirmDelete(context);
-    if (result!) {
-      if (key == null) {
-        function();
-      } else {
-        function(key);
+    if (result != null) {
+      if (result) {
+        if (key == null) {
+          function();
+        } else {
+          function(key);
+        }
       }
     }
   }
