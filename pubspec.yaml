@@ -92,6 +92,20 @@ flutter:
     - assets/chord_imgs/E/
     - assets/chord_imgs/F/
     - assets/chord_imgs/F#m/
+    - assets/charts/piano/A/
+    - assets/charts/piano/B/
+    - assets/charts/piano/Cm/
+    - assets/charts/piano/Dm/
+    - assets/charts/piano/E/
+    - assets/charts/piano/F/
+    - assets/charts/piano/F#m/
+    - assets/charts/guitar/A/
+    - assets/charts/guitar/B/
+    - assets/charts/guitar/Cm/
+    - assets/charts/guitar/Dm/
+    - assets/charts/guitar/E/
+    - assets/charts/guitar/F/
+    - assets/charts/guitar/F#m/
     - lib/scripts/chords.py
 
   # An image asset can refer to one or more resolution-specific "variants", see

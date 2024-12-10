@@ -11,9 +11,7 @@ class SavesScreen extends StatefulWidget {
   const SavesScreen({super.key});
 
   @override
-  SavesScreenState createState() {
-    return SavesScreenState();
-  }
+  SavesScreenState createState() => SavesScreenState();
 }
 
 class SavesScreenState extends State<SavesScreen> {
@@ -165,21 +163,11 @@ class SavesScreenState extends State<SavesScreen> {
 
     return output;
   }
-  
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: Constants.appBar,
+      appBar: Constants.savesAppBar,
       body: saves.isNotEmpty ? Stack(
         children: [
           FadingEdgeScrollView.fromScrollView(

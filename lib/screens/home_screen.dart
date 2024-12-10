@@ -9,9 +9,7 @@ class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  HomeScreenState createState() {
-    return HomeScreenState();
-  }
+  HomeScreenState createState() => HomeScreenState();
 }
 
 class HomeScreenState extends State<HomeScreen> {
@@ -61,7 +59,7 @@ class HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: Constants.appBar,
+      appBar: Constants.defaultAppBar,
       body: PageView(
         controller: _pageController,
         onPageChanged: (index) {

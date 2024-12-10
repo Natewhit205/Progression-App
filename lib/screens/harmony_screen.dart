@@ -15,9 +15,7 @@ class HarmonyScreen extends StatefulWidget {
   const HarmonyScreen({super.key});
 
   @override
-  HarmonyScreenState createState() {
-    return HarmonyScreenState();
-  }
+  HarmonyScreenState createState() => HarmonyScreenState();
 }
 
 class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveClientMixin<HarmonyScreen> {

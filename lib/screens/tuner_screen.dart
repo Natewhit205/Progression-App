@@ -16,9 +16,7 @@ class TunerScreen extends StatefulWidget {
   const TunerScreen({super.key});
 
   @override
-  TunerScreenState createState() {
-    return TunerScreenState();
-  }
+  TunerScreenState createState() => TunerScreenState();
 }
 
 class TunerScreenState extends State<TunerScreen> with AutomaticKeepAliveClientMixin<TunerScreen> {

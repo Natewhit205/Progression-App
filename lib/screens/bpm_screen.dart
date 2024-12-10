@@ -6,9 +6,7 @@ class BpmScreen extends StatefulWidget {
   const BpmScreen({super.key});
 
   @override
-  BpmScreenState createState() {
-    return BpmScreenState();
-  }
+  BpmScreenState createState() => BpmScreenState();
 }
 
 class BpmScreenState extends State<BpmScreen> with AutomaticKeepAliveClientMixin<BpmScreen> {
