@@ -162,7 +162,7 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
                         color: AppTheme.primaryAccent,
                         child: Text(
                           'View Chord Charts',
-                          style: AppTextStyle.standard(context),
+                          style: AppTextStyle.standard(),
                         ),
                       )
                     ),
@@ -195,20 +195,20 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
                       onPressed: _checkPlayStatus() ? _playChordProgression : null,
                       child: Text(
                         'Play',
-                        style: AppTextStyle.standard(context),
+                        style: AppTextStyle.standard(),
                       ),
                     ),
                     !_saved ? CustomMaterialButton(
                       onPressed: _checkSaveStatus() ? _saveChordProgression : null,
                       child: Text(
                         'Save',
-                        style: AppTextStyle.standard(context),
+                        style: AppTextStyle.standard(),
                       ),
                     ) : SizedBox(
                       width: 110,
                       child: Text(
                         'Saved!',textAlign: TextAlign.center,
-                        style: AppTextStyle.bold(context, color: Colors.black),
+                        style: AppTextStyle.bold(color: Colors.black),
                       )
                     ),
                   ],
@@ -248,8 +248,8 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
                       minValue: _minLimit,
                       maxValue: _maxLimit,
                       onChanged: (value) => setState(() => _chordLimit = value),
-                      textStyle: AppTextStyle.small(context, color: Colors.black),
-                      selectedTextStyle: AppTextStyle.emphasised(context, color: Colors.black),
+                      textStyle: AppTextStyle.small(color: Colors.black),
+                      selectedTextStyle: AppTextStyle.emphasised(color: Colors.black),
                       itemWidth: 40,
                     ),
                   ],
@@ -266,7 +266,7 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
                       color: AppTheme.secondary,
                       child: Text(
                         'Start',
-                        style: AppTextStyle.standard(context),
+                        style: AppTextStyle.standard(),
                       ),
                     ),
                     SimpleActionButton(
@@ -274,7 +274,7 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
                       color: AppTheme.primaryAccent,
                       child: Text(
                         'View Saves',
-                        style: AppTextStyle.standard(context),
+                        style: AppTextStyle.standard(),
                       ),
                     ),
                   ],

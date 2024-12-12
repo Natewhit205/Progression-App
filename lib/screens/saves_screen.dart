@@ -3,7 +3,7 @@ import 'package:fading_edge_scrollview/fading_edge_scrollview.dart';
 import 'package:flutter_music_application/colors.dart';
 import 'package:flutter_music_application/main.dart';
 import 'package:flutter_music_application/styles.dart';
-import 'package:flutter_music_application/constants.dart';
+import 'package:flutter_music_application/widgets/app_bar.dart';
 import 'package:flutter_music_application/saved_chord_progression.dart';
 import 'package:flutter_music_application/widgets/button.dart';
 
@@ -29,14 +29,14 @@ class SavesScreenState extends State<SavesScreen> {
         TextButton(
           child: Text(
             'Cancel',
-            style: AppTextStyle.standard(context, color: AppTheme.primaryAccent)
+            style: AppTextStyle.standard(color: AppTheme.primaryAccent)
           ),
           onPressed: () => Navigator.of(context).pop(false)
         ),
         TextButton(
           child: Text(
             'Delete',
-            style: AppTextStyle.standard(context, color: AppTheme.delete),
+            style: AppTextStyle.standard(color: AppTheme.delete),
           ),
           onPressed: () => Navigator.of(context).pop(true)
         ),
@@ -164,14 +164,13 @@ class SavesScreenState extends State<SavesScreen> {
         ),
       ));
     }
-
     return output;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: Constants.savesAppBar,
+      appBar: Constants.customAppBar(title: 'Saved Progressions'),
       body: saves.isNotEmpty ? Stack(
         children: [
           FadingEdgeScrollView.fromScrollView(
@@ -206,7 +205,7 @@ class SavesScreenState extends State<SavesScreen> {
           color: AppTheme.primaryAccent,
           child: Text(
             'Clear Saves',
-            style: AppTextStyle.standard(context),
+            style: AppTextStyle.standard(),
           ),
         ),
       ) : null,

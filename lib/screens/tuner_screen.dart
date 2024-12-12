@@ -107,7 +107,7 @@ class TunerScreenState extends State<TunerScreen> with AutomaticKeepAliveClientM
                   'Tuner',
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.clip,
-                  style: AppTextStyle.heading(context, color: Colors.black),
+                  style: AppTextStyle.heading(color: Colors.black),
                 ),
               ),
               Align(
@@ -116,7 +116,7 @@ class TunerScreenState extends State<TunerScreen> with AutomaticKeepAliveClientM
                   _note,
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.clip,
-                  style: AppTextStyle.setSize(context, color: AppTheme.primaryAccent, fontSize: 96),
+                  style: AppTextStyle.setSize(color: AppTheme.primaryAccent, fontSize: 96),
                 ),
               ),
               Align(
@@ -126,14 +126,14 @@ class TunerScreenState extends State<TunerScreen> with AutomaticKeepAliveClientM
                   color: AppTheme.secondary,
                   child: Text(
                     'Start',
-                    style: AppTextStyle.large(context),
+                    style: AppTextStyle.large(),
                   ),
                 ) : StartStopButton(
                   onPressed: _stopRecording,
                   color: AppTheme.primaryAccent,
                   child: Text(
                     'Stop',
-                    style: AppTextStyle.large(context),
+                    style: AppTextStyle.large(),
                   ),
                 ),
               ),
@@ -143,7 +143,7 @@ class TunerScreenState extends State<TunerScreen> with AutomaticKeepAliveClientM
                   _status,
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.clip,
-                  style: AppTextStyle.emphasised(context, color: Colors.grey),
+                  style: AppTextStyle.emphasised(color: Colors.grey),
                 ),
               ),
             ],

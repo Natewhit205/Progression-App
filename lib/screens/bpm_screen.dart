@@ -65,7 +65,7 @@ class BpmScreenState extends State<BpmScreen> with AutomaticKeepAliveClientMixin
                   'BPM Clicker',
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.clip,
-                  style: AppTextStyle.heading(context, color: Colors.black),
+                  style: AppTextStyle.heading(color: Colors.black),
                 ),
               ),
               Align(
@@ -74,7 +74,7 @@ class BpmScreenState extends State<BpmScreen> with AutomaticKeepAliveClientMixin
                   '$_beatsPerMinute BPM',
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.clip,
-                  style: AppTextStyle.setSize(context, color: Colors.grey, fontSize: 34),
+                  style: AppTextStyle.setSize(color: Colors.grey, fontSize: 34),
                 ),
               ),
               Align(
@@ -91,7 +91,7 @@ class BpmScreenState extends State<BpmScreen> with AutomaticKeepAliveClientMixin
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   child: Text(
                     'Tap',
-                    style: AppTextStyle.large(context),
+                    style: AppTextStyle.large(),
                   ),
                 ),
               ),
@@ -114,7 +114,7 @@ class BpmScreenState extends State<BpmScreen> with AutomaticKeepAliveClientMixin
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   child: Text(
                     'Reset',
-                    style: AppTextStyle.medium(context),
+                    style: AppTextStyle.medium(),
                   ),
                 ),
               ),
