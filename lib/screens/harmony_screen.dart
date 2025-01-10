@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:numberpicker/numberpicker.dart';
@@ -24,10 +25,11 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
 
   bool _saved = false;
   bool _generated = false;
+  bool _playing = false;
 
   String _image = '';
 
-  final double _minFont = 18;
+  final double _minFont = 16;
   final double _maxFont = 30;
   final int _minLimit = 4;
   final int _maxLimit = 32;
@@ -45,7 +47,7 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
 
   String _getImage() => 'assets/chord_imgs/${keyValues.chords[_selectedKey - 1].first.label}/${_selectedChord[1]}.png';
 
-  void _viewSaves() => Navigator.push(context, MaterialPageRoute(builder: (context) => const SavesScreen()));
+  void _viewSaves(context) => Navigator.push(context, MaterialPageRoute(builder: (context) => const SavesScreen()));
 
   void _generateProgression() {
     _saved = false;
@@ -84,16 +86,28 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
       limit--;
     }
 
-    setState(() {
-      _generated = true;
-    });
+    setState(() => _generated = true);
   }
 
-  void _playChordProgression() async {
-    
+  Future<void> _playChordProgression() async {
+    bool finished = false;
+    Duration duration = const Duration(seconds: 0);
+    setState(() => _playing = true);
+
+    duration  = await audioPlayback.playAudio(_chordProgression);
+
+    if (duration != const Duration(seconds: 0)) {
+      finished = true;
+      setState(() => _playing = !finished);
+    }
   }
 
-  void _showChordSymbols() {
+  void _stopPlayback() {
+    audioPlayback.stopAudio();
+    setState(() => _playing = false);
+  }
+
+  void _showChordSymbols(context) {
     Navigator.push(context, MaterialPageRoute(builder: (context) => ChordChartsScreen(selectedKey: _selectedKey)));
   }
 
@@ -103,7 +117,6 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
     while (saves.containsKey(key)) { key++; }
     saves.put(key, newSave);
     setState(() => _saved = true);
-    print("Saved");
   }
 
   @override
@@ -158,11 +171,11 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
                     Align(
                       alignment: const Alignment(0.0, -0.8),
                       child: SimpleActionButton(
-                        onPressed: _showChordSymbols,
-                        color: AppTheme.primaryAccent,
+                        onPressed: () => _showChordSymbols(context),
+                        color: AppTheme.primary80,
                         child: Text(
                           'View Chord Charts',
-                          style: AppTextStyle.standard(),
+                          style: AppTextStyle.standard(color: AppTheme.primary10),
                         ),
                       )
                     ),
@@ -170,7 +183,7 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
                 ),
               ),
               Align(
-                alignment: const Alignment(0.0, 0.0),
+                alignment: const Alignment(0.0, 0.05),
                 child: Padding(
                   padding: const EdgeInsets.all(35.0),
                   child: Text(
@@ -191,18 +204,24 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    CustomMaterialButton(
+                    !_playing ? CustomMaterialButton(
                       onPressed: _checkPlayStatus() ? _playChordProgression : null,
                       child: Text(
                         'Play',
-                        style: AppTextStyle.standard(),
+                        style: AppTextStyle.standard(color: _checkPlayStatus() ? AppTheme.secondary10 : AppTheme.surface),
+                      ),
+                    ) : CustomMaterialButton(
+                      onPressed: _stopPlayback,
+                      child: Text(
+                        'Stop',
+                        style: AppTextStyle.standard(color: AppTheme.secondary10),
                       ),
                     ),
                     !_saved ? CustomMaterialButton(
                       onPressed: _checkSaveStatus() ? _saveChordProgression : null,
                       child: Text(
                         'Save',
-                        style: AppTextStyle.standard(),
+                        style: AppTextStyle.standard(color: _checkSaveStatus() ? AppTheme.secondary10 : AppTheme.surface),
                       ),
                     ) : SizedBox(
                       width: 110,
@@ -263,18 +282,18 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
                   children: [
                     SimpleActionButton(
                       onPressed: _generateProgression,
-                      color: AppTheme.secondary,
+                      color: AppTheme.primary10,
                       child: Text(
                         'Start',
                         style: AppTextStyle.standard(),
                       ),
                     ),
                     SimpleActionButton(
-                      onPressed: _viewSaves,
-                      color: AppTheme.primaryAccent,
+                      onPressed: () => _viewSaves(context),
+                      color: AppTheme.primary80,
                       child: Text(
                         'View Saves',
-                        style: AppTextStyle.standard(),
+                        style: AppTextStyle.standard(color: AppTheme.primary10),
                       ),
                     ),
                   ],

@@ -36,9 +36,7 @@ class BpmScreenState extends State<BpmScreen> with AutomaticKeepAliveClientMixin
       timeElapsed = 400;
     }
 
-    setState(() {
-      _beatsPerMinute = (60000 * _numOfTaps) ~/ timeElapsed;
-    });
+    setState(() => _beatsPerMinute = (60000 * _numOfTaps) ~/ timeElapsed);
   }
 
   void _resetBPM() {
@@ -74,24 +72,23 @@ class BpmScreenState extends State<BpmScreen> with AutomaticKeepAliveClientMixin
                   '$_beatsPerMinute BPM',
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.clip,
-                  style: AppTextStyle.setSize(color: Colors.grey, fontSize: 34),
+                  style: AppTextStyle.setSize(color: AppTheme.secondary40, fontSize: 34),
                 ),
               ),
               Align(
                 alignment: const Alignment(0.0, 0.0),
                 child: MaterialButton(
                   onPressed: _setBpm,
-                  color: AppTheme.secondary,
+                  color: AppTheme.secondary90,
                   shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(20.0)),
                   ),
-                  textColor: Colors.white,
                   height: 10,
                   minWidth: 120,
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   child: Text(
                     'Tap',
-                    style: AppTextStyle.large(),
+                    style: AppTextStyle.large(color: AppTheme.secondary10),
                   ),
                 ),
               ),
@@ -104,17 +101,16 @@ class BpmScreenState extends State<BpmScreen> with AutomaticKeepAliveClientMixin
                       _beatsPerMinute = 0;
                     });
                   },
-                  color: AppTheme.primaryAccent,
+                  color: AppTheme.primary80,
                   shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(20.0)),
                   ),
-                  textColor: Colors.white,
                   height: 8,
                   minWidth: 100,
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   child: Text(
                     'Reset',
-                    style: AppTextStyle.medium(),
+                    style: AppTextStyle.medium(color: AppTheme.primary10),
                   ),
                 ),
               ),

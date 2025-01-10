@@ -56,7 +56,6 @@ class TunerScreenState extends State<TunerScreen> with AutomaticKeepAliveClientM
   }
 
   void listener(dynamic obj) {
-    // Get audio from user
     Float64List buffer = Float64List.fromList(obj.cast<double>());
     final List<double> audioSample = buffer.toList();
 
@@ -116,21 +115,21 @@ class TunerScreenState extends State<TunerScreen> with AutomaticKeepAliveClientM
                   _note,
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.clip,
-                  style: AppTextStyle.setSize(color: AppTheme.primaryAccent, fontSize: 96),
+                  style: AppTextStyle.setSize(color: AppTheme.primary40, fontSize: 96),
                 ),
               ),
               Align(
                 alignment: const Alignment(0.0, 0.5),
                 child: !_listening ? StartStopButton(
                   onPressed: _startRecording,
-                  color: AppTheme.secondary,
+                  color: AppTheme.secondary90,
                   child: Text(
                     'Start',
-                    style: AppTextStyle.large(),
+                    style: AppTextStyle.large(color: AppTheme.secondary10),
                   ),
                 ) : StartStopButton(
                   onPressed: _stopRecording,
-                  color: AppTheme.primaryAccent,
+                  color: AppTheme.error,
                   child: Text(
                     'Stop',
                     style: AppTextStyle.large(),
@@ -143,7 +142,7 @@ class TunerScreenState extends State<TunerScreen> with AutomaticKeepAliveClientM
                   _status,
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.clip,
-                  style: AppTextStyle.emphasised(color: Colors.grey),
+                  style: AppTextStyle.emphasised(color: AppTheme.secondary40),
                 ),
               ),
             ],

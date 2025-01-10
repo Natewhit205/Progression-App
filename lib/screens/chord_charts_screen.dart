@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fading_edge_scrollview/fading_edge_scrollview.dart';
+import 'package:flutter_music_application/colors.dart';
 import 'package:flutter_music_application/widgets/app_bar.dart';
 import 'package:flutter_music_application/main.dart';
 import 'package:flutter_music_application/widgets/chart_row.dart';
@@ -48,6 +49,7 @@ class ChordChartsScreenState extends State<ChordChartsScreen> {
           children: _getCharts(),
         ),
       ),
+      backgroundColor: AppTheme.surface,
     );
   }
 }

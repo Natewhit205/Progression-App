@@ -15,6 +15,8 @@ class SavesScreen extends StatefulWidget {
 }
 
 class SavesScreenState extends State<SavesScreen> {
+  bool _playing = false;
+  int _current = 0;
 
   String _getDisplayString(SavedChordProgression chordProgression) => chordProgression.chordProgression.join(' | ');
 
@@ -36,7 +38,7 @@ class SavesScreenState extends State<SavesScreen> {
         TextButton(
           child: Text(
             'Delete',
-            style: AppTextStyle.standard(color: AppTheme.delete),
+            style: AppTextStyle.standard(color: AppTheme.error),
           ),
           onPressed: () => Navigator.of(context).pop(true)
         ),
@@ -73,8 +75,32 @@ class SavesScreenState extends State<SavesScreen> {
     }
   }
 
-  void _playChordProgression() {
-    
+  Future<void> _playChordProgression(List<String> chordProgression, int key) async {
+    _current = key;
+    bool finished = false;
+    Duration duration = const Duration(seconds: 0);
+    setState(() => _playing = true);
+
+    duration  = await audioPlayback.playAudio(chordProgression);
+
+    if (duration != const Duration(seconds: 0)) {
+      finished = true;
+      setState(() => _playing = !finished);
+    }
+  }
+
+  void _stopChordProgression() {
+    audioPlayback.stopAudio();
+    setState(() => _playing = false);
+  }
+
+  bool _checkCurrent(int key) {
+    if (!_playing) {
+      return true;
+    } else {
+      if (_current == key) { return false; }
+      return true;
+    }
   }
 
   double _calculateFontSize(int length) {
@@ -144,15 +170,19 @@ class SavesScreenState extends State<SavesScreen> {
                   children: [
                     Row(
                       children: [
-                        IconButton(
-                          onPressed: _playChordProgression,
+                        _checkCurrent(key) ? IconButton(
+                          onPressed: () => _playChordProgression(currentProgression.chordProgression, key),
                           icon: const Icon(Icons.play_arrow),
-                          color: AppTheme.primaryAccent,
+                          color: AppTheme.primary40,
+                        ) : IconButton(
+                          onPressed: _stopChordProgression,
+                          icon: const Icon(Icons.stop),
+                          color: AppTheme.primary40,
                         ),
                         IconButton(
                           onPressed: () => _deleteItem(_removeSave, key: key),
                           icon: const Icon(Icons.delete),
-                          color: AppTheme.delete,
+                          color: AppTheme.error,
                         ),
                       ],
                     ),
@@ -199,13 +229,14 @@ class SavesScreenState extends State<SavesScreen> {
           ),
         ),
       ),
+      backgroundColor: AppTheme.surface,
       bottomNavigationBar: saves.isNotEmpty ? BottomAppBar(
         child: SimpleActionButton(
           onPressed: () => _deleteItem(_clearSaves),
-          color: AppTheme.primaryAccent,
+          color: AppTheme.error,
           child: Text(
             'Clear Saves',
-            style: AppTextStyle.standard(),
+            style: AppTextStyle.standard(color: AppTheme.surface),
           ),
         ),
       ) : null,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_music_application/audio_playback.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:flutter_music_application/chord.dart';
 import 'package:flutter_music_application/keys.dart';
@@ -10,6 +11,7 @@ import 'package:flutter_music_application/screens/home_screen.dart';
 late Box<Chord> box;
 late Box<SavedChordProgression> saves;
 final Keys keyValues = Keys();
+final AudioPlayback audioPlayback = AudioPlayback();
 
 bool checkEnabledStatus(List<int> nextChords, Map<int, int> keyShifts) => nextChords.isNotEmpty || keyShifts.isNotEmpty;
 

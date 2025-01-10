@@ -39,9 +39,7 @@ class HomeScreenState extends State<HomeScreen> {
   ];
 
   void onTapHandler(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+    setState(() => _selectedIndex = index);
 
     _pageController.animateToPage(
       index, 
@@ -63,14 +61,13 @@ class HomeScreenState extends State<HomeScreen> {
       body: PageView(
         controller: _pageController,
         onPageChanged: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
+          setState(() => _selectedIndex = index);
         },
         children: _pages,
       ),
+      backgroundColor: AppTheme.surface,
       bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: AppTheme.primaryAccent,
+        selectedItemColor: AppTheme.primary40,
         currentIndex: _selectedIndex,
         onTap: onTapHandler,
         items: _bottomNavigationBarItems,

@@ -19,6 +19,6 @@ class Constants {
         )
       ]
     ),
-    backgroundColor: AppTheme.primary,
+    backgroundColor: AppTheme.primary40,
   );
 }
