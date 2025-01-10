@@ -17,10 +17,3 @@ Once done, press 'Start' to generate the progression. The 'Play' bottom will pro
 ### Tuner
 
 Requires access to your microphone to work. Press 'Start' to begin recording and sound the pitch you want to find. The tuner will listen and display the sound pitch. Press 'Stop' to end the recording.
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
