@@ -26,11 +26,11 @@ if (flutterVersionName == null) {
 android {
     namespace = "com.example.flutter_music_application"
     compileSdk = flutter.compileSdkVersion
-    ndkVersion = flutter.ndkVersion
+    ndkVersion = "27.0.12077973"
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     defaultConfig {
@@ -44,6 +44,10 @@ android {
         versionName = flutterVersionName
     }
 
+    kotlinOptions {
+        jvmTarget = "17" // Ensure this matches if you have Kotlin
+    }
+
     buildTypes {
         release {
             // TODO: Add your own signing config for the release build.
@@ -52,6 +56,17 @@ android {
         }
     }
 }
+
+// tasks.withType(JavaCompile) {
+//     options.encoding = 'UTF-8'
+//     options.release = 8 // Specify the target JVM version
+// }
+
+// java {
+//     toolchain {
+//         languageVersion.set(JavaLanguageVersion.of(8))
+//     }
+// }
 
 flutter {
     source = "../.."

@@ -43,10 +43,19 @@ dependencies:
   numberpicker: ^2.1.2
   permission_handler: ^11.2.1
   fading_edge_scrollview: ^4.1.1
+  http: ^1.2.2
+  just_audio: ^0.9.42
+
+  tekartik_midi:
+    git:
+      url: https://github.com/tekartik/midi.dart
+      ref: dart3a
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6
+  path: ^1.9.0
+  path_provider: ^2.1.5
 
 dev_dependencies:
   flutter_test:
@@ -106,7 +115,6 @@ flutter:
     - assets/charts/guitar/E/
     - assets/charts/guitar/F/
     - assets/charts/guitar/F#m/
-    - lib/scripts/chords.py
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

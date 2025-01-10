@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_music_application/colors.dart';
-import 'package:flutter_music_application/constants.dart';
+import 'package:flutter_music_application/widgets/app_bar.dart';
 import 'package:flutter_music_application/screens/bpm_screen.dart';
 import 'package:flutter_music_application/screens/tuner_screen.dart';
 import 'package:flutter_music_application/screens/harmony_screen.dart';
@@ -39,9 +39,7 @@ class HomeScreenState extends State<HomeScreen> {
   ];
 
   void onTapHandler(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+    setState(() => _selectedIndex = index);
 
     _pageController.animateToPage(
       index, 
@@ -59,18 +57,17 @@ class HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: Constants.defaultAppBar,
+      appBar: Constants.customAppBar(title: 'Progression'),
       body: PageView(
         controller: _pageController,
         onPageChanged: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
+          setState(() => _selectedIndex = index);
         },
         children: _pages,
       ),
+      backgroundColor: AppTheme.surface,
       bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: AppTheme.primaryAccent,
+        selectedItemColor: AppTheme.primary40,
         currentIndex: _selectedIndex,
         onTap: onTapHandler,
         items: _bottomNavigationBarItems,

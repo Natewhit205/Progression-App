@@ -3,7 +3,7 @@ import 'package:fading_edge_scrollview/fading_edge_scrollview.dart';
 import 'package:flutter_music_application/colors.dart';
 import 'package:flutter_music_application/main.dart';
 import 'package:flutter_music_application/styles.dart';
-import 'package:flutter_music_application/constants.dart';
+import 'package:flutter_music_application/widgets/app_bar.dart';
 import 'package:flutter_music_application/saved_chord_progression.dart';
 import 'package:flutter_music_application/widgets/button.dart';
 
@@ -15,6 +15,8 @@ class SavesScreen extends StatefulWidget {
 }
 
 class SavesScreenState extends State<SavesScreen> {
+  bool _playing = false;
+  int _current = 0;
 
   String _getDisplayString(SavedChordProgression chordProgression) => chordProgression.chordProgression.join(' | ');
 
@@ -29,14 +31,14 @@ class SavesScreenState extends State<SavesScreen> {
         TextButton(
           child: Text(
             'Cancel',
-            style: AppTextStyle.standard(context, color: AppTheme.primaryAccent)
+            style: AppTextStyle.standard(color: AppTheme.primaryAccent)
           ),
           onPressed: () => Navigator.of(context).pop(false)
         ),
         TextButton(
           child: Text(
             'Delete',
-            style: AppTextStyle.standard(context, color: AppTheme.delete),
+            style: AppTextStyle.standard(color: AppTheme.error),
           ),
           onPressed: () => Navigator.of(context).pop(true)
         ),
@@ -51,26 +53,54 @@ class SavesScreenState extends State<SavesScreen> {
       for (int i = index; i <= saves.length; i++) {
         int oldKey = i + 1;
         int newKey = i;
-        SavedChordProgression? oldValue = saves.get(oldKey)!;
-        saves.delete(oldKey);
-        saves.put(newKey, oldValue);
+        SavedChordProgression? oldValue = saves.get(oldKey);
+        if (oldValue != null) {
+          saves.delete(oldKey);
+          saves.put(newKey, oldValue);
+        }
       }
     });
   }
 
   void _deleteItem(Function function, {int? key}) async {
     bool? result = await confirmDelete(context);
-    if (result!) {
-      if (key == null) {
-        function();
-      } else {
-        function(key);
+    if (result != null) {
+      if (result) {
+        if (key == null) {
+          function();
+        } else {
+          function(key);
+        }
       }
     }
   }
 
-  void _playChordProgression() {
-    
+  Future<void> _playChordProgression(List<String> chordProgression, int key) async {
+    _current = key;
+    bool finished = false;
+    Duration duration = const Duration(seconds: 0);
+    setState(() => _playing = true);
+
+    duration  = await audioPlayback.playAudio(chordProgression);
+
+    if (duration != const Duration(seconds: 0)) {
+      finished = true;
+      setState(() => _playing = !finished);
+    }
+  }
+
+  void _stopChordProgression() {
+    audioPlayback.stopAudio();
+    setState(() => _playing = false);
+  }
+
+  bool _checkCurrent(int key) {
+    if (!_playing) {
+      return true;
+    } else {
+      if (_current == key) { return false; }
+      return true;
+    }
   }
 
   double _calculateFontSize(int length) {
@@ -140,15 +170,19 @@ class SavesScreenState extends State<SavesScreen> {
                   children: [
                     Row(
                       children: [
-                        IconButton(
-                          onPressed: _playChordProgression,
+                        _checkCurrent(key) ? IconButton(
+                          onPressed: () => _playChordProgression(currentProgression.chordProgression, key),
                           icon: const Icon(Icons.play_arrow),
-                          color: AppTheme.primaryAccent,
+                          color: AppTheme.primary40,
+                        ) : IconButton(
+                          onPressed: _stopChordProgression,
+                          icon: const Icon(Icons.stop),
+                          color: AppTheme.primary40,
                         ),
                         IconButton(
                           onPressed: () => _deleteItem(_removeSave, key: key),
                           icon: const Icon(Icons.delete),
-                          color: AppTheme.delete,
+                          color: AppTheme.error,
                         ),
                       ],
                     ),
@@ -160,14 +194,13 @@ class SavesScreenState extends State<SavesScreen> {
         ),
       ));
     }
-
     return output;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: Constants.savesAppBar,
+      appBar: Constants.customAppBar(title: 'Saved Progressions'),
       body: saves.isNotEmpty ? Stack(
         children: [
           FadingEdgeScrollView.fromScrollView(
@@ -196,13 +229,14 @@ class SavesScreenState extends State<SavesScreen> {
           ),
         ),
       ),
+      backgroundColor: AppTheme.surface,
       bottomNavigationBar: saves.isNotEmpty ? BottomAppBar(
         child: SimpleActionButton(
           onPressed: () => _deleteItem(_clearSaves),
-          color: AppTheme.primaryAccent,
+          color: AppTheme.error,
           child: Text(
             'Clear Saves',
-            style: AppTextStyle.standard(context),
+            style: AppTextStyle.standard(color: AppTheme.surface),
           ),
         ),
       ) : null,

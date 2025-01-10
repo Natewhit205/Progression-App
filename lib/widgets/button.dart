@@ -6,11 +6,11 @@ class CustomMaterialButton extends StatelessWidget {
   final Widget? child;
 
   // Constant Values
-  final Color? color = AppTheme.secondaryAccent;
+  final Color? color = AppTheme.secondary90;
   final ShapeBorder? shape = const RoundedRectangleBorder(
     borderRadius: BorderRadius.all(Radius.circular(10.0)),
   );
-  final Color? textColor = Colors.white;
+  final Color? textColor = AppTheme.secondary10;
   final double? height = 30;
   final double? minWidth = 100;
   final EdgeInsetsGeometry? padding = const EdgeInsets.symmetric(horizontal: 16, vertical: 8);
