@@ -162,7 +162,6 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
                       child: Container(
                         decoration: BoxDecoration(
                           border: Border.all(color: Colors.black, width: 2.0),
-                          borderRadius: BorderRadius.circular(8.0),
                         ),
                         child: AnimatedSwitcher(
                           duration: const Duration(milliseconds: 350),
