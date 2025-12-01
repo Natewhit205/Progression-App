@@ -40,7 +40,7 @@ class ChordChartsScreenState extends State<ChordChartsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: Constants.customAppBar(title: 'Chord Charts'),
+      appBar: CustomAppBar.customAppBar(title: 'Chord Charts'),
       body: FadingEdgeScrollView.fromScrollView(
         gradientFractionOnStart: 0.3,
         gradientFractionOnEnd: 0.3,

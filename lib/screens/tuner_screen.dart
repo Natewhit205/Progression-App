@@ -40,7 +40,7 @@ class TunerScreenState extends State<TunerScreen> with AutomaticKeepAliveClientM
           _listening = true;
         });
       } catch (e) {
-        print('Recording Error: $e');
+        debugPrint('Recording Error: $e');
       }
     } else {
       requestPermissions();
@@ -73,7 +73,7 @@ class TunerScreenState extends State<TunerScreen> with AutomaticKeepAliveClientM
   }
 
   void onError(Object e) {
-    print(e);
+    debugPrint("$e");
   }
 
   @override

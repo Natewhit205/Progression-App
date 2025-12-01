@@ -36,7 +36,7 @@ dependencies:
 
   pitch_detector_dart: ^0.0.7
   pitchupdart: ^0.0.6
-  flutter_audio_capture: ^1.1.8
+  flutter_audio_capture: ^1.1.11
 
   webview_flutter: ^4.10.0
 
@@ -94,6 +94,7 @@ flutter:
   assets:
     - assets/icons/
     - assets/chord_maps/
+    - assets/chord_imgs/
     - assets/chord_imgs/A/
     - assets/chord_imgs/B/
     - assets/chord_imgs/Cm/

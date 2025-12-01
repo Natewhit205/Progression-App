@@ -1,8 +1,11 @@
 import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_music_application/managers/harmony_manager.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:flutter_music_application/main.dart';
+import 'package:flutter_music_application/constants.dart';
 import 'package:flutter_music_application/chord.dart';
 import 'package:flutter_music_application/colors.dart';
 import 'package:flutter_music_application/styles.dart';
@@ -23,16 +26,13 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
   @override
   bool get wantKeepAlive => true;
 
+  HarmonyManager harmonyManager = HarmonyManager();
+
   bool _saved = false;
   bool _generated = false;
   bool _playing = false;
 
-  String _image = '';
-
-  final double _minFont = 16;
-  final double _maxFont = 30;
-  final int _minLimit = 4;
-  final int _maxLimit = 32;
+  late String _image;
 
   late int _selectedKey;
   late List<int> _selectedChord;
@@ -41,11 +41,19 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
   late int _chordLimit;
   late int _lastChordLimit;
 
-  double _calculateFontSize() => _maxFont - (_lastChordLimit - _minLimit) * (_maxFont - _minFont) / (_maxLimit - _minLimit);
   bool _checkPlayStatus() => _generated;
   bool _checkSaveStatus() => _generated && !_saved;
 
+  Future checkAsset(String path) async {
+    try {
+      return await rootBundle.loadString(path);
+    } catch (_) {
+      return null;
+    }
+  }
+
   String _getImage() => 'assets/chord_imgs/${keyValues.chords[_selectedKey - 1].first.label}/${_selectedChord[1]}.png';
+
 
   void _viewSaves(context) => Navigator.push(context, MaterialPageRoute(builder: (context) => const SavesScreen()));
 
@@ -123,10 +131,14 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
   void initState() {
     super.initState();
     _selectedKey = 1;
-    _selectedChord = keyValues.getChords(_selectedKey).first.value;
-    _chordLimit = _minLimit;
-    _lastChordLimit = _minLimit;
-    _image = 'assets/chord_imgs/${keyValues.chords[_selectedKey - 1].first.label}/${_selectedChord[1]}.png';
+    int j = 0;
+    while (keyValues.getChords(_selectedKey)[j].enabled == false) {
+      j++;
+    }
+    _selectedChord = keyValues.getChords(_selectedKey)[j].value;
+    _chordLimit = Constants.minChordLimit;
+    _lastChordLimit = Constants.minChordLimit;
+    _image = _getImage();
   }
 
   @override
@@ -164,6 +176,11 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
                               _getImage(),
                               key: ValueKey('[$_selectedChord]'),
                               width: MediaQuery.of(context).size.width,
+                              errorBuilder: (context, error, stackTrace) => Image.asset(
+                                Constants.defaultImage,
+                                key: ValueKey('[$_selectedChord]'),
+                                width: MediaQuery.of(context).size.width
+                              ),
                             ) : const SizedBox.shrink(),
                         ),
                       ),
@@ -189,7 +206,7 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
                   child: Text(
                     _displayChordProgression,
                     style: TextStyle(
-                      fontSize: _calculateFontSize(),
+                      fontSize: harmonyManager.calculateFontSize(_lastChordLimit),
                       fontWeight: FontWeight.w500,
                     ),
                     textAlign: TextAlign.center,
@@ -256,20 +273,20 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
                         }
                       },
                     ),
+                    NumberPicker(
+                      value: _chordLimit,
+                      minValue: Constants.minChordLimit,
+                      maxValue: Constants.maxChordLimit,
+                      onChanged: (value) => setState(() => _chordLimit = value),
+                      textStyle: AppTextStyle.small(color: Colors.black),
+                      selectedTextStyle: AppTextStyle.emphasised(color: Colors.black),
+                      itemWidth: 40,
+                    ),
                     MusicDropdownMenu(
                       dropdownMenuEntries: keyValues.getChords(_selectedKey),
                       initialSelection: _selectedChord,
                       label: const Text('Starting Chord'),
                       onSelected: (index) => setState(() { _selectedChord = index; }),
-                    ),
-                    NumberPicker(
-                      value: _chordLimit,
-                      minValue: _minLimit,
-                      maxValue: _maxLimit,
-                      onChanged: (value) => setState(() => _chordLimit = value),
-                      textStyle: AppTextStyle.small(color: Colors.black),
-                      selectedTextStyle: AppTextStyle.emphasised(color: Colors.black),
-                      itemWidth: 40,
                     ),
                   ],
                 ),

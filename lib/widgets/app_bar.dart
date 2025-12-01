@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_music_application/colors.dart';
 
-class Constants {
+class CustomAppBar {
   static AppBar customAppBar({String? title}) => AppBar(
     foregroundColor: Colors.white,
     title: Row(
@@ -10,15 +10,16 @@ class Constants {
         Text(
           title!,
           style: const TextStyle(
-            fontWeight: FontWeight.w500,
+            color: AppTheme.primary30,
+            fontWeight: FontWeight.w800,
           ),
-        ),
-        Image.asset(
+        )
+        /*Image.asset(
           'assets/icons/logo_filled.png',
           height: 60,
-        )
+        )*/
       ]
     ),
-    backgroundColor: AppTheme.primary40,
+    backgroundColor: AppTheme.surface,
   );
 }

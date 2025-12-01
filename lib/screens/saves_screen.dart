@@ -31,7 +31,7 @@ class SavesScreenState extends State<SavesScreen> {
         TextButton(
           child: Text(
             'Cancel',
-            style: AppTextStyle.standard(color: AppTheme.primaryAccent)
+            style: AppTextStyle.standard(color: AppTheme.primary60)
           ),
           onPressed: () => Navigator.of(context).pop(false)
         ),
@@ -137,7 +137,7 @@ class SavesScreenState extends State<SavesScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 SizedBox(
-                  width: screenWidth * 2 / 3,
+                  width: screenWidth * 1 / 2,
                   height: 80,
                   child: Flex(
                     direction: Axis.horizontal,
@@ -200,7 +200,7 @@ class SavesScreenState extends State<SavesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: Constants.customAppBar(title: 'Saved Progressions'),
+      appBar: CustomAppBar.customAppBar(title: 'Saved Progressions'),
       body: saves.isNotEmpty ? Stack(
         children: [
           FadingEdgeScrollView.fromScrollView(

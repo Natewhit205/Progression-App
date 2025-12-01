@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:http/http.dart';
 import 'package:path/path.dart';
@@ -32,13 +33,13 @@ class AudioPlayback {
         final Uint8List data = response.bodyBytes;
         final localFileDirectory = await _getLocalPath();
         final outIoFile = join(localFileDirectory, 'chord.mp3');
-        print('File Path $outIoFile');
+        debugPrint('File Path $outIoFile');
         filePath = outIoFile;
         await Directory(dirname(outIoFile)).create(recursive: true);
         await File(outIoFile).writeAsBytes(data);
       }
     } catch (e) {
-      print(e);
+      debugPrint("$e");
     }
   }
 

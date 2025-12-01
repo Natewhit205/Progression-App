@@ -1,0 +1,527 @@
+{
+    "mapName": "Lion's Den",
+    "keyIndex": {
+        "A Major": 1,
+        "B Major": 2,
+        "C Minor": 3,
+        "D Minor": 4,
+        "E Major": 5,
+        "F Major": 6,
+        "F# Minor": 7
+    },
+    "keys": [
+        {
+            "keyName": "A Major",
+            "keyTonality": "Major",
+            "chords" : [
+                {
+                    "chordId": 1,
+                    "chordName": "A",
+                    "enabled": true,
+                    "chordTransitions": {
+                        "transitionId": [4, 5, 6],
+                        "transitionName": ["D", "E", "F#m"]
+                    },
+                    "modulations": null
+                },
+                {
+                    "chordId": 2,
+                    "chordName": "Bm",
+                    "enabled": false,
+                    "chordTransitions": null,
+                    "modulations": null
+                },
+                {
+                    "chordId": 3,
+                    "chordName": "C#m",
+                    "enabled": true,
+                    "chordTransitions": {
+                        "transitionId": [1, 4, 5, 6],
+                        "transitionName": ["A", "D", "E", "F#m"]
+                    },
+                    "modulations": null
+                },
+                {
+                    "chordId": 4,
+                    "chordName": "D",
+                    "enabled": true,
+                    "chordTransitions": {
+                        "transitionId": [1, 5, 6],
+                        "transitionName": ["A", "E", "F#m"]
+                    },
+                    "modulations": null
+                },
+                {
+                    "chordId": 5,
+                    "chordName": "E",
+                    "enabled": true,
+                    "chordTransitions": {
+                        "transitionId": [1, 3, 4],
+                        "transitionName": ["A", "C#m", "D"]
+                    },
+                    "modulations": [
+                        {
+                            "modKey": "B Major",
+                            "modChord": 5
+                        }
+                    ]
+                },
+                {
+                    "chordId": 6,
+                    "chordName": "F#m",
+                    "enabled": true,
+                    "chordTransitions": {
+                        "transitionId": [1, 3, 4, 5],
+                        "transitionName": ["A", "C#m", "D", "E"]
+                    },
+                    "modulations": null
+                },
+                {
+                    "chordId": 7,
+                    "chordName": "G#dim",
+                    "enabled": false,
+                    "chordTransitions": null,
+                    "modulations": null
+                }
+            ]
+        },
+        {
+            "keyName": "B Major",
+            "keyTonality": "Major",
+            "chords" : [
+                {
+                    "chordId": 1,
+                    "chordName": "B",
+                    "enabled": false,
+                    "chordTransitions": null,
+                    "modulations": null
+                },
+                {
+                    "chordId": 2,
+                    "chordName": "C#m",
+                    "enabled": false,
+                    "chordTransitions": null,
+                    "modulations": null
+                },
+                {
+                    "chordId": 3,
+                    "chordName": "D#m",
+                    "enabled": false,
+                    "chordTransitions": null,
+                    "modulations": null
+                },
+                {
+                    "chordId": 4,
+                    "chordName": "E",
+                    "enabled": false,
+                    "chordTransitions": null,
+                    "modulations": null
+                },
+                {
+                    "chordId": 5,
+                    "chordName": "F#",
+                    "enabled": true,
+                    "chordTransitions": null,
+                    "modulations": [
+                        {
+                            "modKey": "F Major",
+                            "modChord": 5
+                        }
+                    ]
+                },
+                {
+                    "chordId": 6,
+                    "chordName": "G#m",
+                    "enabled": false,
+                    "chordTransitions": null,
+                    "modulations": null
+                },
+                {
+                    "chordId": 7,
+                    "chordName": "A#dim",
+                    "enabled": false,
+                    "chordTransitions": null,
+                    "modulations": null
+                }
+            ]
+        },
+        {
+            "keyName": "C Minor",
+            "keyTonality": "Minor",
+            "chords" : [
+                {
+                    "chordId": 1,
+                    "chordName": "Cm",
+                    "enabled": true,
+                    "chordTransitions": {
+                        "transitionId": [2, 3, 5, 6, 7],
+                        "transitionName": ["Ddim", "Eb", "Gm", "Ab", "Bb"]
+                    },
+                    "modulations": null
+                },
+                {
+                    "chordId": 2,
+                    "chordName": "Ddim",
+                    "enabled": true,
+                    "chordTransitions": {
+                        "transitionId": [6],
+                        "transitionName": ["Ab"]
+                    },
+                    "modulations": null
+                },
+                {
+                    "chordId": 3,
+                    "chordName": "Eb",
+                    "enabled": true,
+                    "chordTransitions": {
+                        "transitionId": [1, 4, 5],
+                        "transitionName": ["Cm", "Fm", "Gm"]
+                    },
+                    "modulations": [
+                        {
+                            "modKey": "D Minor",
+                            "modChord": 3
+                        }
+                    ]
+                },
+                {
+                    "chordId": 4,
+                    "chordName": "Fm",
+                    "enabled": true,
+                    "chordTransitions": {
+                        "transitionId": [1],
+                        "transitionName": ["Cm"]
+                    },
+                    "modulations": null
+                },
+                {
+                    "chordId": 5,
+                    "chordName": "Gm",
+                    "enabled": true,
+                    "chordTransitions": {
+                        "transitionId": [1, 7],
+                        "transitionName": ["Cm", "Bb"]
+                    },
+                    "modulations": null
+                },
+                {
+                    "chordId": 6,
+                    "chordName": "Ab",
+                    "enabled": true,
+                    "chordTransitions": {
+                        "transitionId": [3],
+                        "transitionName": ["Eb"]
+                    },
+                    "modulations": null
+                },
+                {
+                    "chordId": 7,
+                    "chordName": "Bb",
+                    "enabled": true,
+                    "chordTransitions": {
+                        "transitionId": [1, 5],
+                        "transitionName": ["Cm", "Gm"]
+                    },
+                    "modulations": null
+                }
+            ]
+        },
+        {
+            "keyName": "D Minor",
+            "keyTonality": "Minor",
+            "chords" : [
+                {
+                    "chordId": 1,
+                    "chordName": "Dm",
+                    "enabled": true,
+                    "chordTransitions": {
+                        "transitionId": [4, 7],
+                        "transitionName": ["Gm", "C"]
+                    },
+                    "modulations": null
+                },
+                {
+                    "chordId": 2,
+                    "chordName": "Edim",
+                    "enabled": false,
+                    "chordTransitions": null,
+                    "modulations": null
+                },
+                {
+                    "chordId": 3,
+                    "chordName": "F",
+                    "enabled": true,
+                    "chordTransitions": {
+                        "transitionId": [4, 7],
+                        "transitionName": ["Gm", "C"]
+                    },
+                    "modulations": [
+                        {
+                            "modKey": "F# Minor",
+                            "modChord": 7
+                        }
+                    ]
+                },
+                {
+                    "chordId": 4,
+                    "chordName": "Gm",
+                    "enabled": true,
+                    "chordTransitions": {
+                        "transitionId": [1, 6],
+                        "transitionName": ["Dm", "Bb"]
+                    },
+                    "modulations": null
+                },
+                {
+                    "chordId": 5,
+                    "chordName": "Am",
+                    "enabled": false,
+                    "chordTransitions": null,
+                    "modulations": null
+                },
+                {
+                    "chordId": 6,
+                    "chordName": "Bb",
+                    "enabled": true,
+                    "chordTransitions": {
+                        "transitionId": [3],
+                        "transitionName": ["F"]
+                    },
+                    "modulations": null
+                },
+                {
+                    "chordId": 7,
+                    "chordName": "C",
+                    "enabled": true,
+                    "chordTransitions": {
+                        "transitionId": [3],
+                        "transitionName": ["F"]
+                    },
+                    "modulations": null
+                }
+            ]
+        },
+        {
+            "keyName": "E Major",
+            "keyTonality": "Major",
+            "chords" : [
+                {
+                    "chordId": 1,
+                    "chordName": "E",
+                    "enabled": false,
+                    "chordTransitions": null,
+                    "modulations": null
+                },
+                {
+                    "chordId": 2,
+                    "chordName": "F#m",
+                    "enabled": false,
+                    "chordTransitions": null,
+                    "modulations": null
+                },
+                {
+                    "chordId": 3,
+                    "chordName": "G#m",
+                    "enabled": false,
+                    "chordTransitions": null,
+                    "modulations": null
+                },
+                {
+                    "chordId": 4,
+                    "chordName": "A",
+                    "enabled": false,
+                    "chordTransitions": null,
+                    "modulations": null
+                },
+                {
+                    "chordId": 5,
+                    "chordName": "B",
+                    "enabled": true,
+                    "chordTransitions": null,
+                    "modulations": [
+                        {
+                            "modKey": "F# Minor",
+                            "modChord": 3
+                        },
+                        {
+                            "modKey": "A Major",
+                            "modChord": 1
+                        }
+                    ]
+                },
+                {
+                    "chordId": 6,
+                    "chordName": "C#m",
+                    "enabled": false,
+                    "chordTransitions": null,
+                    "modulations": null
+                },
+                {
+                    "chordId": 7,
+                    "chordName": "D#dim",
+                    "enabled": false,
+                    "chordTransitions": null,
+                    "modulations": null
+                }
+            ]
+        },
+        {
+            "keyName": "F Major",
+            "keyTonality": "Major",
+            "chords" : [
+                {
+                    "chordId": 1,
+                    "chordName": "F",
+                    "enabled": true,
+                    "chordTransitions": {
+                        "transitionId": [4, 5, 6],
+                        "transitionName": ["Bb", "C", "Dm"]
+                    },
+                    "modulations": null
+                },
+                {
+                    "chordId": 2,
+                    "chordName": "Gm",
+                    "enabled": true,
+                    "chordTransitions": {
+                        "transitionId": [4, 5],
+                        "transitionName": ["Bb", "C"]
+                    },
+                    "modulations": null
+                },
+                {
+                    "chordId": 3,
+                    "chordName": "Am",
+                    "enabled": false,
+                    "chordTransitions": null,
+                    "modulations": null
+                },
+                {
+                    "chordId": 4,
+                    "chordName": "Bb",
+                    "enabled": true,
+                    "chordTransitions": {
+                        "transitionId": [1, 2, 5, 6],
+                        "transitionName": ["F", "Gm", "C", "Dm"]
+                    },
+                    "modulations": [
+                        {
+                            "modKey": "C Minor",
+                            "modChord": 1
+                        }
+                    ]
+                },
+                {
+                    "chordId": 5,
+                    "chordName": "C",
+                    "enabled": true,
+                    "chordTransitions": {
+                        "transitionId": [1, 2, 4, 6],
+                        "transitionName": ["F", "Gm", "Bb", "Dm"]
+                    },
+                    "modulations": null
+                },
+                {
+                    "chordId": 6,
+                    "chordName": "Dm",
+                    "enabled": true,
+                    "chordTransitions": {
+                        "transitionId": [1, 4, 5],
+                        "transitionName": ["F", "Bb", "C"]
+                    },
+                    "modulations": null
+                },
+                {
+                    "chordId": 7,
+                    "chordName": "Edim",
+                    "enabled": false,
+                    "chordTransitions": null,
+                    "modulations": null
+                }
+            ]
+        },
+        {
+            "keyName": "F# Minor",
+            "keyTonality": "Minor",
+            "chords" : [
+                {
+                    "chordId": 1,
+                    "chordName": "F#m",
+                    "enabled": true,
+                    "chordTransitions": {
+                        "transitionId": [3, 4, 7],
+                        "transitionName": ["A", "Bm", "E"]
+                    },
+                    "modulations": null
+                },
+                {
+                    "chordId": 2,
+                    "chordName": "G#dim",
+                    "enabled": false,
+                    "chordTransitions": null,
+                    "modulations": null
+                },
+                {
+                    "chordId": 3,
+                    "chordName": "A",
+                    "enabled": true,
+                    "chordTransitions": {
+                        "transitionId": [1, 4, 6, 7],
+                        "transitionName": ["F#m", "Bm", "D", "E"]
+                    },
+                    "modulations": null
+                },
+                {
+                    "chordId": 4,
+                    "chordName": "Bm",
+                    "enabled": true,
+                    "chordTransitions": {
+                        "transitionId": [3, 6],
+                        "transitionName": ["A", "D"]
+                    },
+                    "modulations": null
+                },
+                {
+                    "chordId": 5,
+                    "chordName": "C#m",
+                    "enabled": true,
+                    "chordTransitions": {
+                        "transitionId": [3],
+                        "transitionName": ["A"]
+                    },
+                    "modulations": null
+                },
+                {
+                    "chordId": 6,
+                    "chordName": "D",
+                    "enabled": true,
+                    "chordTransitions": {
+                        "transitionId": [5],
+                        "transitionName": ["C#m"]
+                    },
+                    "modulations": [
+                        {
+                            "modKey": "E Major",
+                            "modChord": 5
+                        }
+                    ]
+                },
+                {
+                    "chordId": 7,
+                    "chordName": "E",
+                    "enabled": true,
+                    "chordTransitions": {
+                        "transitionId": [1, 3],
+                        "transitionName": ["F#m", "A"]
+                    },
+                    "modulations": [
+                        {
+                            "modKey": "E Major",
+                            "modChord": 5
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
