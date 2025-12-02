@@ -2,7 +2,9 @@ import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_music_application/managers/chord_display.dart';
 import 'package:flutter_music_application/managers/harmony_manager.dart';
+import 'package:flutter_music_application/widgets/chord_cell.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:flutter_music_application/main.dart';
 import 'package:flutter_music_application/constants.dart';
@@ -27,6 +29,7 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
   bool get wantKeepAlive => true;
 
   HarmonyManager harmonyManager = HarmonyManager();
+  ChordDisplay chordDisplay = ChordDisplay();
 
   bool _saved = false;
   bool _generated = false;
@@ -58,6 +61,8 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
   void _viewSaves(context) => Navigator.push(context, MaterialPageRoute(builder: (context) => const SavesScreen()));
 
   void _generateProgression() {
+    // TODO: Redo chord storage and make it so chord progression generation simply adds the chord object to the progression
+    chordDisplay.clearDisplay();
     _saved = false;
     _lastChordLimit = _chordLimit;
     _displayChordProgression = '';
@@ -74,6 +79,7 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
       Chord? chord = box.get('[$currentKey, $currentChordId]');
       List<int> nextChords = chord!.getPossibleChords();
       int index = Random().nextInt(nextChords.length);
+      chordDisplay.addChord(chord);
 
       String newChordPair = '';
 
@@ -130,6 +136,7 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
   @override
   void initState() {
     super.initState();
+    chordDisplay.init();
     _selectedKey = 1;
     int j = 0;
     while (keyValues.getChords(_selectedKey)[j].enabled == false) {
@@ -160,6 +167,7 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
                     Padding(
                       padding: const EdgeInsets.all(15.0),
                       child: Container(
+                        height: MediaQuery.of(context).size.height / 4,
                         decoration: BoxDecoration(
                           border: Border.all(color: Colors.black, width: 2.0),
                         ),
@@ -170,17 +178,21 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
                               scale: animation,
                               child: child
                             ),
-                          child: _image.isNotEmpty
-                            ? Image.asset(
-                              _getImage(),
-                              key: ValueKey('[$_selectedChord]'),
-                              width: MediaQuery.of(context).size.width,
-                              errorBuilder: (context, error, stackTrace) => Image.asset(
-                                Constants.defaultImage,
-                                key: ValueKey('[$_selectedChord]'),
-                                width: MediaQuery.of(context).size.width
-                              ),
-                            ) : const SizedBox.shrink(),
+                            child: GridView.count(
+                              crossAxisCount: Constants.chordsPerLine,
+                              children: chordDisplay.getDisplay(),
+                            ),
+                        //   child: _image.isNotEmpty
+                        //     ? Image.asset(
+                        //       _getImage(),
+                        //       key: ValueKey('[$_selectedChord]'),
+                        //       width: MediaQuery.of(context).size.width,
+                        //       errorBuilder: (context, error, stackTrace) => Image.asset(
+                        //         Constants.defaultImage,
+                        //         key: ValueKey('[$_selectedChord]'),
+                        //         width: MediaQuery.of(context).size.width
+                        //       ),
+                        //     ) : const SizedBox.shrink(),
                         ),
                       ),
                     ),
