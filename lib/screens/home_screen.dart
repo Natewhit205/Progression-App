@@ -26,8 +26,8 @@ class HomeScreenState extends State<HomeScreen> {
 
   final List<BottomNavigationBarItem> _bottomNavigationBarItems = const [
     BottomNavigationBarItem(
-      icon: Icon(Icons.timer),
-      label: 'BPM Clicker',
+      icon: Icon(Icons.map),
+      label: 'Maps',
     ),
     BottomNavigationBarItem(
       icon: Icon(Icons.home),

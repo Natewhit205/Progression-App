@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_music_application/colors.dart';
-import 'package:flutter_music_application/constants.dart';
 import 'package:flutter_music_application/styles.dart';
 
 class ChordCell extends StatelessWidget {
   final String name;
+  final int number;
 
   // Constant Values
   final Color? color = AppTheme.secondary90;
@@ -16,18 +16,18 @@ class ChordCell extends StatelessWidget {
 
   const ChordCell({
     super.key,
+    required this.number,
     required this.name
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 30,
       padding: padding,
-      color: AppTheme.primary40,
+      color: AppTheme.secondary40,
       child: Text(
-        name,
-        style: AppTextStyle.large(color: AppTheme.surface),
+        '$number: $name',
+        style: AppTextStyle.medium(color: AppTheme.surface),
       ),
     );
   }

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_music_application/managers/chord_display.dart';
 import 'package:flutter_music_application/managers/harmony_manager.dart';
-import 'package:flutter_music_application/widgets/chord_cell.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:flutter_music_application/main.dart';
 import 'package:flutter_music_application/constants.dart';
@@ -12,7 +11,7 @@ import 'package:flutter_music_application/chord.dart';
 import 'package:flutter_music_application/colors.dart';
 import 'package:flutter_music_application/styles.dart';
 import 'package:flutter_music_application/saved_chord_progression.dart';
-import 'package:flutter_music_application/screens/saves_screen.dart';
+//import 'package:flutter_music_application/screens/saves_screen.dart';
 import 'package:flutter_music_application/screens/chord_charts_screen.dart';
 import 'package:flutter_music_application/widgets/dropdown.dart';
 import 'package:flutter_music_application/widgets/button.dart';
@@ -35,7 +34,6 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
   bool _generated = false;
   bool _playing = false;
 
-  late String _image;
 
   late int _selectedKey;
   late List<int> _selectedChord;
@@ -55,10 +53,7 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
     }
   }
 
-  String _getImage() => 'assets/chord_imgs/${keyValues.chords[_selectedKey - 1].first.label}/${_selectedChord[1]}.png';
-
-
-  void _viewSaves(context) => Navigator.push(context, MaterialPageRoute(builder: (context) => const SavesScreen()));
+  //void _viewSaves(context) => Navigator.push(context, MaterialPageRoute(builder: (context) => const SavesScreen()));
 
   void _generateProgression() {
     // TODO: Redo chord storage and make it so chord progression generation simply adds the chord object to the progression
@@ -145,12 +140,14 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
     _selectedChord = keyValues.getChords(_selectedKey)[j].value;
     _chordLimit = Constants.minChordLimit;
     _lastChordLimit = Constants.minChordLimit;
-    _image = _getImage();
   }
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    var size = MediaQuery.of(context).size;
+    double chordDisplayHeight = size.height / 4;
+
     return Center(
       child: Align(
         alignment: Alignment.center,
@@ -167,8 +164,9 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
                     Padding(
                       padding: const EdgeInsets.all(15.0),
                       child: Container(
-                        height: MediaQuery.of(context).size.height / 4,
+                        height: chordDisplayHeight,
                         decoration: BoxDecoration(
+                          color: AppTheme.secondary10,
                           border: Border.all(color: Colors.black, width: 2.0),
                         ),
                         child: AnimatedSwitcher(
@@ -179,7 +177,10 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
                               child: child
                             ),
                             child: GridView.count(
+                              mainAxisSpacing: 2.0,
+                              crossAxisSpacing: 2.0,
                               crossAxisCount: Constants.chordsPerLine,
+                              childAspectRatio: 1.75,
                               children: chordDisplay.getDisplay(),
                             ),
                         //   child: _image.isNotEmpty
@@ -312,18 +313,18 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
                       onPressed: _generateProgression,
                       color: AppTheme.primary10,
                       child: Text(
-                        'Start',
+                        'Generate',
                         style: AppTextStyle.standard(),
                       ),
                     ),
-                    SimpleActionButton(
-                      onPressed: () => _viewSaves(context),
-                      color: AppTheme.primary80,
-                      child: Text(
-                        'View Saves',
-                        style: AppTextStyle.standard(color: AppTheme.primary10),
-                      ),
-                    ),
+                    // SimpleActionButton(
+                    //   onPressed: () => _viewSaves(context),
+                    //   color: AppTheme.primary80,
+                    //   child: Text(
+                    //     'View Saves',
+                    //     style: AppTextStyle.standard(color: AppTheme.primary10),
+                    //   ),
+                    // ),
                   ],
                 ),
               ),
