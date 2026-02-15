@@ -1,15 +1,45 @@
-import 'package:flutter_music_application/classes/key.dart';
+import 'package:flutter_music_application/classes/chord.dart';
+import 'package:flutter_music_application/classes/music_key.dart';
+import 'package:hive/hive.dart';
 
+@HiveType(typeId: 2)
 class ChordMap {
+  @HiveField(0)
   String mapName;
-  List<Key> mapKeys;
 
-  ChordMap(this.mapName, this.mapKeys);
+  @HiveField(1)
+  Map<String, int> keyIndex;
 
-  int addKey(Key? key) {
-    if (key != null) {
-      mapKeys.add(key);
+  @HiveField(2)
+  List<MusicKey> mapKeys = [];
+
+  ChordMap(this.mapName, this.keyIndex);
+
+  List<MusicKey> populateKeys(List<Map> keys) {
+    List<MusicKey> output = [];
+
+    for (final musicKey in keys) {
+      String keyName = musicKey["keyName"];
+      List<Map> chords = musicKey["chords"];
+      MusicKey currentKey = MusicKey(keyName, chords);
+      output.add(currentKey);
     }
-    return -1;
+
+    return output;
+  }
+
+  Chord getChordObj(String keyName, String chordName) {
+    if (mapKeys.isEmpty) {
+      throw Exception("ChordMap not populated");
+    }
+
+    final int? keyId = keyIndex[keyName];
+
+    if (keyId == null) {
+      throw Exception("Key not found: $keyName");
+    }
+
+    Chord chordObj = mapKeys[keyId].getChordObj(chordName);
+    return chordObj;
   }
 }

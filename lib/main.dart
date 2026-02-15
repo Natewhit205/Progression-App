@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_music_application/audio_playback.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:flutter_music_application/chord.dart';
+import 'package:flutter_music_application/classes/chord_map.dart';
 import 'package:flutter_music_application/keys.dart';
 import 'package:flutter_music_application/permissions.dart';
 import 'package:flutter_music_application/saved_chord_progression.dart';
@@ -11,6 +12,9 @@ import 'package:flutter_music_application/screens/home_screen.dart';
 
 late Box<Chord> box;
 late Box<SavedChordProgression> saves;
+
+late Box<ChordMap> chordMaps;
+
 final Keys keyValues = Keys();
 final AudioPlayback audioPlayback = AudioPlayback();
 
@@ -21,26 +25,34 @@ Future<Map> readJsonFile(String filePath) async {
   return json.decode(jsonString) as Map;
 }
 
-Future<void> _loadDecisionMap() async {
+Future<List<ChordMap>> _loadDecisionMap() async {
   List<String> jsonFiles = [
+    'assets/chord_maps/map1.json',
     'assets/chord_maps/map2.json'
   ];
+
+  List<ChordMap> maps = [];
 
   for (String jsonFile in jsonFiles) {
     final Map fileData = await readJsonFile(jsonFile);
     final keys = fileData["keys"];
+    ChordMap chordMap = ChordMap(fileData["mapName"], fileData["keyIndex"]);
+    chordMap.mapKeys = chordMap.populateKeys(fileData["keys"]);
+    maps.add(chordMap);
 
     int index = 1;
 
     for (Map key in keys) {
+      String keyName = key["keyName"];
       final chords = key["chords"];
 
-      keyValues.addKeys(index, key["keyName"]);
+      keyValues.addKeys(index, keyName);
       keyValues.chords.add([]);
 
       for (Map currentChord in chords) {
-        int iD = currentChord["chordId"];
         String chordName = currentChord["chordName"];
+
+        int iD = currentChord["chordId"];
         List<int> nextChords = [];
         List<String> nextChordNames = [];
         bool enabled = currentChord["enabled"];
@@ -79,7 +91,15 @@ Future<void> _loadDecisionMap() async {
       }
       index += 1;
     }
+
+    try {
+      chordMaps.put(index, chordMap);
+    } catch (e) {
+      debugPrint('Error storing chord map: $e');
+    }
   }
+
+  return maps;
 }
 
 /* Future<void> _populateDecisionMap() async {
@@ -185,12 +205,12 @@ Future<void> main() async {
   box = await Hive.openBox<Chord>('decisionMap');
   saves = await Hive.openBox<SavedChordProgression>('savedChords');
 
-  await _loadDecisionMap();
+  final List<ChordMap> maps = await _loadDecisionMap();
   requestPermissions();
 
   runApp (
-    const MaterialApp(
-      home: HomeScreen(),
+    MaterialApp(
+      home: HomeScreen(chordMap: maps.first),
       debugShowCheckedModeBanner: false,
     ),
   );

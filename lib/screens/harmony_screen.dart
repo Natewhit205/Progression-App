@@ -2,12 +2,16 @@ import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_music_application/classes/chord.dart';
+import 'package:flutter_music_application/classes/chord_map.dart';
+import 'package:flutter_music_application/classes/chord_progression.dart';
 import 'package:flutter_music_application/managers/chord_display.dart';
 import 'package:flutter_music_application/managers/harmony_manager.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:flutter_music_application/main.dart';
 import 'package:flutter_music_application/constants.dart';
-import 'package:flutter_music_application/chord.dart';
+//import 'package:flutter_music_application/chord.dart';
+import 'package:flutter_music_application/classes/utilities.dart';
 import 'package:flutter_music_application/colors.dart';
 import 'package:flutter_music_application/styles.dart';
 import 'package:flutter_music_application/saved_chord_progression.dart';
@@ -17,17 +21,18 @@ import 'package:flutter_music_application/widgets/dropdown.dart';
 import 'package:flutter_music_application/widgets/button.dart';
 
 class HarmonyScreen extends StatefulWidget {
-  const HarmonyScreen({super.key});
+  final ChordMap chordMap;
+  const HarmonyScreen({super.key, required this.chordMap});
 
   @override
-  HarmonyScreenState createState() => HarmonyScreenState();
+  State<HarmonyScreen> createState() => _HarmonyScreenState();
 }
 
-class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveClientMixin<HarmonyScreen> {
+class _HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveClientMixin<HarmonyScreen> {
   @override
   bool get wantKeepAlive => true;
 
-  HarmonyManager harmonyManager = HarmonyManager();
+  late final HarmonyManager harmonyManager;
   ChordDisplay chordDisplay = ChordDisplay();
 
   bool _saved = false;
@@ -56,13 +61,36 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
   //void _viewSaves(context) => Navigator.push(context, MaterialPageRoute(builder: (context) => const SavesScreen()));
 
   void _generateProgression() {
-    // TODO: Redo chord storage and make it so chord progression generation simply adds the chord object to the progression
+    final int limit = _chordLimit;
+
+    assert(_selectedChord.length > 1);
+    assert(_selectedChord[1] > 0);
+
     chordDisplay.clearDisplay();
+
+    final ChordData startingChord =
+      harmonyManager.getChordDataObj(_selectedKey - 1, _selectedChord[1] - 1);
+
+    final ChordProgression chordProgression =
+      harmonyManager.generateChordProgression(startingChord, limit);
+
+    _saved = false;
+    _lastChordLimit = _chordLimit;
+
+    _chordProgression =
+      chordProgression.chords.map((c) => c.chordName).toList();
+    
+    _displayChordProgression = _chordProgression.join(' | ');
+
+    setState(() => _generated = true);
+    return;
+
+    // TODO: Redo chord storage and make it so chord progression generation simply adds the chord object to the progression
+    
     _saved = false;
     _lastChordLimit = _chordLimit;
     _displayChordProgression = '';
     _chordProgression = [];
-    int limit = _chordLimit;
     int currentKey = _selectedKey;
     int currentChordId = _selectedChord[1];
 
@@ -131,6 +159,7 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
   @override
   void initState() {
     super.initState();
+    harmonyManager = HarmonyManager(chordMap: widget.chordMap);
     chordDisplay.init();
     _selectedKey = 1;
     int j = 0;
@@ -218,7 +247,7 @@ class HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCli
                   child: Text(
                     _displayChordProgression,
                     style: TextStyle(
-                      fontSize: harmonyManager.calculateFontSize(_lastChordLimit),
+                      fontSize: Utilities.calculateFontSize(_lastChordLimit),
                       fontWeight: FontWeight.w500,
                     ),
                     textAlign: TextAlign.center,

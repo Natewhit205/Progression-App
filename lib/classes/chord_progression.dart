@@ -1,9 +1,9 @@
-import 'package:flutter_music_application/chord.dart';
+import 'package:flutter_music_application/classes/chord.dart';
 
 class ChordProgression {
-  List<Chord> chords = [];
+  final List<ChordData> chords = [];
 
-  int addChord(Chord? chord) {
+  int addChord(ChordData? chord) {
     if (chord != null) {
       chords.add(chord);
       return 0;
