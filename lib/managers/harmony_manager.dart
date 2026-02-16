@@ -2,16 +2,20 @@ import 'package:flutter_music_application/classes/chord.dart';
 import 'package:flutter_music_application/classes/chord_map.dart';
 import 'package:flutter_music_application/classes/chord_progression.dart';
 import 'package:dart_random_choice/dart_random_choice.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_music_application/managers/chord_display.dart';
 
 class HarmonyManager {
   ChordMap chordMap;
 
   HarmonyManager({required this.chordMap});
 
-  ChordProgression generateChordProgression(ChordData startingChord, int numberOfChords) {
+  ChordProgression generateChordProgression(ChordData startingChord, int numberOfChords, ChordDisplay chordDisplay) {
+    debugPrint("Generate Progression (HarmonyManager) Start");
     ChordProgression progression = ChordProgression();
     progression.addChord(startingChord);
-    _recursiveChordGenerate(progression, numberOfChords - 1);
+    chordDisplay.addChord(startingChord);
+    _recursiveChordGenerate(progression, numberOfChords - 1, chordDisplay);
     return progression;
   }
 
@@ -29,7 +33,7 @@ class HarmonyManager {
     return chordMap.mapKeys[keyId].chords[chordId].chordName;
   }
 
-  void _recursiveChordGenerate(ChordProgression chordProgression, int num) {
+  void _recursiveChordGenerate(ChordProgression chordProgression, int num, ChordDisplay chordDisplay) {
     assert(num >= 0);
     assert(chordProgression.chords.isNotEmpty);
 
@@ -43,9 +47,10 @@ class HarmonyManager {
       }
 
       chordProgression.addChord(nextChord);
+      chordDisplay.addChord(nextChord);
       num--;
 
-      _recursiveChordGenerate(chordProgression, num);
+      _recursiveChordGenerate(chordProgression, num, chordDisplay);
     }
   }
 

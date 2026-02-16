@@ -2,6 +2,8 @@ import 'package:flutter_music_application/classes/chord.dart';
 import 'package:flutter_music_application/classes/music_key.dart';
 import 'package:hive/hive.dart';
 
+part 'chord_map.g.dart';
+
 @HiveType(typeId: 2)
 class ChordMap {
   @HiveField(0)
@@ -20,8 +22,8 @@ class ChordMap {
 
     for (final musicKey in keys) {
       String keyName = musicKey["keyName"];
-      List<Map> chords = musicKey["chords"];
-      MusicKey currentKey = MusicKey(keyName, chords);
+      final chords = (musicKey["chords"] as List).map((e) => Map<String, dynamic>.from(e)).toList();
+      MusicKey currentKey = MusicKey.fromJson(keyName, chords);
       output.add(currentKey);
     }
 

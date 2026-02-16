@@ -1,47 +1,38 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'chord.dart';
+part of 'music_key.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class ChordAdapter extends TypeAdapter<Chord> {
+class MusicKeyAdapter extends TypeAdapter<MusicKey> {
   @override
-  final int typeId = 0;
+  final int typeId = 3;
 
   @override
-  Chord read(BinaryReader reader) {
+  MusicKey read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return Chord(
-      fields[0] as int,
-      fields[1] as String,
-      (fields[2] as List).cast<int>(),
-      (fields[3] as List).cast<String>(),
-      fields[4] as bool,
-      (fields[5] as Map).cast<int, int>(),
+    return MusicKey(
+      fields[0] as String,
+      (fields[1] as Map).cast<String, int>(),
+      (fields[2] as List).cast<Chord>(),
     );
   }
 
   @override
-  void write(BinaryWriter writer, Chord obj) {
+  void write(BinaryWriter writer, MusicKey obj) {
     writer
-      ..writeByte(6)
-      ..writeByte(0)
-      ..write(obj.iD)
-      ..writeByte(1)
-      ..write(obj.chordName)
-      ..writeByte(2)
-      ..write(obj.nextChords)
       ..writeByte(3)
-      ..write(obj.nextChordNames)
-      ..writeByte(4)
-      ..write(obj.modulates)
-      ..writeByte(5)
-      ..write(obj.keyShifts);
+      ..writeByte(0)
+      ..write(obj.keyName)
+      ..writeByte(1)
+      ..write(obj.chordIndex)
+      ..writeByte(2)
+      ..write(obj.chords);
   }
 
   @override
@@ -50,7 +41,7 @@ class ChordAdapter extends TypeAdapter<Chord> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is ChordAdapter &&
+      other is MusicKeyAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

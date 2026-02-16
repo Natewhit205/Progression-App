@@ -14,10 +14,6 @@ class CustomAppBar {
             fontWeight: FontWeight.w800,
           ),
         )
-        /*Image.asset(
-          'assets/icons/logo_filled.png',
-          height: 60,
-        )*/
       ]
     ),
     backgroundColor: AppTheme.surface,

@@ -95,6 +95,7 @@ flutter:
   assets:
     - assets/icons/
     - assets/chord_maps/
+    - assets/chord_maps/chord_map.json
     - assets/chord_imgs/
     - assets/chord_imgs/A/
     - assets/chord_imgs/B/

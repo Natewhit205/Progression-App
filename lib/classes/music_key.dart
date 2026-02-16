@@ -1,19 +1,28 @@
+import 'package:hive/hive.dart';
 import 'package:flutter_music_application/classes/chord.dart';
 
+part 'music_key.g.dart';
+
+@HiveType(typeId: 3)
 class MusicKey {
+  @HiveField(0)
   final String keyName;
-  final Map<String, int> chordIndex = {};
-  final List<Chord> chords = [];
 
-  MusicKey(this.keyName, List<Map> chordsJson) {
-    _populateChords(chordsJson);
-  }
+  @HiveField(1)
+  final Map<String, int> chordIndex;
 
-  void _populateChords(List<Map> chords) {
-    for (final chord in chords) {
+  @HiveField(2)
+  final List<Chord> chords;
+
+  MusicKey(this.keyName, this.chordIndex, this.chords);
+
+  factory MusicKey.fromJson(String keyName, List<Map> chordsJson) {
+    final chordIndex = <String, int>{};
+    final chords = <Chord>[];
+
+    for (final chord in chordsJson) {
       int chordId = chord["chordId"];
       String chordName = chord["chordName"];
-      String keyName = this.keyName;
       bool enabled = chord["enabled"];
 
       // Parse Transitions
@@ -25,7 +34,8 @@ class MusicKey {
         final names = List<String>.from(transitionJson["transitionName"]);
         final weights = List<num>.from(transitionJson["weights"]);
 
-        final len = [ids.length, names.length, weights.length].reduce((a, b) => a < b ? a : b);
+        final len = [ids.length, names.length, weights.length]
+          .reduce((a, b) => a < b ? a : b);
 
         for (int i = 0; i < len; i++) {
           transitions.add(
@@ -64,9 +74,11 @@ class MusicKey {
         modulations: modulations
       );
 
-      this.chords.add(chordObj);
+      chords.add(chordObj);
       chordIndex[chordName] = chordId;
     }
+
+    return MusicKey(keyName, chordIndex, chords);
   }
 
   Chord getChordObj(String chordName) {

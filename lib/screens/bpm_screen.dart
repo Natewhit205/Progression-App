@@ -12,6 +12,7 @@ class BpmScreen extends StatefulWidget {
 class BpmScreenState extends State<BpmScreen> with AutomaticKeepAliveClientMixin<BpmScreen> {
   @override
   bool get wantKeepAlive => true;
+  
   // BPM Variables
   int _beatsPerMinute = 0;
   int _numOfTaps = 0;

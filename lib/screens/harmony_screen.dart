@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_music_application/classes/chord.dart';
@@ -61,69 +60,34 @@ class _HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCl
   //void _viewSaves(context) => Navigator.push(context, MaterialPageRoute(builder: (context) => const SavesScreen()));
 
   void _generateProgression() {
+    debugPrint("_generateProgression function call");
     final int limit = _chordLimit;
+    debugPrint("Selected Chord: $_selectedChord");
 
-    assert(_selectedChord.length > 1);
-    assert(_selectedChord[1] > 0);
+    if (_selectedChord.length <= 1 || _selectedChord[1] < 0) return;
 
+    debugPrint("About to Clear Display");
     chordDisplay.clearDisplay();
+    debugPrint("Display Cleared");
 
     final ChordData startingChord =
-      harmonyManager.getChordDataObj(_selectedKey - 1, _selectedChord[1] - 1);
+      harmonyManager.getChordDataObj(_selectedKey, _selectedChord[1]);
+
+    debugPrint("Starting ChordData: $startingChord");
 
     final ChordProgression chordProgression =
-      harmonyManager.generateChordProgression(startingChord, limit);
-
-    _saved = false;
-    _lastChordLimit = _chordLimit;
+      harmonyManager.generateChordProgression(startingChord, limit, chordDisplay);
 
     _chordProgression =
       chordProgression.chords.map((c) => c.chordName).toList();
     
     _displayChordProgression = _chordProgression.join(' | ');
 
-    setState(() => _generated = true);
-    return;
-
-    // TODO: Redo chord storage and make it so chord progression generation simply adds the chord object to the progression
-    
-    _saved = false;
-    _lastChordLimit = _chordLimit;
-    _displayChordProgression = '';
-    _chordProgression = [];
-    int currentKey = _selectedKey;
-    int currentChordId = _selectedChord[1];
-
-    _displayChordProgression += keyValues.getChords(_selectedKey)[currentChordId - 1].label;
-    _chordProgression.add(keyValues.getChords(_selectedKey)[currentChordId - 1].label);
-    limit--;
-
-    while (limit > 0) {
-      Chord? chord = box.get('[$currentKey, $currentChordId]');
-      List<int> nextChords = chord!.getPossibleChords();
-      int index = Random().nextInt(nextChords.length);
-      chordDisplay.addChord(chord);
-
-      String newChordPair = '';
-
-      if (nextChords[index] == -1) {
-        newChordPair = chord.getModulation();
-      } else {
-        newChordPair = '[$currentKey, ${nextChords[index]}]';
-      }
-
-      List<String> keyChord = newChordPair.substring(1, newChordPair.length - 1).split(',');
-      currentKey = int.parse(keyChord[0]);
-      currentChordId = int.parse(keyChord[1]);
-
-      String? chordName = box.get(newChordPair)!.chordName;
-
-      _displayChordProgression += ' | $chordName';
-      _chordProgression.add(chordName);
-      limit--;
-    }
-
-    setState(() => _generated = true);
+    setState(() {
+      _saved = false;
+      _lastChordLimit = _chordLimit;
+      _generated = true;
+    });
   }
 
   Future<void> _playChordProgression() async {
@@ -161,7 +125,7 @@ class _HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCl
     super.initState();
     harmonyManager = HarmonyManager(chordMap: widget.chordMap);
     chordDisplay.init();
-    _selectedKey = 1;
+    _selectedKey = 0;
     int j = 0;
     while (keyValues.getChords(_selectedKey)[j].enabled == false) {
       j++;
@@ -212,17 +176,6 @@ class _HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCl
                               childAspectRatio: 1.75,
                               children: chordDisplay.getDisplay(),
                             ),
-                        //   child: _image.isNotEmpty
-                        //     ? Image.asset(
-                        //       _getImage(),
-                        //       key: ValueKey('[$_selectedChord]'),
-                        //       width: MediaQuery.of(context).size.width,
-                        //       errorBuilder: (context, error, stackTrace) => Image.asset(
-                        //         Constants.defaultImage,
-                        //         key: ValueKey('[$_selectedChord]'),
-                        //         width: MediaQuery.of(context).size.width
-                        //       ),
-                        //     ) : const SizedBox.shrink(),
                         ),
                       ),
                     ),
@@ -304,8 +257,14 @@ class _HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCl
                       onSelected: (index) {
                         if (_selectedKey != index) {
                           setState(() {
-                            int j = 0;
                             _selectedKey = index;
+                            final chords = keyValues.getChords(_selectedKey);
+                            int j = chords.indexWhere((c) => c.enabled);
+                            if (j == -1) {
+                              debugPrint("No enabled chords in this key");
+                              return;
+                            }
+                            
                             while (keyValues.getChords(_selectedKey)[j].enabled == false) {
                               j++;
                             }

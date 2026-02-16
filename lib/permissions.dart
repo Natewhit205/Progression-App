@@ -4,7 +4,6 @@ Future<void> requestPermissions() async {
   final status = await Permission.microphone.request();
   switch (status) {
     case PermissionStatus.granted:
-      // Proceed to App
       break;
     case PermissionStatus.denied:
       openAppSettings();
@@ -13,7 +12,6 @@ Future<void> requestPermissions() async {
       openAppSettings();
       break;
     default:
-      // Error Handling
       break;
   }
 }

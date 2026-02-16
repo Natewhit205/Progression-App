@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_music_application/chord.dart';
+import 'package:flutter_music_application/classes/chord.dart';
 import 'package:flutter_music_application/widgets/chord_cell.dart';
 
 class ChordDisplay {
-  late List<Chord> displayArray;
+  late List<ChordData> displayArray;
   int defaultDisplaySize = 16;
 
-  void addChord(Chord chord) => displayArray.add(chord);
+  void addChord(ChordData chord) => displayArray.add(chord);
 
   void init() {
     clearDisplay();
@@ -16,8 +16,8 @@ class ChordDisplay {
     displayArray = [];
   }
 
-  List<Chord?> addNulls(List<Chord?> array, int numOfNulls) {
-    List<Chord?> output = List.from(array);
+  List<ChordData?> addNulls(List<ChordData?> array, int numOfNulls) {
+    List<ChordData?> output = List.from(array);
     for (int i = 0; i < numOfNulls; i++) {
       output.add(null);
     }
@@ -27,7 +27,7 @@ class ChordDisplay {
   List<ChordCell> getDisplay() {
     List<ChordCell> widgets = [];
     int number = 1;    
-    List<Chord?> temporaryArray = displayArray;
+    List<ChordData?> temporaryArray = displayArray;
     int length = temporaryArray.length;
 
     if (length < defaultDisplaySize) {
@@ -47,7 +47,7 @@ class ChordDisplay {
       }
     }
 
-    for (Chord? chord in temporaryArray) {
+    for (ChordData? chord in temporaryArray) {
       if (chord == null) {
         widgets.add(ChordCell(
           number: number,

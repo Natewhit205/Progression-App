@@ -2,15 +2,15 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_music_application/audio_playback.dart';
+import 'package:flutter_music_application/classes/chord.dart';
+import 'package:flutter_music_application/classes/music_key.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:flutter_music_application/chord.dart';
 import 'package:flutter_music_application/classes/chord_map.dart';
 import 'package:flutter_music_application/keys.dart';
 import 'package:flutter_music_application/permissions.dart';
 import 'package:flutter_music_application/saved_chord_progression.dart';
 import 'package:flutter_music_application/screens/home_screen.dart';
 
-late Box<Chord> box;
 late Box<SavedChordProgression> saves;
 
 late Box<ChordMap> chordMaps;
@@ -20,190 +20,78 @@ final AudioPlayback audioPlayback = AudioPlayback();
 
 bool checkEnabledStatus(List<int> nextChords, Map<int, int> keyShifts) => nextChords.isNotEmpty || keyShifts.isNotEmpty;
 
-Future<Map> readJsonFile(String filePath) async {
-  final String jsonString = await rootBundle.loadString(filePath);
-  return json.decode(jsonString) as Map;
+Future<Map<String, dynamic>> readJsonFile(String filePath) async {
+  try {
+    final jsonString = await rootBundle.loadString(filePath);
+    return json.decode(jsonString) as Map<String, dynamic>;
+  } catch (e, stackTrace) {
+    debugPrint("Load Error: $e");
+    debugPrintStack(stackTrace: stackTrace);
+    return {};
+  }
 }
 
 Future<List<ChordMap>> _loadDecisionMap() async {
   List<String> jsonFiles = [
-    'assets/chord_maps/map1.json',
-    'assets/chord_maps/map2.json'
+    'assets/chord_maps/chord_map.json'
   ];
 
   List<ChordMap> maps = [];
 
+  int mapIndex = 0;
+
   for (String jsonFile in jsonFiles) {
-    final Map fileData = await readJsonFile(jsonFile);
-    final keys = fileData["keys"];
-    ChordMap chordMap = ChordMap(fileData["mapName"], fileData["keyIndex"]);
-    chordMap.mapKeys = chordMap.populateKeys(fileData["keys"]);
+    final fileData = await readJsonFile(jsonFile);
+    final keys = (fileData["keys"] as List).map((e) => Map<String, dynamic>.from(e)).toList();
+
+    final keyIndex = Map<String, int>.from(fileData["keyIndex"]);
+    ChordMap chordMap = ChordMap(fileData["mapName"], keyIndex);
+    chordMap.mapKeys = chordMap.populateKeys(keys);
     maps.add(chordMap);
 
-    int index = 1;
+    int index = 0;
 
-    for (Map key in keys) {
+    for (final Map<String, dynamic> key in keys) {
       String keyName = key["keyName"];
-      final chords = key["chords"];
+      final chords = (key["chords"] as List).map((e) => Map<String, dynamic>.from(e)).toList();
 
       keyValues.addKeys(index, keyName);
       keyValues.chords.add([]);
 
-      for (Map currentChord in chords) {
+      for (final currentChord in chords) {
         String chordName = currentChord["chordName"];
 
         int iD = currentChord["chordId"];
-        List<int> nextChords = [];
-        List<String> nextChordNames = [];
         bool enabled = currentChord["enabled"];
-        bool modulates;
-        Map<int, int> keyShifts = {};
-
-        final chordTransitions = currentChord["chordTransitions"];
-
-        if (chordTransitions != null) {
-          nextChords = List<int>.from(chordTransitions["transitionId"] ?? []);
-          nextChordNames = List<String>.from(chordTransitions["transitionName"] ?? []);
-        }
-
-        if (currentChord["modulations"] != null) {
-          modulates = true;
-
-          for (final modulation in currentChord["modulations"]) {
-            String modKey = modulation["modKey"];
-            int keyReference = fileData["keyIndex"][modKey];
-            keyShifts[keyReference] = modulation["modChord"];
-          }
-        } else {
-          modulates = false;
-        }  
         
-
-        Chord chord = Chord(iD, chordName, nextChords, nextChordNames, modulates, keyShifts);
-        String key = '[$index, $iD]';
         keyValues.addChords(index, iD, chordName, enabled);
-
-        try {
-          box.put(key, chord);
-        } catch(e) {
-          debugPrint('Error storing chord: $e');
-        }
       }
       index += 1;
     }
 
     try {
-      chordMaps.put(index, chordMap);
+      chordMaps.put(mapIndex, chordMap);
     } catch (e) {
       debugPrint('Error storing chord map: $e');
     }
+
+    mapIndex += 1;
   }
 
   return maps;
 }
 
-/* Future<void> _populateDecisionMap() async {
-  List<String> files = [
-    'assets/chord_maps/f_maj.csv',
-    'assets/chord_maps/c_min.csv',
-    'assets/chord_maps/d_min.csv',
-    'assets/chord_maps/f#_min.csv',
-    'assets/chord_maps/e_maj.csv',
-    'assets/chord_maps/a_maj.csv',
-    'assets/chord_maps/b_maj.csv'
-  ];
-
-  for (int k = 1; k < files.length + 1; k++) {
-    String csv = files[k - 1];
-    String fileData = await rootBundle.loadString(csv);
-    String name;
-
-    List<String> rows = fileData.split('\n');
-
-    String keyChordName = rows[0].split(',')[1];
-    if (keyChordName.length == 1) {
-      name = keyChordName[0];
-    } else {
-      name = keyChordName.substring(0, keyChordName.length - 1);
-    }
-
-    if (keyChordName.endsWith('m')) {
-      name += ' Minor';
-    } else {
-      name += ' Major';
-    }
-    keyValues.addKeys(k, name);
-    keyValues.chords.add([]);
-
-    for (int i = 0; i < rows.length; i++) {
-      String row = rows[i].trim(); //remove trailing whitespace or new lines
-      if (row.isEmpty) continue; //skip empty rows
-      List<String> itemInRow = row.split(',');
-
-      int iD = 0;
-      String chordName = '';
-      List<int> nextChords = [];
-      List<String> nextChordNames = [];
-      bool modulates = false;
-      Map<int, int> keyShifts = {};
-
-      for (int j = 0; j < itemInRow.length; j++) {
-        if (j == 0) {
-          iD = int.parse(itemInRow[j]);
-        } else if (j == 1) {
-          chordName = itemInRow[j];
-        } else {
-          while (itemInRow[j] != '-1') {
-            nextChords.add(int.parse(itemInRow[j]));
-            j++;
-          }
-          j++; //skip the -1 entry
-
-          while (itemInRow[j] != '0') {
-            nextChordNames.add(itemInRow[j]);
-            j++;
-          }
-          j++; //skip the 0 entry
-
-          List<int> tempValues = [];
-          while (itemInRow[j] != "None") {
-            modulates = true;
-            if (itemInRow[j] == "-") {
-              j++;
-              continue;
-            }
-
-            tempValues.add(int.parse(itemInRow[j]));
-
-            if (tempValues.length == 2) {
-              keyShifts[tempValues[0]] = tempValues[1];
-              tempValues.clear();
-            }
-            j++;
-          }
-        }
-      }
-    
-      Chord chord = Chord(iD, chordName, nextChords, nextChordNames, modulates, keyShifts);
-      String key = '[$k, ${itemInRow[0]}]';
-      keyValues.addChords(k, iD, chordName, checkEnabledStatus(nextChords, keyShifts));
-
-      try {
-        box.put(key, chord);
-      } catch(e) {
-        print('Error storing chord: $e');
-      }
-    }
-  }
-} */
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
-  Hive.registerAdapter(ChordAdapter());
   Hive.registerAdapter(SavedChordProgressionAdapter());
-  box = await Hive.openBox<Chord>('decisionMap');
+  Hive.registerAdapter(ChordMapAdapter());
+  Hive.registerAdapter(MusicKeyAdapter());
+  Hive.registerAdapter(ChordAdapter());
+  Hive.registerAdapter(TransitionAdapter());
+  Hive.registerAdapter(ModulationAdapter());
   saves = await Hive.openBox<SavedChordProgression>('savedChords');
+  chordMaps = await Hive.openBox<ChordMap>('chordMaps');
 
   final List<ChordMap> maps = await _loadDecisionMap();
   requestPermissions();

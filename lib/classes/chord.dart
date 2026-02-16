@@ -1,9 +1,25 @@
+import 'package:hive/hive.dart';
+
+part 'chord.g.dart';
+
+@HiveType(typeId: 4)
 class Chord {
+  @HiveField(0)
   final int chordId;
+
+  @HiveField(1)
   final String chordName;
+
+  @HiveField(2)
   final String keyName;
+
+  @HiveField(3)
   final bool enabled;
+
+  @HiveField(4)
   final List<Transition> chordTransitions;
+
+  @HiveField(5)
   final List<Modulation> modulations;
 
   Chord({
@@ -42,9 +58,15 @@ class Chord {
   }
 }
 
+@HiveType(typeId: 5)
 class Transition {
+  @HiveField(0)
   final int transitionId;
+
+  @HiveField(1)
   final String transitionName;
+
+  @HiveField(2)
   final double weight;
 
   Transition({
@@ -54,9 +76,15 @@ class Transition {
   });
 }
 
+@HiveType(typeId: 6)
 class Modulation {
+  @HiveField(0)
   final String keyName;
+
+  @HiveField(1)
   final String chordName;
+
+  @HiveField(2)
   final double weight;
 
   Modulation({

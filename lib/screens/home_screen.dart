@@ -18,7 +18,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   // Page Controller
   int _selectedIndex = 1;
-  final PageController _pageController = PageController(initialPage: 1);
+  late final PageController _pageController;
   
   late final List<Widget> _pages;
 
@@ -50,6 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    _pageController = PageController(initialPage: _selectedIndex);
     _pages = [
       const BpmScreen(),
       HarmonyScreen(chordMap: widget.chordMap),

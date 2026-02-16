@@ -1,0 +1,1019 @@
+{
+  "mapName": "test.mp3",
+  "keyIndex": {
+    "F:major": 0,
+    "Bb:major": 1,
+    "Eb:major": 2,
+    "F:minor": 3,
+    "B:major": 4,
+    "D:major": 5,
+    "G:major": 6,
+    "Bb:minor": 7,
+    "C:major": 8
+  },
+  "keys": [
+    {
+      "keyName": "F:major",
+      "chords": [
+        {
+          "chordId": 0,
+          "chordName": "F:maj",
+          "enabled": true,
+          "chordTransitions": {
+            "transitionId": [
+              5,
+              3,
+              4,
+              1
+            ],
+            "transitionName": [
+              "D:min",
+              "Bb:maj",
+              "C:maj",
+              "G:min"
+            ],
+            "weights": [
+              0.2222222222222222,
+              0.3333333333333333,
+              0.3333333333333333,
+              0.1111111111111111
+            ]
+          },
+          "modulations": null
+        },
+        {
+          "chordId": 1,
+          "chordName": "G:min",
+          "enabled": true,
+          "chordTransitions": {
+            "transitionId": [
+              3
+            ],
+            "transitionName": [
+              "Bb:maj"
+            ],
+            "weights": [
+              1.0
+            ]
+          },
+          "modulations": null
+        },
+        {
+          "chordId": 2,
+          "chordName": "A:min",
+          "enabled": false,
+          "chordTransitions": null,
+          "modulations": null
+        },
+        {
+          "chordId": 3,
+          "chordName": "Bb:maj",
+          "enabled": true,
+          "chordTransitions": {
+            "transitionId": [
+              4,
+              0,
+              5
+            ],
+            "transitionName": [
+              "C:maj",
+              "F:maj",
+              "D:min"
+            ],
+            "weights": [
+              0.4,
+              0.4,
+              0.1
+            ]
+          },
+          "modulations": [
+            {
+              "modKey": "Bb:major",
+              "modChord": "C:min",
+              "modWeight": 0.1
+            }
+          ]
+        },
+        {
+          "chordId": 4,
+          "chordName": "C:maj",
+          "enabled": true,
+          "chordTransitions": {
+            "transitionId": [
+              0,
+              3,
+              5
+            ],
+            "transitionName": [
+              "F:maj",
+              "Bb:maj",
+              "D:min"
+            ],
+            "weights": [
+              0.5,
+              0.25,
+              0.25
+            ]
+          },
+          "modulations": null
+        },
+        {
+          "chordId": 5,
+          "chordName": "D:min",
+          "enabled": true,
+          "chordTransitions": {
+            "transitionId": [
+              3,
+              4
+            ],
+            "transitionName": [
+              "Bb:maj",
+              "C:maj"
+            ],
+            "weights": [
+              0.8,
+              0.2
+            ]
+          },
+          "modulations": null
+        },
+        {
+          "chordId": 6,
+          "chordName": "E:dim",
+          "enabled": false,
+          "chordTransitions": null,
+          "modulations": null
+        }
+      ]
+    },
+    {
+      "keyName": "Bb:major",
+      "chords": [
+        {
+          "chordId": 0,
+          "chordName": "Bb:maj",
+          "enabled": true,
+          "chordTransitions": {
+            "transitionId": [
+              4,
+              2
+            ],
+            "transitionName": [
+              "F:maj",
+              "D:min"
+            ],
+            "weights": [
+              0.3333333333333333,
+              0.3333333333333333
+            ]
+          },
+          "modulations": [
+            {
+              "modKey": "F:minor",
+              "modChord": "C:maj",
+              "modWeight": 0.3333333333333333
+            }
+          ]
+        },
+        {
+          "chordId": 1,
+          "chordName": "C:min",
+          "enabled": true,
+          "chordTransitions": {
+            "transitionId": [
+              5
+            ],
+            "transitionName": [
+              "G:min"
+            ],
+            "weights": [
+              0.5
+            ]
+          },
+          "modulations": [
+            {
+              "modKey": "Eb:major",
+              "modChord": "Ab:maj",
+              "modWeight": 0.5
+            }
+          ]
+        },
+        {
+          "chordId": 2,
+          "chordName": "D:min",
+          "enabled": true,
+          "chordTransitions": {
+            "transitionId": [
+              4,
+              0,
+              5
+            ],
+            "transitionName": [
+              "F:maj",
+              "Bb:maj",
+              "G:min"
+            ],
+            "weights": [
+              0.25,
+              0.5,
+              0.25
+            ]
+          },
+          "modulations": null
+        },
+        {
+          "chordId": 3,
+          "chordName": "Eb:maj",
+          "enabled": false,
+          "chordTransitions": null,
+          "modulations": null
+        },
+        {
+          "chordId": 4,
+          "chordName": "F:maj",
+          "enabled": true,
+          "chordTransitions": {
+            "transitionId": [
+              2,
+              0,
+              5
+            ],
+            "transitionName": [
+              "D:min",
+              "Bb:maj",
+              "G:min"
+            ],
+            "weights": [
+              0.3333333333333333,
+              0.16666666666666666,
+              0.16666666666666666
+            ]
+          },
+          "modulations": [
+            {
+              "modKey": "F:minor",
+              "modChord": "C:maj",
+              "modWeight": 0.16666666666666666
+            },
+            {
+              "modKey": "B:major",
+              "modChord": "E:maj",
+              "modWeight": 0.16666666666666666
+            }
+          ]
+        },
+        {
+          "chordId": 5,
+          "chordName": "G:min",
+          "enabled": true,
+          "chordTransitions": {
+            "transitionId": [
+              1,
+              4,
+              2
+            ],
+            "transitionName": [
+              "C:min",
+              "F:maj",
+              "D:min"
+            ],
+            "weights": [
+              0.3333333333333333,
+              0.3333333333333333,
+              0.3333333333333333
+            ]
+          },
+          "modulations": null
+        },
+        {
+          "chordId": 6,
+          "chordName": "A:dim",
+          "enabled": false,
+          "chordTransitions": null,
+          "modulations": null
+        }
+      ]
+    },
+    {
+      "keyName": "Eb:major",
+      "chords": [
+        {
+          "chordId": 0,
+          "chordName": "Eb:maj",
+          "enabled": true,
+          "chordTransitions": {
+            "transitionId": [
+              2,
+              1,
+              5,
+              3
+            ],
+            "transitionName": [
+              "G:min",
+              "F:min",
+              "C:min",
+              "Ab:maj"
+            ],
+            "weights": [
+              0.125,
+              0.125,
+              0.5,
+              0.125
+            ]
+          },
+          "modulations": [
+            {
+              "modKey": "Bb:major",
+              "modChord": "F:maj",
+              "modWeight": 0.125
+            }
+          ]
+        },
+        {
+          "chordId": 1,
+          "chordName": "F:min",
+          "enabled": true,
+          "chordTransitions": {
+            "transitionId": [
+              0,
+              5
+            ],
+            "transitionName": [
+              "Eb:maj",
+              "C:min"
+            ],
+            "weights": [
+              0.5,
+              0.5
+            ]
+          },
+          "modulations": null
+        },
+        {
+          "chordId": 2,
+          "chordName": "G:min",
+          "enabled": true,
+          "chordTransitions": {
+            "transitionId": [
+              4
+            ],
+            "transitionName": [
+              "Bb:maj"
+            ],
+            "weights": [
+              1.0
+            ]
+          },
+          "modulations": null
+        },
+        {
+          "chordId": 3,
+          "chordName": "Ab:maj",
+          "enabled": true,
+          "chordTransitions": {
+            "transitionId": [
+              0,
+              4,
+              5
+            ],
+            "transitionName": [
+              "Eb:maj",
+              "Bb:maj",
+              "C:min"
+            ],
+            "weights": [
+              0.6,
+              0.2,
+              0.2
+            ]
+          },
+          "modulations": null
+        },
+        {
+          "chordId": 4,
+          "chordName": "Bb:maj",
+          "enabled": true,
+          "chordTransitions": {
+            "transitionId": [
+              5,
+              0,
+              2
+            ],
+            "transitionName": [
+              "C:min",
+              "Eb:maj",
+              "G:min"
+            ],
+            "weights": [
+              0.1111111111111111,
+              0.2222222222222222,
+              0.1111111111111111
+            ]
+          },
+          "modulations": [
+            {
+              "modKey": "C:major",
+              "modChord": "C:maj",
+              "modWeight": 0.2222222222222222
+            },
+            {
+              "modKey": "C:major",
+              "modChord": "D:min",
+              "modWeight": 0.1111111111111111
+            },
+            {
+              "modKey": "C:major",
+              "modChord": "F:maj",
+              "modWeight": 0.2222222222222222
+            }
+          ]
+        },
+        {
+          "chordId": 5,
+          "chordName": "C:min",
+          "enabled": true,
+          "chordTransitions": {
+            "transitionId": [
+              1,
+              3,
+              0,
+              4
+            ],
+            "transitionName": [
+              "F:min",
+              "Ab:maj",
+              "Eb:maj",
+              "Bb:maj"
+            ],
+            "weights": [
+              0.14285714285714285,
+              0.42857142857142855,
+              0.2857142857142857,
+              0.14285714285714285
+            ]
+          },
+          "modulations": null
+        },
+        {
+          "chordId": 6,
+          "chordName": "D:dim",
+          "enabled": false,
+          "chordTransitions": null,
+          "modulations": null
+        }
+      ]
+    },
+    {
+      "keyName": "F:minor",
+      "chords": [
+        {
+          "chordId": 0,
+          "chordName": "F:min",
+          "enabled": false,
+          "chordTransitions": null,
+          "modulations": null
+        },
+        {
+          "chordId": 1,
+          "chordName": "G:dim",
+          "enabled": false,
+          "chordTransitions": null,
+          "modulations": null
+        },
+        {
+          "chordId": 2,
+          "chordName": "Ab:maj",
+          "enabled": false,
+          "chordTransitions": null,
+          "modulations": null
+        },
+        {
+          "chordId": 3,
+          "chordName": "Bb:min",
+          "enabled": false,
+          "chordTransitions": null,
+          "modulations": null
+        },
+        {
+          "chordId": 4,
+          "chordName": "C:min",
+          "enabled": false,
+          "chordTransitions": null,
+          "modulations": null
+        },
+        {
+          "chordId": 5,
+          "chordName": "C:maj",
+          "enabled": true,
+          "chordTransitions": null,
+          "modulations": [
+            {
+              "modKey": "Bb:major",
+              "modChord": "F:maj",
+              "modWeight": 1.0
+            }
+          ]
+        },
+        {
+          "chordId": 6,
+          "chordName": "Db:maj",
+          "enabled": false,
+          "chordTransitions": null,
+          "modulations": null
+        },
+        {
+          "chordId": 7,
+          "chordName": "Eb:maj",
+          "enabled": false,
+          "chordTransitions": null,
+          "modulations": null
+        },
+        {
+          "chordId": 8,
+          "chordName": "E:dim",
+          "enabled": false,
+          "chordTransitions": null,
+          "modulations": null
+        }
+      ]
+    },
+    {
+      "keyName": "B:major",
+      "chords": [
+        {
+          "chordId": 0,
+          "chordName": "B:maj",
+          "enabled": true,
+          "chordTransitions": null,
+          "modulations": [
+            {
+              "modKey": "D:major",
+              "modChord": "A:maj",
+              "modWeight": 1.0
+            }
+          ]
+        },
+        {
+          "chordId": 1,
+          "chordName": "C#:min",
+          "enabled": true,
+          "chordTransitions": null,
+          "modulations": [
+            {
+              "modKey": "D:major",
+              "modChord": "A:maj",
+              "modWeight": 0.6666666666666666
+            },
+            {
+              "modKey": "D:major",
+              "modChord": "F#:min",
+              "modWeight": 0.3333333333333333
+            }
+          ]
+        },
+        {
+          "chordId": 2,
+          "chordName": "D#:min",
+          "enabled": false,
+          "chordTransitions": null,
+          "modulations": null
+        },
+        {
+          "chordId": 3,
+          "chordName": "E:maj",
+          "enabled": true,
+          "chordTransitions": {
+            "transitionId": [
+              0,
+              1
+            ],
+            "transitionName": [
+              "B:maj",
+              "C#:min"
+            ],
+            "weights": [
+              0.07692307692307693,
+              0.23076923076923078
+            ]
+          },
+          "modulations": [
+            {
+              "modKey": "D:major",
+              "modChord": "F#:min",
+              "modWeight": 0.15384615384615385
+            },
+            {
+              "modKey": "D:major",
+              "modChord": "A:maj",
+              "modWeight": 0.3076923076923077
+            },
+            {
+              "modKey": "D:major",
+              "modChord": "D:maj",
+              "modWeight": 0.15384615384615385
+            },
+            {
+              "modKey": "G:major",
+              "modChord": "C:maj",
+              "modWeight": 0.07692307692307693
+            }
+          ]
+        },
+        {
+          "chordId": 4,
+          "chordName": "F#:maj",
+          "enabled": false,
+          "chordTransitions": null,
+          "modulations": null
+        },
+        {
+          "chordId": 5,
+          "chordName": "G#:min",
+          "enabled": false,
+          "chordTransitions": null,
+          "modulations": null
+        },
+        {
+          "chordId": 6,
+          "chordName": "A#:dim",
+          "enabled": false,
+          "chordTransitions": null,
+          "modulations": null
+        },
+        {
+          "chordId": 7,
+          "chordName": "Bb:dim",
+          "enabled": false,
+          "chordTransitions": null,
+          "modulations": null
+        }
+      ]
+    },
+    {
+      "keyName": "D:major",
+      "chords": [
+        {
+          "chordId": 0,
+          "chordName": "D:maj",
+          "enabled": true,
+          "chordTransitions": {
+            "transitionId": [
+              4,
+              2
+            ],
+            "transitionName": [
+              "A:maj",
+              "F#:min"
+            ],
+            "weights": [
+              0.6666666666666666,
+              0.16666666666666666
+            ]
+          },
+          "modulations": [
+            {
+              "modKey": "B:major",
+              "modChord": "E:maj",
+              "modWeight": 0.16666666666666666
+            }
+          ]
+        },
+        {
+          "chordId": 1,
+          "chordName": "E:min",
+          "enabled": false,
+          "chordTransitions": null,
+          "modulations": null
+        },
+        {
+          "chordId": 2,
+          "chordName": "F#:min",
+          "enabled": true,
+          "chordTransitions": {
+            "transitionId": [
+              5,
+              4,
+              0
+            ],
+            "transitionName": [
+              "B:min",
+              "A:maj",
+              "D:maj"
+            ],
+            "weights": [
+              0.1111111111111111,
+              0.1111111111111111,
+              0.2222222222222222
+            ]
+          },
+          "modulations": [
+            {
+              "modKey": "B:major",
+              "modChord": "E:maj",
+              "modWeight": 0.5555555555555556
+            }
+          ]
+        },
+        {
+          "chordId": 3,
+          "chordName": "G:maj",
+          "enabled": false,
+          "chordTransitions": null,
+          "modulations": null
+        },
+        {
+          "chordId": 4,
+          "chordName": "A:maj",
+          "enabled": true,
+          "chordTransitions": {
+            "transitionId": [
+              5,
+              0,
+              2
+            ],
+            "transitionName": [
+              "B:min",
+              "D:maj",
+              "F#:min"
+            ],
+            "weights": [
+              0.07692307692307693,
+              0.15384615384615385,
+              0.3076923076923077
+            ]
+          },
+          "modulations": [
+            {
+              "modKey": "B:major",
+              "modChord": "E:maj",
+              "modWeight": 0.46153846153846156
+            }
+          ]
+        },
+        {
+          "chordId": 5,
+          "chordName": "B:min",
+          "enabled": true,
+          "chordTransitions": {
+            "transitionId": [
+              4,
+              2
+            ],
+            "transitionName": [
+              "A:maj",
+              "F#:min"
+            ],
+            "weights": [
+              0.5,
+              0.5
+            ]
+          },
+          "modulations": null
+        },
+        {
+          "chordId": 6,
+          "chordName": "C#:dim",
+          "enabled": false,
+          "chordTransitions": null,
+          "modulations": null
+        }
+      ]
+    },
+    {
+      "keyName": "G:major",
+      "chords": [
+        {
+          "chordId": 0,
+          "chordName": "G:maj",
+          "enabled": false,
+          "chordTransitions": null,
+          "modulations": null
+        },
+        {
+          "chordId": 1,
+          "chordName": "A:min",
+          "enabled": false,
+          "chordTransitions": null,
+          "modulations": null
+        },
+        {
+          "chordId": 2,
+          "chordName": "B:min",
+          "enabled": false,
+          "chordTransitions": null,
+          "modulations": null
+        },
+        {
+          "chordId": 3,
+          "chordName": "C:maj",
+          "enabled": true,
+          "chordTransitions": null,
+          "modulations": [
+            {
+              "modKey": "Bb:minor",
+              "modChord": "F:maj",
+              "modWeight": 1.0
+            }
+          ]
+        },
+        {
+          "chordId": 4,
+          "chordName": "D:maj",
+          "enabled": false,
+          "chordTransitions": null,
+          "modulations": null
+        },
+        {
+          "chordId": 5,
+          "chordName": "E:min",
+          "enabled": false,
+          "chordTransitions": null,
+          "modulations": null
+        },
+        {
+          "chordId": 6,
+          "chordName": "F#:dim",
+          "enabled": false,
+          "chordTransitions": null,
+          "modulations": null
+        }
+      ]
+    },
+    {
+      "keyName": "Bb:minor",
+      "chords": [
+        {
+          "chordId": 0,
+          "chordName": "Bb:min",
+          "enabled": false,
+          "chordTransitions": null,
+          "modulations": null
+        },
+        {
+          "chordId": 1,
+          "chordName": "C:dim",
+          "enabled": false,
+          "chordTransitions": null,
+          "modulations": null
+        },
+        {
+          "chordId": 2,
+          "chordName": "Db:maj",
+          "enabled": false,
+          "chordTransitions": null,
+          "modulations": null
+        },
+        {
+          "chordId": 3,
+          "chordName": "Eb:min",
+          "enabled": false,
+          "chordTransitions": null,
+          "modulations": null
+        },
+        {
+          "chordId": 4,
+          "chordName": "F:min",
+          "enabled": false,
+          "chordTransitions": null,
+          "modulations": null
+        },
+        {
+          "chordId": 5,
+          "chordName": "F:maj",
+          "enabled": true,
+          "chordTransitions": null,
+          "modulations": [
+            {
+              "modKey": "C:major",
+              "modChord": "D:min",
+              "modWeight": 1.0
+            }
+          ]
+        },
+        {
+          "chordId": 6,
+          "chordName": "Gb:maj",
+          "enabled": false,
+          "chordTransitions": null,
+          "modulations": null
+        },
+        {
+          "chordId": 7,
+          "chordName": "Ab:maj",
+          "enabled": false,
+          "chordTransitions": null,
+          "modulations": null
+        },
+        {
+          "chordId": 8,
+          "chordName": "Adim",
+          "enabled": false,
+          "chordTransitions": null,
+          "modulations": null
+        }
+      ]
+    },
+    {
+      "keyName": "C:major",
+      "chords": [
+        {
+          "chordId": 0,
+          "chordName": "C:maj",
+          "enabled": true,
+          "chordTransitions": {
+            "transitionId": [
+              3
+            ],
+            "transitionName": [
+              "F:maj"
+            ],
+            "weights": [
+              0.5
+            ]
+          },
+          "modulations": [
+            {
+              "modKey": "Eb:major",
+              "modChord": "Bb:maj",
+              "modWeight": 0.5
+            }
+          ]
+        },
+        {
+          "chordId": 1,
+          "chordName": "D:min",
+          "enabled": true,
+          "chordTransitions": {
+            "transitionId": [
+              0
+            ],
+            "transitionName": [
+              "C:maj"
+            ],
+            "weights": [
+              0.5
+            ]
+          },
+          "modulations": [
+            {
+              "modKey": "Eb:major",
+              "modChord": "Bb:maj",
+              "modWeight": 0.5
+            }
+          ]
+        },
+        {
+          "chordId": 2,
+          "chordName": "E:min",
+          "enabled": false,
+          "chordTransitions": null,
+          "modulations": null
+        },
+        {
+          "chordId": 3,
+          "chordName": "F:maj",
+          "enabled": true,
+          "chordTransitions": {
+            "transitionId": [
+              0
+            ],
+            "transitionName": [
+              "C:maj"
+            ],
+            "weights": [
+              0.3333333333333333
+            ]
+          },
+          "modulations": [
+            {
+              "modKey": "Eb:major",
+              "modChord": "Bb:maj",
+              "modWeight": 0.6666666666666666
+            }
+          ]
+        },
+        {
+          "chordId": 4,
+          "chordName": "G:maj",
+          "enabled": false,
+          "chordTransitions": null,
+          "modulations": null
+        },
+        {
+          "chordId": 5,
+          "chordName": "A:min",
+          "enabled": false,
+          "chordTransitions": null,
+          "modulations": null
+        },
+        {
+          "chordId": 6,
+          "chordName": "B:dim",
+          "enabled": false,
+          "chordTransitions": null,
+          "modulations": null
+        }
+      ]
+    }
+  ]
+}
