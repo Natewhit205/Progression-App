@@ -3,7 +3,7 @@ import 'package:flutter_music_application/colors.dart';
 
 class CustomAppBar {
   static AppBar customAppBar({String? title}) => AppBar(
-    foregroundColor: Colors.white,
+    foregroundColor: AppTheme.primary40,
     title: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [

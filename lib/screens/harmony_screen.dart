@@ -14,7 +14,7 @@ import 'package:flutter_music_application/classes/utilities.dart';
 import 'package:flutter_music_application/colors.dart';
 import 'package:flutter_music_application/styles.dart';
 import 'package:flutter_music_application/saved_chord_progression.dart';
-//import 'package:flutter_music_application/screens/saves_screen.dart';
+import 'package:flutter_music_application/screens/saves_screen.dart';
 import 'package:flutter_music_application/screens/chord_charts_screen.dart';
 import 'package:flutter_music_application/widgets/dropdown.dart';
 import 'package:flutter_music_application/widgets/button.dart';
@@ -57,7 +57,7 @@ class _HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCl
     }
   }
 
-  //void _viewSaves(context) => Navigator.push(context, MaterialPageRoute(builder: (context) => const SavesScreen()));
+  void _viewSaves(context) => Navigator.push(context, MaterialPageRoute(builder: (context) => const SavesScreen()));
 
   void _generateProgression() {
     debugPrint("_generateProgression function call");
@@ -179,22 +179,22 @@ class _HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCl
                         ),
                       ),
                     ),
-                    Align(
-                      alignment: const Alignment(0.0, -0.8),
-                      child: SimpleActionButton(
-                        onPressed: () => _showChordSymbols(context),
-                        color: AppTheme.primary80,
-                        child: Text(
-                          'View Chord Charts',
-                          style: AppTextStyle.standard(color: AppTheme.primary10),
-                        ),
-                      )
-                    ),
+                    // Align(
+                    //   alignment: const Alignment(0.0, -0.8),
+                    //   child: SimpleActionButton(
+                    //     onPressed: () => _showChordSymbols(context),
+                    //     color: AppTheme.primary80,
+                    //     child: Text(
+                    //       'View Chord Charts',
+                    //       style: AppTextStyle.standard(color: AppTheme.primary10),
+                    //     ),
+                    //   )
+                    // ),
                   ]
                 ),
               ),
               Align(
-                alignment: const Alignment(0.0, 0.05),
+                alignment: const Alignment(0.0, -0.1),
                 child: Padding(
                   padding: const EdgeInsets.all(35.0),
                   child: Text(
@@ -210,42 +210,48 @@ class _HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCl
                 ),
               ),
               Align(
-                alignment: const Alignment(0.0, 0.30),
+                alignment: const Alignment(0.0, 0.20),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    !_playing ? CustomMaterialButton(
-                      onPressed: _checkPlayStatus() ? _playChordProgression : null,
-                      child: Text(
-                        'Play',
-                        style: AppTextStyle.standard(color: _checkPlayStatus() ? AppTheme.secondary10 : AppTheme.surface),
-                      ),
-                    ) : CustomMaterialButton(
-                      onPressed: _stopPlayback,
-                      child: Text(
-                        'Stop',
-                        style: AppTextStyle.standard(color: AppTheme.secondary10),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: !_playing ? CustomMaterialButton(
+                        onPressed: _checkPlayStatus() ? _playChordProgression : null,
+                        child: Text(
+                          'Play',
+                          style: AppTextStyle.standard(color: _checkPlayStatus() ? AppTheme.secondary10 : AppTheme.surface),
+                        ),
+                      ) : CustomMaterialButton(
+                        onPressed: _stopPlayback,
+                        child: Text(
+                          'Stop',
+                          style: AppTextStyle.standard(color: AppTheme.secondary10),
+                        ),
                       ),
                     ),
-                    !_saved ? CustomMaterialButton(
-                      onPressed: _checkSaveStatus() ? _saveChordProgression : null,
-                      child: Text(
-                        'Save',
-                        style: AppTextStyle.standard(color: _checkSaveStatus() ? AppTheme.secondary10 : AppTheme.surface),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: !_saved ? CustomMaterialButton(
+                        onPressed: _checkSaveStatus() ? _saveChordProgression : null,
+                        child: Text(
+                          'Save',
+                          style: AppTextStyle.standard(color: _checkSaveStatus() ? AppTheme.secondary10 : AppTheme.surface),
+                        ),
+                      ) : SizedBox(
+                        width: 110,
+                        child: Text(
+                          'Saved!',textAlign: TextAlign.center,
+                          style: AppTextStyle.bold(color: Colors.black),
+                        )
                       ),
-                    ) : SizedBox(
-                      width: 110,
-                      child: Text(
-                        'Saved!',textAlign: TextAlign.center,
-                        style: AppTextStyle.bold(color: Colors.black),
-                      )
                     ),
                   ],
                 ),
               ),
               Align(
-                alignment: const Alignment(0.0, 0.7),
+                alignment: const Alignment(0.0, 0.6),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -295,24 +301,30 @@ class _HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCl
                 alignment: const Alignment(0.0, 0.9),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SimpleActionButton(
-                      onPressed: _generateProgression,
-                      color: AppTheme.primary10,
-                      child: Text(
-                        'Generate',
-                        style: AppTextStyle.standard(),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: SimpleActionButton(
+                        onPressed: _generateProgression,
+                        color: AppTheme.primary10,
+                        child: Text(
+                          'Generate',
+                          style: AppTextStyle.standard(),
+                        ),
                       ),
                     ),
-                    // SimpleActionButton(
-                    //   onPressed: () => _viewSaves(context),
-                    //   color: AppTheme.primary80,
-                    //   child: Text(
-                    //     'View Saves',
-                    //     style: AppTextStyle.standard(color: AppTheme.primary10),
-                    //   ),
-                    // ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: SimpleActionButton(
+                        onPressed: () => _viewSaves(context),
+                        color: AppTheme.primary80,
+                        child: Text(
+                          'View Saves',
+                          style: AppTextStyle.standard(color: AppTheme.primary10),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
