@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fading_edge_scrollview/fading_edge_scrollview.dart';
 import 'package:flutter_music_application/colors.dart';
+import 'package:flutter_music_application/constants.dart';
 import 'package:flutter_music_application/main.dart';
 import 'package:flutter_music_application/styles.dart';
 import 'package:flutter_music_application/widgets/app_bar.dart';
@@ -111,7 +112,7 @@ class SavesScreenState extends State<SavesScreen> {
     int upperBound = 32;
 
     if (length <= 8) {
-      output = maxFont;
+      output = Constants.maxOutputFont;
     } else {
       output = maxFont - (length - lowerBound) * (maxFont - minFont) / (upperBound - lowerBound);
     }
@@ -141,7 +142,7 @@ class SavesScreenState extends State<SavesScreen> {
                   height: 80,
                   child: Flex(
                     direction: Axis.horizontal,
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Flexible(
                         child: FadingEdgeScrollView.fromSingleChildScrollView(
@@ -152,7 +153,7 @@ class SavesScreenState extends State<SavesScreen> {
                             controller: ScrollController(),
                             child: Text(
                               displayedProgression,
-                              textAlign: TextAlign.center,
+                              textAlign: TextAlign.left,
                               style: TextStyle(
                                 fontSize: _calculateFontSize(currentProgression.chordProgression.length),
                                 fontWeight: FontWeight.w500,

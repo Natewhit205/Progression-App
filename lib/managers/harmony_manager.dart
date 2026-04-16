@@ -2,7 +2,6 @@ import 'package:flutter_music_application/classes/chord.dart';
 import 'package:flutter_music_application/classes/chord_map.dart';
 import 'package:flutter_music_application/classes/chord_progression.dart';
 import 'package:dart_random_choice/dart_random_choice.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_music_application/managers/chord_display.dart';
 
 class HarmonyManager {
@@ -11,7 +10,6 @@ class HarmonyManager {
   HarmonyManager({required this.chordMap});
 
   ChordProgression generateChordProgression(ChordData startingChord, int numberOfChords, ChordDisplay chordDisplay) {
-    debugPrint("Generate Progression (HarmonyManager) Start");
     ChordProgression progression = ChordProgression();
     progression.addChord(startingChord);
     chordDisplay.addChord(startingChord);

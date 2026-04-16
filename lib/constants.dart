@@ -1,8 +1,8 @@
 class Constants {
   static int minChordLimit = 4;
   static int maxChordLimit = 32;
-  static int minOutputFont = 16;
-  static int maxOutputFont = 28;
+  static double minOutputFont = 16;
+  static double maxOutputFont = 28;
 
   static int chordsPerLine = 4;
 

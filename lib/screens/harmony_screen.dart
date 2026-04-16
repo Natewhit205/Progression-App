@@ -9,13 +9,11 @@ import 'package:flutter_music_application/managers/harmony_manager.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:flutter_music_application/main.dart';
 import 'package:flutter_music_application/constants.dart';
-//import 'package:flutter_music_application/chord.dart';
 import 'package:flutter_music_application/classes/utilities.dart';
 import 'package:flutter_music_application/colors.dart';
 import 'package:flutter_music_application/styles.dart';
 import 'package:flutter_music_application/saved_chord_progression.dart';
 import 'package:flutter_music_application/screens/saves_screen.dart';
-import 'package:flutter_music_application/screens/chord_charts_screen.dart';
 import 'package:flutter_music_application/widgets/dropdown.dart';
 import 'package:flutter_music_application/widgets/button.dart';
 
@@ -38,6 +36,7 @@ class _HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCl
   bool _generated = false;
   bool _playing = false;
 
+  bool haltedGeneration = false;
 
   late int _selectedKey;
   late List<int> _selectedChord;
@@ -60,23 +59,20 @@ class _HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCl
   void _viewSaves(context) => Navigator.push(context, MaterialPageRoute(builder: (context) => const SavesScreen()));
 
   void _generateProgression() {
-    debugPrint("_generateProgression function call");
     final int limit = _chordLimit;
-    debugPrint("Selected Chord: $_selectedChord");
+    haltedGeneration = false;
 
     if (_selectedChord.length <= 1 || _selectedChord[1] < 0) return;
 
-    debugPrint("About to Clear Display");
     chordDisplay.clearDisplay();
-    debugPrint("Display Cleared");
 
     final ChordData startingChord =
       harmonyManager.getChordDataObj(_selectedKey, _selectedChord[1]);
 
-    debugPrint("Starting ChordData: $startingChord");
-
     final ChordProgression chordProgression =
       harmonyManager.generateChordProgression(startingChord, limit, chordDisplay);
+    
+    if (chordProgression.chords.length < limit) haltedGeneration = true;
 
     _chordProgression =
       chordProgression.chords.map((c) => c.chordName).toList();
@@ -108,10 +104,6 @@ class _HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCl
     setState(() => _playing = false);
   }
 
-  void _showChordSymbols(context) {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => ChordChartsScreen(selectedKey: _selectedKey)));
-  }
-
   void _saveChordProgression() {
     SavedChordProgression newSave = SavedChordProgression(_chordProgression);
     int key = 1;
@@ -138,9 +130,6 @@ class _HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCl
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    var size = MediaQuery.of(context).size;
-    double chordDisplayHeight = size.height / 4;
-
     return Center(
       child: Align(
         alignment: Alignment.center,
@@ -151,50 +140,17 @@ class _HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCl
             alignment: Alignment.topLeft,
             children: [
               Align(
-                alignment: const Alignment(0.0, -1),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Container(
-                        height: chordDisplayHeight,
-                        decoration: BoxDecoration(
-                          color: AppTheme.secondary10,
-                          border: Border.all(color: Colors.black, width: 2.0),
-                        ),
-                        child: AnimatedSwitcher(
-                          duration: const Duration(milliseconds: 350),
-                          transitionBuilder: (Widget child,
-                            Animation<double> animation) => ScaleTransition(
-                              scale: animation,
-                              child: child
-                            ),
-                            child: GridView.count(
-                              mainAxisSpacing: 2.0,
-                              crossAxisSpacing: 2.0,
-                              crossAxisCount: Constants.chordsPerLine,
-                              childAspectRatio: 1.75,
-                              children: chordDisplay.getDisplay(),
-                            ),
-                        ),
-                      ),
-                    ),
-                    // Align(
-                    //   alignment: const Alignment(0.0, -0.8),
-                    //   child: SimpleActionButton(
-                    //     onPressed: () => _showChordSymbols(context),
-                    //     color: AppTheme.primary80,
-                    //     child: Text(
-                    //       'View Chord Charts',
-                    //       style: AppTextStyle.standard(color: AppTheme.primary10),
-                    //     ),
-                    //   )
-                    // ),
-                  ]
+                alignment: const Alignment(0.0, -0.8),
+                child: Padding(
+                  padding: const EdgeInsets.all(35.0),
+                  child: haltedGeneration ? Text(
+                    "Halted Generation - No further connected chords",
+                    style: AppTextStyle.large(color: AppTheme.error)
+                  ) : const SizedBox(),
                 ),
               ),
               Align(
-                alignment: const Alignment(0.0, -0.1),
+                alignment: const Alignment(0.0, -0.5),
                 child: Padding(
                   padding: const EdgeInsets.all(35.0),
                   child: Text(
@@ -210,7 +166,7 @@ class _HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCl
                 ),
               ),
               Align(
-                alignment: const Alignment(0.0, 0.20),
+                alignment: const Alignment(0.0, 0.0),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -267,7 +223,6 @@ class _HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCl
                             final chords = keyValues.getChords(_selectedKey);
                             int j = chords.indexWhere((c) => c.enabled);
                             if (j == -1) {
-                              debugPrint("No enabled chords in this key");
                               return;
                             }
                             

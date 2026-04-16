@@ -7,7 +7,6 @@ import 'package:flutter_music_application/classes/music_key.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:flutter_music_application/classes/chord_map.dart';
 import 'package:flutter_music_application/keys.dart';
-import 'package:flutter_music_application/permissions.dart';
 import 'package:flutter_music_application/saved_chord_progression.dart';
 import 'package:flutter_music_application/screens/home_screen.dart';
 
@@ -94,7 +93,6 @@ Future<void> main() async {
   chordMaps = await Hive.openBox<ChordMap>('chordMaps');
 
   final List<ChordMap> maps = await _loadDecisionMap();
-  requestPermissions();
 
   runApp (
     MaterialApp(
