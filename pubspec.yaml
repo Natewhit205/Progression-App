@@ -47,11 +47,6 @@ dependencies:
   just_audio: ^0.9.42
   dart_random_choice: ^0.2.0
 
-  tekartik_midi:
-    git:
-      url: https://github.com/tekartik/midi.dart
-      ref: dart3a
-
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6
@@ -96,28 +91,6 @@ flutter:
     - assets/icons/
     - assets/chord_maps/
     - assets/chord_maps/chord_map.json
-    - assets/chord_imgs/
-    - assets/chord_imgs/A/
-    - assets/chord_imgs/B/
-    - assets/chord_imgs/Cm/
-    - assets/chord_imgs/Dm/
-    - assets/chord_imgs/E/
-    - assets/chord_imgs/F/
-    - assets/chord_imgs/F#m/
-    - assets/charts/piano/A/
-    - assets/charts/piano/B/
-    - assets/charts/piano/Cm/
-    - assets/charts/piano/Dm/
-    - assets/charts/piano/E/
-    - assets/charts/piano/F/
-    - assets/charts/piano/F#m/
-    - assets/charts/guitar/A/
-    - assets/charts/guitar/B/
-    - assets/charts/guitar/Cm/
-    - assets/charts/guitar/Dm/
-    - assets/charts/guitar/E/
-    - assets/charts/guitar/F/
-    - assets/charts/guitar/F#m/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
