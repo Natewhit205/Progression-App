@@ -1,6 +1,4 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_music_application/classes/chord.dart';
 import 'package:flutter_music_application/classes/chord_map.dart';
 import 'package:flutter_music_application/classes/chord_progression.dart';
@@ -34,7 +32,6 @@ class _HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCl
 
   bool _saved = false;
   bool _generated = false;
-  bool _playing = false;
 
   bool haltedGeneration = false;
 
@@ -47,14 +44,6 @@ class _HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCl
 
   bool _checkPlayStatus() => _generated;
   bool _checkSaveStatus() => _generated && !_saved;
-
-  Future checkAsset(String path) async {
-    try {
-      return await rootBundle.loadString(path);
-    } catch (_) {
-      return null;
-    }
-  }
 
   void _viewSaves(context) => Navigator.push(context, MaterialPageRoute(builder: (context) => const SavesScreen()));
 
@@ -84,24 +73,6 @@ class _HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCl
       _lastChordLimit = _chordLimit;
       _generated = true;
     });
-  }
-
-  Future<void> _playChordProgression() async {
-    bool finished = false;
-    Duration duration = const Duration(seconds: 0);
-    setState(() => _playing = true);
-
-    duration  = await audioPlayback.playAudio(_chordProgression);
-
-    if (duration != const Duration(seconds: 0)) {
-      finished = true;
-      setState(() => _playing = !finished);
-    }
-  }
-
-  void _stopPlayback() {
-    audioPlayback.stopAudio();
-    setState(() => _playing = false);
   }
 
   void _saveChordProgression() {
@@ -173,19 +144,13 @@ class _HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCl
                   children: [
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: !_playing ? CustomMaterialButton(
-                        onPressed: _checkPlayStatus() ? _playChordProgression : null,
+                      child: CustomMaterialButton(
+                        onPressed: null,
                         child: Text(
                           'Play',
                           style: AppTextStyle.standard(color: _checkPlayStatus() ? AppTheme.secondary10 : AppTheme.surface),
                         ),
-                      ) : CustomMaterialButton(
-                        onPressed: _stopPlayback,
-                        child: Text(
-                          'Stop',
-                          style: AppTextStyle.standard(color: AppTheme.secondary10),
-                        ),
-                      ),
+                      )
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
