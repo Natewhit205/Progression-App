@@ -129,6 +129,7 @@ class _HarmonyScreenState extends State<HarmonyScreen> with AutomaticKeepAliveCl
                     style: TextStyle(
                       fontSize: Utilities.calculateFontSize(_lastChordLimit),
                       fontWeight: FontWeight.w500,
+                      color: AppTheme.primary30,
                     ),
                     textAlign: TextAlign.center,
                     overflow: TextOverflow.clip,

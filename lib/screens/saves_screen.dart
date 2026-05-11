@@ -32,7 +32,7 @@ class SavesScreenState extends State<SavesScreen> {
         TextButton(
           child: Text(
             'Cancel',
-            style: AppTextStyle.standard(color: AppTheme.primaryAccent)
+            style: AppTextStyle.standard(color: AppTheme.primary40)
           ),
           onPressed: () => Navigator.of(context).pop(false)
         ),
